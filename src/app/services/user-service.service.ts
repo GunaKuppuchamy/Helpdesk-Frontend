@@ -59,4 +59,9 @@ export class UserServiceService {
     status: 'Active'
   }
   ];
+
+  getUsers()
+  {
+    return this.UsersData;
+  }
 }
