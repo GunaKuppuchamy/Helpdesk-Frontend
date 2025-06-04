@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Ticket } from '../model/ticket.type';
+import { Ticket } from '../models/ticket.type';
 
 @Injectable({
   providedIn: 'root'
