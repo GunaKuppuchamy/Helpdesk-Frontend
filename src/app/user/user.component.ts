@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { UserServiceService } from '../services/user-service.service';
 import { Users } from '../models/users';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -14,11 +14,18 @@ export class UserComponent {
   userservice=inject(UserServiceService);
   router=inject(Router);
 
-  userData:Users[]=this.userservice.getUsers();
+  curUserData!:Users;
 
   onAddTicket()
   {
-    this.router.navigate(['/userAddTicket']);
+    this.router.navigate(['addTicket']);
+  }
+
+  curUserId:string='U001';
+
+  ngOnInit():void
+  {
+    this.curUserData=this.userservice.getUserById(this.curUserId);
   }
 
 }

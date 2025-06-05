@@ -1,7 +1,10 @@
 import { Routes } from '@angular/router';
-import { UserTicketComponent } from './components/user-ticket/user-ticket.component';
+import { DisplayUserTicketsComponent } from './components/display-user-tickets/display-user-tickets.component';
+import { AddTicketComponent } from './components/add-ticket/add-ticket.component';
+import { UserComponent } from './user/user.component';
 
 export const routes: Routes = [
-    {path:'/userTicket',component:UserTicketComponent},
-    
+  { path: 'displayUserTickets/:type', component: DisplayUserTicketsComponent },
+  { path: 'addTicket', component: AddTicketComponent },
+  { path: '', component:UserComponent}
 ];

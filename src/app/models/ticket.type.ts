@@ -1,8 +1,9 @@
 export type Ticket = {
-  tid?: string;           
+  tid?: string;    
+  subject:string;       
   category: string;
   description: string;
-  status: 'open' | 'inprogress' | 'closed';
+  status: 'open' | 'onHold' | 'closed'|'cancelled';
   priority: 'low' | 'medium' | 'high';
   raisedById: string;     
   assignedToId?: string;  
