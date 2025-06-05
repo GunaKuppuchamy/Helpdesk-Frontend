@@ -17,7 +17,7 @@ export class ItOverdueTicketComponent implements OnInit {
     loggedInUserId : string = "U002"
 
     ngOnInit(): void {
-        const filtered = this.ticketService.tickets.filter( t => t.dueDate < this.today && t.assignedToId === this.loggedInUserId && t.status !== 'closed');
+        const filtered = this.ticketService.tickets.filter( t => t.duedate < this.today && t.itid === this.loggedInUserId && t.status !== 'closed');
         this.display_tickets.set(filtered)
 
     }

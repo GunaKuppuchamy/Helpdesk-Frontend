@@ -1,0 +1,25 @@
+<p>admin-view-users works!</p>
+<div>
+    <table style="border-style:solid">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Mail</th>
+                <th>Phone</th>
+                <th>role</th>
+                <th>BU</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of allUsers">
+                <td>{{u.empid}}</td>
+                <td>{{u.name}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.phoneno}}</td>
+                <td>{{u.role}}</td>
+                <td>{{u.bu}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

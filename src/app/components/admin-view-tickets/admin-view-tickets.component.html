@@ -1,0 +1,33 @@
+<p>admin-view-tickets works!</p>
+<div>
+    <table style="border-style:solid">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Subject</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>raisedBy</th>
+                <th>assignedTo</th>
+                <th>CreatedDate</th>
+                <th>DueDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let t of allTickets">
+                <td>{{t.ticketid}}</td>
+                <td>{{t.subject}}</td>
+                <td>{{t.category}}</td>
+                <td>{{t.description}}</td>
+                <td>{{t.status}}</td>
+                <td>{{t.priority}}</td>
+                <td>{{t.userid}}</td>
+                <td>{{t.itid}}</td>
+                <td>{{t.raiseddate}}</td>
+                <td>{{t.duedate}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

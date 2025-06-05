@@ -9,52 +9,50 @@ export class UserServiceService {
   constructor() { }
   UsersData: Users[] = [
   {
-    user_id: 'U001',
+    empid: 'U001',
     name: 'Alice Johnson',
     email: 'alice.johnson@example.com',
-    password_hash: '$2a$10$abcdefgh1234567890ijklmnopqrstuv',
+    password: '$2a$10$abcdefgh1234567890ijklmnopqrstuv',
     role: 'user',
-    BU: 'DEX',
-    phNumber: 9876543210
+    bu: 'DEX',
+    phoneno: 9876543210
   },
   {
-    user_id: 'U002',
+    empid: 'U002',
     name: 'Bob Smith',
     email: 'bob.smith@example.com',
-    password_hash: '$2a$10$abcdef1234567890ghijklmnopqrstuv',
+    password: '$2a$10$abcdef1234567890ghijklmnopqrstuv',
     role: 'IT_team',
-    BU: 'IT',
+    bu: 'IT',
     
-    phNumber: 9123456780
+    phoneno: 9123456780
   },
   {
-    user_id: 'U003',
+    empid: 'U003',
     name: 'Charlie Davis',
     email: 'charlie.davis@example.com',
-    password_hash: '$2a$10$abc1234567890defghijklmnopqrstuv',
+    password: '$2a$10$abc1234567890defghijklmnopqrstuv',
     role: 'user',
-    BU: 'DATA',
-    phNumber: 9988776655
+    bu: 'DATA',
+    phoneno: 9988776655
   },
   {
-    user_id: 'U004',
+    empid: 'U004',
     name: 'Diana Lee',
     email: 'diana.lee@example.com',
-    password_hash: '$2a$10$xyz9876543210abcdefghijklmno',
+    password: '$2a$10$xyz9876543210abcdefghijklmno',
     role: 'user',
-    BU: 'HR',
-    
-    phNumber: 9090909090
+    bu: 'HR',
+    phoneno: 9090909090
   },
   {
-    user_id: 'U005',
+    empid: 'U005',
     name: 'Ethan Brown',
     email: 'ethan.brown@example.com',
-    password_hash: '$2a$10$mnopqr1234567890stuvwxabcdefghij',
+    password: '$2a$10$mnopqr1234567890stuvwxabcdefghij',
     role: 'IT_team',
-    BU: 'IT',
-    
-    phNumber: 9008007006
+    bu: 'IT',
+    phoneno: 9008007006
   }
 ];
 
@@ -65,7 +63,7 @@ getUsers()
  
   getUserById(uid:string):Users
   {
-    const user = this.UsersData.find(u => uid === u.user_id);
+    const user = this.UsersData.find(u => uid === u.empid);
     if (!user) {
       throw new Error(`User with ID ${uid} not found`);
     }

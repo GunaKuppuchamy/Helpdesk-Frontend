@@ -18,19 +18,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let ticket of filteredTickets">
-          <td>{{ticket.tid}}</td>
+          <td>{{ticket.ticketid}}</td>
           <td>{{ticket.subject}}</td>
           <td>{{ticket.category}}</td>
           <td>{{ticket.description}}</td>
           <td>{{ticket.status}}</td>
           <td>{{ticket.priority}}</td>
-          <td>{{ticket.raisedById}}</td>
-          <td>{{ticket.assignedToId}}</td>
-          <td>{{ticket.createdDate | date}}</td>
-          <td>{{ticket.dueDate | date}}</td>
+          <td>{{ticket.userid}}</td>
+          <td>{{ticket.itid}}</td>
+          <td>{{ticket.raiseddate | date}}</td>
+          <td>{{ticket.duedate | date}}</td>
           <td>
             <button *ngIf="ticket.status === 'open' || ticket.status === 'onHold'" 
-            (click)="cancelTicket(ticket.tid!)">
+            (click)="cancelTicket(ticket.ticketid!)">
              Cancel
             </button>
           </td>
