@@ -7,8 +7,6 @@ export interface Users {
     phNumber:number;
     role:'IT_team'|'user';
     BU:'DEX'|'DATA'|'ILD'|'IT'|'HR'|'SIMS';
-    created_at:Date;
-    status:'Active'|'Inactive';
-
+    
 }
 
