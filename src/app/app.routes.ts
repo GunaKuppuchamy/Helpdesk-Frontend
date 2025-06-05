@@ -49,5 +49,5 @@ export const routes: Routes = [
     },
   { path: 'displayUserTickets/:type', component: DisplayUserTicketsComponent },
   { path: 'addTicket', component: AddTicketComponent },
-  { path: '', component:UserComponent}
+  { path: 'user', component:UserComponent}
 ];

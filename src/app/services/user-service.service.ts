@@ -59,4 +59,20 @@ export class UserServiceService {
     phNumber: 9008007006
   }
 ];
+
+
+getUsers()
+  {
+    return this.UsersData;
+  }
+ 
+  getUserById(uid:string):Users
+  {
+    const user = this.UsersData.find(u => uid === u.user_id);
+    if (!user) {
+      throw new Error(`User with ID ${uid} not found`);
+    }
+    return user;
+ 
+  }
 }
