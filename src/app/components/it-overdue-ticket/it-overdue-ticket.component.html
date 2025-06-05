@@ -1,0 +1,11 @@
+<ul>
+  <ng-container *ngIf="display_tickets().length!=0; else elseBlock" >
+  <li  *ngFor="let ticket of display_tickets()">
+    {{ ticket.tid }} - {{ ticket.description }} - {{ ticket.status }}
+  </li>
+  </ng-container>
+</ul>
+
+<ng-template #elseBlock>
+  <p>No overdue Tickets</p>
+</ng-template>

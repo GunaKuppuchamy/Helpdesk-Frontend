@@ -1,3 +1,47 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+
+    {
+        path : '',
+        pathMatch : 'full',
+        loadComponent : () => {
+            return import('./components/home/home.component').then((m)=>m.HomeComponent)
+        }
+    },
+
+    {
+        path : 'it-team',
+        loadComponent : () => {
+            return import('./it-team/it-team.component').then((m)=>m.ItTeamComponent)
+        }
+    },
+
+    {
+        path : 'it-overdue',
+        loadComponent : () => {
+            return import('./components/it-overdue-ticket/it-overdue-ticket.component').then((m)=>m.ItOverdueTicketComponent)
+        }
+    },
+
+     {
+        path : 'it-all',
+        loadComponent : () => {
+            return import('./components/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
+        }
+    },
+
+     {
+        path : 'it-my',
+        loadComponent : () => {
+            return import('./components/it-my-tickets/it-my-tickets.component').then((m)=>m.ItMyTicketsComponent)
+        }
+    },
+
+     {
+        path : 'edit-ticket/:id',
+        loadComponent : () => {
+            return import('./edit-ticket/edit-ticket.component').then((m)=>m.EditTicketComponent)
+        }
+    },
+];
