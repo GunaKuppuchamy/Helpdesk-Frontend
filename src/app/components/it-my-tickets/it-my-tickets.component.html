@@ -1,0 +1,18 @@
+<a (click)="setView('all')">All</a>
+<a (click)="setView('open')">Open</a>
+<a (click)="setView('closed')">Closed</a>
+<a (click)="setView('onHold')">OnHold</a>
+<a routerLink="/it-overdue">Over Due Tickets</a>
+
+<ul>
+  <ng-container *ngIf="display_tickets().length!=0; else elseBlock">
+  <li *ngFor="let ticket of display_tickets()">
+    {{ ticket.tid }} - {{ ticket.description }} - {{ ticket.status }}
+    <a [routerLink]="['/edit-ticket',ticket.tid]">Edit Ticket</a>
+  </li>
+  </ng-container>
+</ul>
+
+<ng-template #elseBlock>
+  <p>No tickets</p>
+</ng-template>

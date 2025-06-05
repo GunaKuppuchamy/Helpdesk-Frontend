@@ -8,7 +8,8 @@ export class TicketsService {
 
   constructor() { }
 
-  tickets:Ticket[]=[{
+  tickets: Array<Ticket> = [
+    {
       tid: 't1',
       category: 'Hardware',
       subject: 'Laptop issue',

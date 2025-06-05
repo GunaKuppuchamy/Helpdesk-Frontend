@@ -5,8 +5,9 @@ export interface Users {
     email:string;
     phNumber:number;
     password_hash:string;
-    role:'IT_team'|'user'|'admin';
+    role:'IT_team'|'user';
     BU:'DEX'|'DATA'|'ILD'|'IT'|'HR'|'SIMS';
+    
 
 }
 
