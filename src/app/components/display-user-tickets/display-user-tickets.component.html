@@ -30,7 +30,7 @@
           <td>{{ticket.dueDate | date}}</td>
           <td>
             <button *ngIf="ticket.status === 'open' || ticket.status === 'onHold'" 
-            (click)="cancelTicket(ticket.tid)">
+            (click)="cancelTicket(ticket.tid!)">
              Cancel
             </button>
           </td>
