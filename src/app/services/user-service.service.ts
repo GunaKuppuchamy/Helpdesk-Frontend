@@ -35,7 +35,6 @@ export class UserServiceService {
     password_hash: '$2a$10$abc1234567890defghijklmnopqrstuv',
     role: 'user',
     BU: 'DATA',
-    
     phNumber: 9988776655
   },
   {
@@ -59,7 +58,6 @@ export class UserServiceService {
     phNumber: 9008007006
   }
 ];
-
 
 getUsers()
   {
