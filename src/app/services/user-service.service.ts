@@ -59,5 +59,4 @@ export class UserServiceService {
     phNumber: 9008007006
   }
 ];
-
 }

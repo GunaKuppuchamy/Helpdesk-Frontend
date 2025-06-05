@@ -1,0 +1,8 @@
+<h2>Hi {{curUserData.name}}</h2>
+<button (click)="onAddTicket()">Add Ticket</button><br><br>
+<nav>
+    <a [routerLink]="['/displayUserTickets', 'all']">My Tickets</a><br><br>
+    <a [routerLink]="['/displayUserTickets', 'open']">Open Tickets</a><br><br>
+    <a [routerLink]="['/displayUserTickets', 'onhold']">OnHold Tickets</a><br><br>
+    <a [routerLink]="['/displayUserTickets', 'closed']">Closed Tickets</a><br><br>
+</nav>

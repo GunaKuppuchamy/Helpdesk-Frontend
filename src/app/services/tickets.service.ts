@@ -17,7 +17,7 @@ export class TicketsService {
       status: 'open',
       priority: 'high',
       raisedById: 'U001',
-      assignedToId: 'U002', 
+      assignedToId: 'U002',
       dueDate: new Date('2025-06-10'),
       createdDate: new Date('2025-06-01')
     },
@@ -29,7 +29,7 @@ export class TicketsService {
       status: 'onHold',
       priority: 'medium',
       raisedById: 'U003',
-      assignedToId: 'U005', 
+      assignedToId: 'U005',
       dueDate: new Date('2025-06-08'),
       createdDate: new Date('2025-06-02')
     },
@@ -41,7 +41,7 @@ export class TicketsService {
       status: 'open',
       priority: 'high',
       raisedById: 'U004',
-      assignedToId: 'U005', 
+      assignedToId: 'U005',
       dueDate: new Date('2025-06-07'),
       createdDate: new Date('2025-06-03')
     },
@@ -53,7 +53,7 @@ export class TicketsService {
       status: 'open',
       priority: 'medium',
       raisedById: 'U001',
-      assignedToId: 'U002', 
+      assignedToId: 'U002',
       dueDate: new Date('2025-06-04'),
       createdDate: new Date('2025-06-01')
     },
@@ -65,9 +65,29 @@ export class TicketsService {
       status: 'onHold',
       priority: 'low',
       raisedById: 'U004',
-      assignedToId: 'U005', 
+      assignedToId: 'U005',
       dueDate: new Date('2025-06-15'),
       createdDate: new Date('2025-06-04')
     }
   ];
+
+  addTicket(ticket: Ticket) {
+    ticket.tid = Math.random().toString(36).slice(2, 9);
+    this.tickets.push(ticket);
+  }
+
+  getTicketsByUser(userId: string): Ticket[] {
+    return this.tickets.filter(t => t.raisedById === userId);
+  }
+
+  cancelTicketById(ticketId:string )
+  {
+    const ticket=this.tickets.find(t=>t.tid===ticketId);
+    if(ticket)
+    {
+      ticket.status='cancelled';
+    }
+  }
+
+  
 }
