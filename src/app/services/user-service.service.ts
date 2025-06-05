@@ -15,7 +15,6 @@ export class UserServiceService {
     password_hash: '$2a$10$abcdefgh1234567890ijklmnopqrstuv',
     role: 'user',
     BU: 'DEX',
-    
     phNumber: 9876543210
   },
   {

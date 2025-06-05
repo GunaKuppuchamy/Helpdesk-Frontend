@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket.type';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketsService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   tickets: Array<Ticket> = [
     {
@@ -89,5 +91,21 @@ export class TicketsService {
     }
   }
 
-  
+  // private baseUrl = 'http://localhost:3002';
+  // getAllTickets(): Observable<Ticket[]> {
+  //   return this.http.get<Ticket[]>(`${this.baseUrl}/getticket`);
+  // }
+
+  // getTicketsByUser(userId: string): Observable<Ticket> {
+  //    return this.http.get<Ticket>(`${this.baseUrl}/getby/${userId}`);
+  // }
+
+  // addTicket(ticket: Ticket): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/addticket`, ticket);
+  // }
+
+  // cancelTicketById(ticketId: string): Observable<any> {
+  //   const updatedStatus = { status: 'cancelled' };
+  //   return this.http.put(`${this.baseUrl}/putby/${ticketId}`, updatedStatus);
+  // }
 }
