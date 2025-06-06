@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TicketsService } from '../../services/tickets.service';
 import { Router } from '@angular/router';
+import { UserServiceService } from '../../services/user-service.service';
 
 @Component({
   selector: 'app-add-ticket',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AddTicketComponent {
   ticketForm: FormGroup;
+  userservice=inject(UserServiceService);
 
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({
@@ -38,12 +40,29 @@ export class AddTicketComponent {
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + daysToAdd);
 
+      // Step 1: Get all IT members
+      const itMembers = this.userservice.getUsers().filter(u => u.role === 'IT_team');
+
+      // Step 2: Count tickets per IT member
+      const ticketCounts: { [itid: string]: number } = {};
+      for (let member of itMembers) {
+        const count = this.ticketService.getTickets().filter(t => t.itid === member.empid).length;
+        ticketCounts[member.empid] = count;
+      }
+
+      // Step 3: Find IT member with minimum assigned tickets
+      const leastLoadedIT = Object.keys(ticketCounts).reduce((a, b) =>
+        ticketCounts[a] <= ticketCounts[b] ? a : b
+      );
+
+      // Step 4: Create new ticket with assigned IT ID
       const newTicket = {
         ...this.ticketForm.value,
-        raisedById: 'U001', // Replace with logged-in user ID
+        userid: 'U001', // Replace with logged-in user
+        itid: leastLoadedIT,
         status: 'open',
-        createdDate: new Date(),
-        dueDate: dueDate
+        raiseddate: new Date(),
+        duedate: dueDate
       };
       this.ticketService.addTicket(newTicket);
       this.router.navigate(['/displayUserTickets', 'all']);

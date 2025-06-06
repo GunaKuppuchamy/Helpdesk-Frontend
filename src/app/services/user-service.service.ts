@@ -51,7 +51,7 @@ export class UserServiceService {
     email: 'ethan.brown@example.com',
     password: '$2a$10$mnopqr1234567890stuvwxabcdefghij',
     role: 'IT_team',
-    bu: 'IT',
+    bu: 'SIMS',
     phoneno: '9008007006'
   }
 ];
@@ -70,8 +70,6 @@ getUsers()
     return user;
  
   }
-
-
   addUser(user:Users)
   {
         this.UsersData.push(user);
