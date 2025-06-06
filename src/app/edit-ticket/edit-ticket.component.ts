@@ -24,9 +24,7 @@ export class EditTicketComponent implements OnInit {
       this.this_ticket=ticket;
     })
       console.log(this.id)
-    // if (this.id) {
-    //   this.this_ticket = this.ticketService.tickets.find(t => t.ticketid === this.id)!;
-    // }
+    
   }
 onHold()
 {
@@ -36,12 +34,6 @@ onHold()
       this.this_ticket.status = "onHold"
     }
 
-    // const ind = this.ticketService.tickets.findIndex(t => t.ticketid === this.this_ticket.ticketid)
-    // console.log(this.ticketService.tickets[ind])
-    // if(ind !==-1)
-    // {
-    //   this.ticketService.tickets[ind] = { ...this.this_ticket };
-    // }
 
     this.ticketService.updateTickets(this.id,this.this_ticket).subscribe(
       {
@@ -64,21 +56,30 @@ onHold()
 
 close()
 {
-  // if(this.this_ticket)
-  //   {
-  //     this.this_ticket.status = "closed"
-  //   }
+  
 
-  //   const ind = this.ticketService.tickets.findIndex(t => t.ticketid === this.this_ticket.ticketid)
-  //   console.log(this.ticketService.tickets[ind])
-  //   if(ind !==-1)
-  //   {
-  //     this.ticketService.tickets[ind] = { ...this.this_ticket };
-  //   }
 
-  //    alert("Ticket upadted - closed");
-  //   console.log(this.this_ticket)
-  //   this.router.navigate(['/it-my']);
+  if(this.this_ticket)
+    {
+      this.this_ticket.status = "closed"
+    }
+
+  
+    this.ticketService.updateTickets(this.id,this.this_ticket).subscribe(
+      {
+        next :(upTicket) => {
+
+             alert("Ticket Updated - Closed");
+    console.log(upTicket)
+    this.router.navigate(['/it-my']);
+        },
+
+        error : () =>
+        {
+          alert("Error occured while Updating");
+        }
+      }
+    );
 
 }
 

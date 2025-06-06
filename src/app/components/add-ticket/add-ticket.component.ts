@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component ,inject, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TicketsService } from '../../services/tickets.service';
 import { Router, RouterLink } from '@angular/router';
+import { Ticket } from '../../models/ticket.type';
 
 @Component({
   selector: 'app-add-ticket',
@@ -9,9 +10,10 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './add-ticket.component.html',
   styleUrl: './add-ticket.component.css'
 })
-export class AddTicketComponent {
+export class AddTicketComponent implements OnInit {
   ticketForm: FormGroup;
-
+  
+  all_tickets !: Ticket[]
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({
       subject: ['', Validators.required],
@@ -20,13 +22,20 @@ export class AddTicketComponent {
       priroty: ['medium', Validators.required]
     });
   }
-
+it_count ={}
+  ngOnInit(): void {
+      this.ticketService.getTicketAPI().subscribe((ticket) =>
+      {
+        this.all_tickets = ticket;
+      })
+      console.log(this.all_tickets)
+  }
   
 
   submitTicket() {
     if (this.ticketForm.valid) {
 
-      const priority = this.ticketForm.value.priority;
+      const priority = this.ticketForm.value.priroty;
       let daysToAdd = 3; // default for low
 
       if (priority === 'high') {

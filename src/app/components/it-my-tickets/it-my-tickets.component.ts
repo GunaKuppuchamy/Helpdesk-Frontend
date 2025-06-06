@@ -24,14 +24,7 @@ export class ItMyTicketsComponent {
       this.filterTicket()
     }
     ngOnInit(): void {
-      // const filtered = this.all_tickets.filter(t => t.itid === this.loggedInUserId);
-      //   this.display_tickets.set(filtered);
-      // this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
-      // {
-      //   const filtered = ticket.filter(t => t.status == this.currentview)
-      //   this.display_tickets.set(filtered)
-      // }
-      // )
+    
        this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
       {
        
@@ -45,18 +38,7 @@ export class ItMyTicketsComponent {
 
     filterTicket()
     {
-      // if(this.currentview== 'all')
-      // {
-      //   this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
-      // {
-      //   const filtered = ticket.filter(t => t.status == this.currentview)
-      //   this.display_tickets.set(filtered)
-      // }
-      // }
-      // else{
-      // const filtered = this.all_tickets.filter(t => t.status === this.currentview && t.itid === this.loggedInUserId);
-      // this.display_tickets.set(filtered);
-      // }
+      
        if(this.currentview== 'all')
        {
            this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
