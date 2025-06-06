@@ -15,9 +15,9 @@ export class AddTicketComponent {
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({
       subject: ['', Validators.required],
-      category: ['', Validators.required],
+      categeory: ['', Validators.required],
       description: ['', Validators.required],
-      priority: ['medium', Validators.required]
+      priroty: ['medium', Validators.required]
     });
   }
 
@@ -35,17 +35,29 @@ export class AddTicketComponent {
         daysToAdd = 2;
       }
 
-      const dueDate = new Date();
-      dueDate.setDate(dueDate.getDate() + daysToAdd);
-
+      const duedate = new Date();
+      duedate.setDate(duedate.getDate() + daysToAdd);
+      
       const newTicket = {
         ...this.ticketForm.value,
-        raisedById: 'U001', // Replace with logged-in user ID
+        userid: 'U001', // Replace with logged-in user ID
+        itid: 'IT001',                            
+      ticketid: Math.random().toString(36).slice(2, 9),    
         status: 'open',
-        createdDate: new Date(),
-        dueDate: dueDate
+        raiseddate: new Date(),
+        duedate: duedate
       };
-      this.ticketService.addTicket(newTicket);
+      this.ticketService.addTicket(newTicket).subscribe( {
+        next: (ticket) => {
+        console.log('Ticket added successfully!', ticket);
+        this.router.navigate(['/displayUserTickets', 'all']);
+      },
+      error: (err) => {
+        console.error('Error adding ticket', err);
+        alert('Something went wrong while submitting the ticket.');
+      }
+
+      });
       this.router.navigate(['/displayUserTickets', 'all']);
     }
   }

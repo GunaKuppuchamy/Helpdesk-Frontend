@@ -1,5 +1,5 @@
-
-    {{ this_ticket.tid }} - {{ this_ticket.description }} - {{ this_ticket.status }}
+<h1>Ticket Details</h1>
+    <p>{{ this_ticket.ticketid }} - {{ this_ticket.description }} - {{ this_ticket.status }}</p>
 
     <button (click)="onHold()">OnHold</button>
     <button (click)="close()">Close</button>

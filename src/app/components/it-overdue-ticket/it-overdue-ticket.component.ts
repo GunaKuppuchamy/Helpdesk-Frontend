@@ -14,12 +14,26 @@ export class ItOverdueTicketComponent implements OnInit {
     ticketService = inject(TicketsService);
     display_tickets = signal<Array<Ticket>>([]);
     today = new Date()
-    loggedInUserId : string = "U002"
+    loggedInUserId : string = "U001"
 
     ngOnInit(): void {
-        const filtered = this.ticketService.tickets.filter( t => t.dueDate < this.today && t.assignedToId === this.loggedInUserId && t.status !== 'closed');
-        this.display_tickets.set(filtered)
+  this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket: Ticket[]) => {
+    const filtered = ticket.filter(t => {
+      const dueDate = new Date(t.duedate);
+      console.log('Due Date:', dueDate);
+      console.log('Today:', this.today);
+      console.log('Status:', t.status);
+
+      return dueDate < this.today && t.userid === this.loggedInUserId && t.status !== 'closed';
+    });
+
+    this.display_tickets.set(filtered);
+  });
+}
+
+        // const filtered = this.ticketService.tickets.filter( t => t.duedate < this.today && t.itid === this.loggedInUserId && t.status !== 'closed');
+        // this.display_tickets.set(filtered)
 
     }
 
-}
+

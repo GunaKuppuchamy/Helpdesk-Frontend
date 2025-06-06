@@ -7,9 +7,12 @@
 <ul>
   <ng-container *ngIf="display_tickets().length!=0; else elseBlock">
   <li *ngFor="let ticket of display_tickets()">
-    {{ ticket.tid }} - {{ ticket.description }} - {{ ticket.status }}
-    <a [routerLink]="['/edit-ticket',ticket.tid]">Edit Ticket</a>
+    {{ ticket.ticketid }} - {{ ticket.description }} - {{ ticket.status }}
+    <div *ngIf="ticket.status != 'closed'">
+    <a [routerLink]="['/edit-ticket',ticket.ticketid]">Edit Ticket</a>
+    </div>
   </li>
+  
   </ng-container>
 </ul>
 

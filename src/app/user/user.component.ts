@@ -25,7 +25,7 @@ export class UserComponent {
 
   ngOnInit():void
   {
-    this.curUserData=this.userservice.getUserById(this.curUserId);
+    //this.curUserData=this.userservice.getUserById(this.curUserId);
   }
 
 }
