@@ -1,12 +1,35 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  email = "";
+  password = "";
+  role = ""
 
+  constructor(private router: Router) {
+    console.log("1");
+    
+  }
+  login() {
+    switch (this.role) {
+      case 'User':
+        this.router.navigate(['/user']);
+        break;
+      case 'IT':
+        this.router.navigate(['/it-team']);
+        break;
+      case 'admin':
+        this.router.navigate(['/admin']);
+        break;
+      default:
+        alert('Please select a valid user type');
+    }
+  }
 }
