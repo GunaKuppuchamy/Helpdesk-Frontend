@@ -25,8 +25,8 @@ export class HomeComponent {
       case 'IT':
         this.router.navigate(['/it-team']);
         break;
-      case 'Admin':
-        this.router.navigate(['/']);
+      case 'admin':
+        this.router.navigate(['/admin']);
         break;
       default:
         alert('Please select a valid user type');
