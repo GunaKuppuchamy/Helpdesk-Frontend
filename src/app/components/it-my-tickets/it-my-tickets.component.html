@@ -22,7 +22,7 @@
               }">
           {{ ticket.status }}
         </span>
-        <a [routerLink]="['/edit-ticket', ticket.ticketid]" class="edit-link">Edit Ticket</a>
+        <a *ngIf="ticket.status!='closed'" [routerLink]="['/edit-ticket', ticket.ticketid]" class="edit-link">Edit Ticket</a>
       </div>
     </li>
   </ul>
