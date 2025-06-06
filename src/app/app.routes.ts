@@ -48,5 +48,8 @@ export const routes: Routes = [
     },
   { path: 'displayUserTickets/:user', component: DisplayUserTicketsComponent },
   { path: 'addTicket', component: AddTicketComponent },
-  { path: 'user', component:UserComponent}
+  { path: 'user', component:UserComponent},
+  
+
+  
 ];
