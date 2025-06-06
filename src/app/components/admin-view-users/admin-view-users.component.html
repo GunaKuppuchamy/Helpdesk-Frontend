@@ -1,0 +1,34 @@
+<p-table [value]="allUsers" [paginator]="true" [rows]="5">
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="empid">
+        ID
+        <p-sortIcon field="empid"></p-sortIcon>
+      </th>
+      <th pSortableColumn="name">
+        Name
+        <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th>Mail</th>
+      <th>Phone</th>
+      <th>Role</th>
+      <th pSortableColumn="bu">
+        BU
+        <p-sortIcon field="bu"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-u>
+    <tr>
+      <td>{{ u.empid }}</td>
+      <td>{{ u.name }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.phoneno }}</td>
+      <td>{{ u.role }}</td>
+      <td>{{ u.bu }}</td>
+    </tr>
+  </ng-template>
+
+</p-table>
