@@ -2,11 +2,11 @@ import { Component ,inject,signal} from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-it-my-tickets',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule,RouterLink],
   templateUrl: './it-my-tickets.component.html',
   styleUrl: './it-my-tickets.component.css'
 })

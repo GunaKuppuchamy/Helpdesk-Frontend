@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { TableModule} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import {  HttpClientModule } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-it-all-tickets',
   standalone:true,
-  imports: [CommonModule,TableModule,ButtonModule,HttpClientModule],
+  imports: [CommonModule,TableModule,ButtonModule,HttpClientModule,RouterLink],
   templateUrl: './it-all-tickets.component.html',
   styleUrl: './it-all-tickets.component.css'
 })

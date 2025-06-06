@@ -1,15 +1,31 @@
-<h2>Raise a Ticket</h2>
-<form [formGroup]="ticketForm" (ngSubmit)="submitTicket()">
-  <label>Subject: <input formControlName="subject" /></label><br>
-  <label>Category: <input formControlName="categeory" /></label><br>
-  <label>Description: <textarea formControlName="description"></textarea></label><br>
-  <label>Priority:
-    <select formControlName="priroty">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
-    </select>
-  </label><br>
-  <button type="submit" [disabled]="!ticketForm.valid">Submit</button>
-</form>
+<div class="raise-ticket-container">
+  <h2>Raise a Ticket</h2>
+  <form [formGroup]="ticketForm" (ngSubmit)="submitTicket()" class="ticket-form">
+    <div class="form-group">
+      <label>Subject:</label>
+      <input formControlName="subject" type="text" />
+    </div>
 
+    <div class="form-group">
+      <label>Category:</label>
+      <input formControlName="category" type="text" />
+    </div>
+
+    <div class="form-group">
+      <label>Description:</label>
+      <textarea formControlName="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Priority:</label>
+      <select formControlName="priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="!ticketForm.valid" class="submit-btn">Submit</button>
+    <a><button class="back-btn" [routerLink]="['/user']">Back</button></a>
+  </form>
+</div>

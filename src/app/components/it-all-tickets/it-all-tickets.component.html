@@ -1,7 +1,7 @@
 <p-table 
   [value]="display_tickets()" 
   [paginator]="true" 
-  [rows]="5" 
+  [rows]="7" 
   
   [responsiveLayout]="'scroll'" 
   [resizableColumns]="true"
@@ -48,3 +48,5 @@
   </ng-template>
 
 </p-table>
+
+   <a ><button class="back-btn"[routerLink]="['/it-team']">Back</button></a>
