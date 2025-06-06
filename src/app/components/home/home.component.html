@@ -1,7 +1,14 @@
 <div class="home-container">
-  <h2>Select Role</h2>
-  <div class="nav-links">
-    <a routerLink="/it-team">It Team</a>
-    <a routerLink="/user">User</a>
+<h2>Login Here</h2>
+<label>Email: <input [(ngModel)]="email" ></label> <br>
+<label>Password: <input [(ngModel)]="password"></label> <br>
+<div>Role:
+    <select [(ngModel)]="role">
+      <option value="IT">It</option>
+      <option value="User">User</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <br>
+<button (click)="login()">Login</button>
   </div>
-</div>
+  

@@ -7,7 +7,6 @@ export const routes: Routes = [
 
     {
         path : '',
-        pathMatch : 'full',
         loadComponent : () => {
             return import('./components/home/home.component').then((m)=>m.HomeComponent)
         }
@@ -49,5 +48,5 @@ export const routes: Routes = [
     },
   { path: 'displayUserTickets/:type', component: DisplayUserTicketsComponent },
   { path: 'addTicket', component: AddTicketComponent },
-  { path: 'user', component:UserComponent}
+  { path: 'user', component:UserComponent},
 ];
