@@ -12,7 +12,7 @@
   <ul class="ticket-list" *ngIf="display_tickets().length !== 0; else elseBlock">
     <li *ngFor="let ticket of display_tickets()">
       <div class="ticket-item">
-        <span class="ticket-id">{{ ticket.tid }}</span>
+        <span class="ticket-id">{{ ticket.ticketid }}</span>
         <span class="ticket-desc">{{ ticket.description }}</span>
         <span class="ticket-status badge" 
               [ngClass]="{
@@ -22,7 +22,7 @@
               }">
           {{ ticket.status }}
         </span>
-        <a [routerLink]="['/edit-ticket', ticket.tid]" class="edit-link">Edit Ticket</a>
+        <a [routerLink]="['/edit-ticket', ticket.ticketid]" class="edit-link">Edit Ticket</a>
       </div>
     </li>
   </ul>
