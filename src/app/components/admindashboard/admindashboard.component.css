@@ -1,0 +1,7 @@
+.card{
+    margin:20px;
+    padding: 10px;
+    border-style: dashed;
+    width: 150px;
+    border-width: 2px;
+}

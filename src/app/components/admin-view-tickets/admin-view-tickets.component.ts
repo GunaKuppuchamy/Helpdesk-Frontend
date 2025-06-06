@@ -2,21 +2,25 @@ import { Component, inject } from '@angular/core';
 import { Ticket } from '../../models/ticket.type';
 import { TicketsService } from '../../services/tickets.service';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-admin-view-tickets',
-  imports: [CommonModule],
+  imports: [CommonModule,TableModule],
   templateUrl: './admin-view-tickets.component.html',
   styleUrl: './admin-view-tickets.component.css'
 })
 export class AdminViewTicketsComponent {
 
-  allTickets:Ticket[]=[];
-  ticketservice=inject(TicketsService);
+  allTickets: Ticket[] = [];
+  filters: { [s: string]: any } = {};
 
-  ngOnInit()
-  {
-    this.allTickets=this.ticketservice.getTickets();
+  constructor(private ticketservice: TicketsService) {}
+
+  ngOnInit() {
+    this.allTickets = this.ticketservice.getTickets();
   }
-
 }
+
+
+

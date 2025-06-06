@@ -15,9 +15,9 @@ export class AddTicketComponent {
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({
       subject: ['', Validators.required],
-      category: ['', Validators.required],
+      categeory: ['', Validators.required],
       description: ['', Validators.required],
-      priority: ['medium', Validators.required]
+      priroty: ['medium', Validators.required]
     });
   }
 

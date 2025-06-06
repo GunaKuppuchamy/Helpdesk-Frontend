@@ -15,7 +15,7 @@ export class UserServiceService {
     password: '$2a$10$abcdefgh1234567890ijklmnopqrstuv',
     role: 'user',
     bu: 'DEX',
-    phoneno: 9876543210
+    phoneno: '9876543210'
   },
   {
     empid: 'U002',
@@ -25,7 +25,7 @@ export class UserServiceService {
     role: 'IT_team',
     bu: 'IT',
     
-    phoneno: 9123456780
+    phoneno: '9123456780'
   },
   {
     empid: 'U003',
@@ -34,7 +34,7 @@ export class UserServiceService {
     password: '$2a$10$abc1234567890defghijklmnopqrstuv',
     role: 'user',
     bu: 'DATA',
-    phoneno: 9988776655
+    phoneno: '9988776655'
   },
   {
     empid: 'U004',
@@ -43,7 +43,7 @@ export class UserServiceService {
     password: '$2a$10$xyz9876543210abcdefghijklmno',
     role: 'user',
     bu: 'HR',
-    phoneno: 9090909090
+    phoneno: '9090909090'
   },
   {
     empid: 'U005',
@@ -52,7 +52,7 @@ export class UserServiceService {
     password: '$2a$10$mnopqr1234567890stuvwxabcdefghij',
     role: 'IT_team',
     bu: 'IT',
-    phoneno: 9008007006
+    phoneno: '9008007006'
   }
 ];
 
@@ -69,5 +69,11 @@ getUsers()
     }
     return user;
  
+  }
+
+
+  addUser(user:Users)
+  {
+        this.UsersData.push(user);
   }
 }
