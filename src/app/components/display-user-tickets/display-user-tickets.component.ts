@@ -21,6 +21,7 @@ export class DisplayUserTicketsComponent {
  ngOnInit(): void {
   const currentUserId = 'U001';  // or from AuthService in real case
   this.allTickets = this.ticketservice.getTicketsByUser(currentUserId);
+  
 
   const type = this.route.snapshot.paramMap.get('type');
 

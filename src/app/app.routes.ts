@@ -49,4 +49,26 @@ export const routes: Routes = [
   { path: 'displayUserTickets/:type', component: DisplayUserTicketsComponent },
   { path: 'addTicket', component: AddTicketComponent },
   { path: 'user', component:UserComponent},
+  {
+        path:'admin',
+        loadComponent:()=>{ return import('./admin/admin.component').then((m)=>m.AdminComponent)}
+    },
+
+    {
+        path:'adminViewUsers',
+        loadComponent:()=>{ return import('./components/admin-view-users/admin-view-users.component').then((m)=>m.AdminViewUsersComponent)}
+    },
+    {
+        path:'adminViewTickets',
+        loadComponent:()=>{ return import('./components/admin-view-tickets/admin-view-tickets.component').then((m)=>m.AdminViewTicketsComponent)}
+    },
+    {
+        path:'adminDashboard',
+        loadComponent:()=>{ return import('./components/admindashboard/admindashboard.component').then((m)=>m.AdmindashboardComponent)}
+    },
+    {
+        path:'addUser',
+        loadComponent:()=>{ return import('./components/add-user/add-user.component').then((m)=>m.AddUserComponent)}
+    }
+
 ];

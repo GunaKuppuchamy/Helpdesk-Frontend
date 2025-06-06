@@ -1,13 +1,12 @@
 export type Ticket = {
-  tid?: string;    
+  ticketid?: string;    
   subject:string;       
-  category: string;
-  
+  categeory: string;
   description: string;
   status: 'open' | 'onHold' | 'closed'|'cancelled';
-  priority: 'low' | 'medium' | 'high';
-  raisedById: string;     
-  assignedToId: string;  
-  dueDate: Date;
-  createdDate?: Date;     
+  priroty: 'low' | 'medium' | 'high';
+  userid: string;     
+  itid: string;  
+  duedate: Date;
+  raiseddate?: Date;     
 }

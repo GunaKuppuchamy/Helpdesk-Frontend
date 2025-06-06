@@ -20,7 +20,7 @@ export class EditTicketComponent implements OnInit {
   ngOnInit(): void {
       const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.this_ticket = this.ticketService.tickets.find(t => t.tid === id)!;
+      this.this_ticket = this.ticketService.tickets.find(t => t.ticketid === id)!;
     }
   }
 onHold()
@@ -30,7 +30,7 @@ onHold()
       this.this_ticket.status = "onHold"
     }
 
-    const ind = this.ticketService.tickets.findIndex(t => t.tid === this.this_ticket.tid)
+    const ind = this.ticketService.tickets.findIndex(t => t.ticketid === this.this_ticket.ticketid)
     console.log(this.ticketService.tickets[ind])
     if(ind !==-1)
     {
@@ -50,7 +50,7 @@ close()
       this.this_ticket.status = "closed"
     }
 
-    const ind = this.ticketService.tickets.findIndex(t => t.tid === this.this_ticket.tid)
+    const ind = this.ticketService.tickets.findIndex(t => t.ticketid === this.this_ticket.ticketid)
     console.log(this.ticketService.tickets[ind])
     if(ind !==-1)
     {

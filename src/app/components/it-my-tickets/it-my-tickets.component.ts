@@ -24,7 +24,7 @@ export class ItMyTicketsComponent {
       this.filterTicket()
     }
     ngOnInit(): void {
-      const filtered = this.all_tickets.filter(t => t.assignedToId === this.loggedInUserId);
+      const filtered = this.all_tickets.filter(t => t.itid === this.loggedInUserId);
         this.display_tickets.set(filtered);
       console.log(this.display_tickets)
       console.log(this.currentview)
@@ -35,11 +35,11 @@ export class ItMyTicketsComponent {
     {
       if(this.currentview== 'all')
       {
-        const filtered = this.all_tickets.filter(t => t.assignedToId === this.loggedInUserId);
+        const filtered = this.all_tickets.filter(t => t.itid === this.loggedInUserId);
         this.display_tickets.set(filtered);
       }
       else{
-      const filtered = this.all_tickets.filter(t => t.status === this.currentview && t.assignedToId === this.loggedInUserId);
+      const filtered = this.all_tickets.filter(t => t.status === this.currentview && t.itid === this.loggedInUserId);
       this.display_tickets.set(filtered);
       }
       

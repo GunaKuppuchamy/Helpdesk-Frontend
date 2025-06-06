@@ -1,12 +1,12 @@
 export interface Users {
 
-    user_id:string;
+    empid:string;
     name:string;
     email:string;
-    phNumber:number;
-    password_hash:string;
-    role:'IT_team'|'user';
-    BU:'DEX'|'DATA'|'ILD'|'IT'|'HR'|'SIMS';
+    phoneno:string;
+    password:string;
+    role:'admin'|'IT_team'|'user';
+    bu:'DEX'|'DATA'|'ILD'|'IT'|'HR'|'SIMS';
     
 
 }

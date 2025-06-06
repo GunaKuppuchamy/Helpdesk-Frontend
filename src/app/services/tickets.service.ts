@@ -7,124 +7,108 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TicketsService {
 
-  constructor() { }
 
   tickets: Array<Ticket> = [
     {
-      tid: 't1',
-      category: 'Hardware',
+      ticketid: 't1',
+      categeory: 'Hardware',
       subject: 'Laptop issue',
       description: 'Laptop not turning on even after charging. Screen remains black and no lights are visible.',
-      status: 'onHold',
-      priority: 'high',
-      raisedById: 'U001',
-      assignedToId: 'U002',
-      dueDate: new Date('2025-06-10'),
-      createdDate: new Date('2025-06-01')
+      status: 'open',
+      priroty: 'high',
+      userid: 'U001',
+      itid: 'U002',
+      duedate: new Date('2025-06-10'),
+      raiseddate: new Date('2025-06-01')
     },
     {
-      tid: 't2',
-      category: 'Software',
+      ticketid: 't2',
+      categeory: 'Software',
       subject: 'Office install error',
       description: 'Error occurs while installing Microsoft Office 365 on Windows 11. Installer crashes at 75%.',
       status: 'onHold',
-      priority: 'medium',
-      raisedById: 'U003',
-      assignedToId: 'U005',
-      dueDate: new Date('2025-06-08'),
-      createdDate: new Date('2025-06-02')
+      priroty: 'medium',
+      userid: 'U003',
+      itid: 'U005',
+      duedate: new Date('2025-06-08'),
+      raiseddate: new Date('2025-06-02')
     },
     {
-      tid: 't3',
-      category: 'Network',
+      ticketid: 't3',
+      categeory: 'Network',
       subject: 'Wi-Fi down',
       description: 'Wi-Fi is not working in the 3rd floor conference room. Devices can see network but can’t connect.',
       status: 'open',
-      priority: 'high',
-      raisedById: 'U004',
-      assignedToId: 'U005',
-      dueDate: new Date('2025-06-07'),
-      createdDate: new Date('2025-06-03')
+      priroty: 'high',
+      userid: 'U004',
+      itid: 'U005',
+      duedate: new Date('2025-06-07'),
+      raiseddate: new Date('2025-06-03')
     },
     {
-      tid: 't4',
-      category: 'Email',
+      ticketid: 't4',
+      categeory: 'Email',
       subject: 'Email receiving issue',
       description: 'User is unable to receive emails from external domains. Internal emails work fine.',
       status: 'open',
-      priority: 'medium',
-      raisedById: 'U001',
-      assignedToId: 'U002',
-      dueDate: new Date('2025-06-04'),
-      createdDate: new Date('2025-06-01')
+      priroty: 'medium',
+      userid: 'U001',
+      itid: 'U002',
+      duedate: new Date('2025-06-04'),
+      raiseddate: new Date('2025-06-01')
     },
     {
-      tid: 't5',
-      category: 'Access',
+      ticketid: 't5',
+      categeory: 'Access',
       subject: 'Finance dashboard access',
       description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
       status: 'onHold',
-      priority: 'low',
-      raisedById: 'U004',
-      assignedToId: 'U005',
-      dueDate: new Date('2025-06-15'),
-      createdDate: new Date('2025-06-04')
-    },
-     {
-      tid: 't5',
-      category: 'Access',
-      subject: 'Finance dashboard access',
-      description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
-      status: 'closed',
-      priority: 'low',
-      raisedById: 'U004',
-      assignedToId: 'U005',
-      dueDate: new Date('2025-06-15'),
-      createdDate: new Date('2025-06-04')
-    },
-     {
-      tid: 't5',
-      category: 'Access',
-      subject: 'Finance dashboard access',
-      description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
-      status: 'closed',
-      priority: 'low',
-      raisedById: 'U004',
-      assignedToId: 'U005',
-      dueDate: new Date('2025-06-15'),
-      createdDate: new Date('2025-06-04')
-    },
-     {
-      tid: 't5',
-      category: 'Access',
-      subject: 'Finance dashboard access',
-      description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
-      status: 'open',
-      priority: 'low',
-      raisedById: 'U004',
-      assignedToId: 'U005',
-      dueDate: new Date('2025-06-15'),
-      createdDate: new Date('2025-06-04')
+      priroty: 'low',
+      userid: 'U004',
+      itid: 'U005',
+      duedate: new Date('2025-06-15'),
+      raiseddate: new Date('2025-06-04')
     }
   ];
 
+  getTickets()
+  {
+    return this.tickets;
+  }
+
   addTicket(ticket: Ticket) {
-    ticket.tid = Math.random().toString(36).slice(2, 9);
+    ticket.ticketid = Math.random().toString(36).slice(2, 9);
     this.tickets.push(ticket);
   }
 
   getTicketsByUser(userId: string): Ticket[] {
-    return this.tickets.filter(t => t.raisedById === userId);
+    return this.tickets.filter(t => t.userid === userId);
   }
 
-  cancelTicketById(ticketId:string )
+  cancelTicketById(ticketid:string )
   {
-    const ticket=this.tickets.find(t=>t.tid===ticketId);
+    const ticket=this.tickets.find(t=>t.ticketid===ticketid);
     if(ticket)
     {
       ticket.status='cancelled';
     }
   }
 
-  
+  // private baseUrl = 'http://localhost:3002';
+  // getAllTickets(): Observable<Ticket[]> {
+  //   return this.http.get<Ticket[]>(`${this.baseUrl}/getticket`);
+  // }
+
+  // getTicketsByUser(userId: string): Observable<Ticket> {
+  //    return this.http.get<Ticket>(`${this.baseUrl}/getby/${userId}`);
+  // }
+
+  // addTicket(ticket: Ticket): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/addticket`, ticket);
+  // }
+
+  // cancelTicketById(ticketicketid: string): Observable<any> {
+  //   const updatedStatus = { status: 'cancelled' };
+  //   return this.http.put(`${this.baseUrl}/putby/${ticketicketid}`, updatedStatus);
+  // }
 }

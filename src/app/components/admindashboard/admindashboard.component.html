@@ -1,0 +1,46 @@
+<p>admindashboard works!</p>
+
+<div class="Ticket-insights">
+
+    <div class="card">
+        Total Tickets: {{totalTickets}}
+    </div>
+    <!-- Dropdown to select filter type -->
+    <label for="filterType">Filter By: </label>
+    <select id="filterType" (change)="onGroupByChange($event)">
+        <option value="status">Status</option>
+        <option value="priroty">Priority</option>
+        <option value="categeory">Category</option>
+    </select> &nbsp;
+
+    <!-- Dropdown to select chart type -->
+    <label for="chartType">Select Chart Type: </label>
+    <select id="chartType" (change)="onTicketChartTypeChange($event)">
+      <option value="bar">Bar</option>
+      <option value="line">Line</option>
+      <option value="pie">Pie</option>
+    </select> 
+
+    <div echarts [options]="ticketsByFilter" style="height:400px; width:600px;"></div>
+</div>
+
+<div class="user-ticket-insights">
+    <div class="card">
+        Total Users: {{totalUsers}}
+    </div>
+    <!-- Dropdown to select filter type -->
+    <label for="userGroupBy">Group By: </label>
+    <select id="userGroupBy" (change)="onUserGroupByChange($event)">
+    <option *ngFor="let option of userGroupOptions" [value]="option">{{ option }}</option>
+    </select> &nbsp;
+    
+    <label for="userChartType">Select Chart Type: </label>
+    <select id="userChartType" (change)="onUserChartTypeChange($event)">
+    <option value="bar">Bar</option>
+    <option value="line">Line</option>
+    <option value="pie">Pie</option>
+    </select>
+
+    <!-- Display User Chart -->
+    <div echarts [options]="usersByFilter" style="height:400px; width:600px;"></div>
+</div>

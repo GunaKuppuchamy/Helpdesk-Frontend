@@ -11,7 +11,7 @@
 
   <ng-template pTemplate="header">
     <tr>
-      <th pResizableColumn pSortableColumn="tid">Ticket ID <p-sortIcon field="tid"></p-sortIcon></th>
+      <th pResizableColumn pSortableColumn="ticketid">Ticket ID <p-sortIcon field="ticketid"></p-sortIcon></th>
       <th pResizableColumn pSortableColumn="subject">Subject <p-sortIcon field="subject"></p-sortIcon></th>
       <th>Description</th>
       <th>Status</th>
@@ -27,7 +27,7 @@
 
   <ng-template pTemplate="body" let-ticket>
     <tr>
-      <td>{{ ticket.tid }}</td>
+      <td>{{ ticket.ticketid }}</td>
       <td>{{ ticket.subject }}</td>
       <td>{{ ticket.description }}</td>
       <td>
@@ -37,12 +37,12 @@
           'badge-onhold': ticket.status === 'onHold'
         }">{{ ticket.status }}</span>
       </td>
-      <td>{{ ticket.priority }}</td>
-      <td>{{ ticket.category }}</td>
-      <td>{{ ticket.raisedById }}</td>
-      <td>{{ ticket.assignedToId }}</td>
-      <td>{{ ticket.createdDate | date: 'mediumDate' }}</td>
-      <td>{{ ticket.dueDate | date: 'mediumDate' }}</td>
+      <td>{{ ticket.priroty }}</td>
+      <td>{{ ticket.categeory }}</td>
+      <td>{{ ticket.userid }}</td>
+      <td>{{ ticket.itid }}</td>
+      <td>{{ ticket.raiseddate | date: 'mediumDate' }}</td>
+      <td>{{ ticket.duedate | date: 'mediumDate' }}</td>
       
     </tr>
   </ng-template>
