@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-display-user-tickets',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './display-user-tickets.component.html',
   styleUrl: './display-user-tickets.component.css'
 })

@@ -1,11 +1,17 @@
 <ul>
-  <ng-container *ngIf="display_tickets().length!=0; else elseBlock" >
-  <li  *ngFor="let ticket of display_tickets()">
-    {{ ticket.tid }} - {{ ticket.description }} - {{ ticket.status }}
-  </li>
-  </ng-container>
-</ul>
+<div class="ticket-overdue-container">
+  <h2>Overdue Tickets</h2>
 
-<ng-template #elseBlock>
-  <p>No overdue Tickets</p>
-</ng-template>
+  <ul class="ticket-list" *ngIf="display_tickets().length != 0; else elseBlock">
+    <li *ngFor="let ticket of display_tickets()" class="ticket-item">
+      <span class="ticket-id">#{{ ticket.tid }}</span>
+      <span class="ticket-desc">{{ ticket.description }}</span>
+      <span class="ticket-status badge badge-overdue">{{ ticket.status }}</span>
+    </li>
+  </ul>
+
+  <ng-template #elseBlock>
+    <p class="no-tickets">No overdue tickets</p>
+  </ng-template>
+</div>
+   <a ><button class="back-btn"[routerLink]="['/it-my']">Back</button></a>

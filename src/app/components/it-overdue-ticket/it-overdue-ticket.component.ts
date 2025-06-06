@@ -2,10 +2,11 @@ import { Component,inject,OnInit,signal } from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-it-overdue-ticket',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './it-overdue-ticket.component.html',
   styleUrl: './it-overdue-ticket.component.css'
 })

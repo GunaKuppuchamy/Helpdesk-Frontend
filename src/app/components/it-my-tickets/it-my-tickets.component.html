@@ -1,18 +1,35 @@
-<a (click)="setView('all')">All</a>
-<a (click)="setView('open')">Open</a>
-<a (click)="setView('closed')">Closed</a>
-<a (click)="setView('onHold')">OnHold</a>
-<a routerLink="/it-overdue">Over Due Tickets</a>
 
-<ul>
-  <ng-container *ngIf="display_tickets().length!=0; else elseBlock">
-  <li *ngFor="let ticket of display_tickets()">
-    {{ ticket.tid }} - {{ ticket.description }} - {{ ticket.status }}
-    <a [routerLink]="['/edit-ticket',ticket.tid]">Edit Ticket</a>
-  </li>
-  </ng-container>
-</ul>
+<div class="ticket-filter-container">
+  <h2>Filter Tickets</h2>
+  <div class="filter-links">
+    <a (click)="setView('all')">All</a>
+    <a (click)="setView('open')">Open</a>
+    <a (click)="setView('closed')">Closed</a>
+    <a (click)="setView('onHold')">On Hold</a>
+    <a routerLink="/it-overdue">Overdue Tickets</a>
+  </div>
 
-<ng-template #elseBlock>
-  <p>No tickets</p>
-</ng-template>
+  <ul class="ticket-list" *ngIf="display_tickets().length !== 0; else elseBlock">
+    <li *ngFor="let ticket of display_tickets()">
+      <div class="ticket-item">
+        <span class="ticket-id">{{ ticket.tid }}</span>
+        <span class="ticket-desc">{{ ticket.description }}</span>
+        <span class="ticket-status badge" 
+              [ngClass]="{
+                'badge-open': ticket.status === 'open',
+                'badge-closed': ticket.status === 'closed',
+                'badge-onhold': ticket.status === 'onHold'
+              }">
+          {{ ticket.status }}
+        </span>
+        <a [routerLink]="['/edit-ticket', ticket.tid]" class="edit-link">Edit Ticket</a>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #elseBlock>
+    <p class="no-ticket">No tickets</p>
+  </ng-template>
+</div>
+
+<a><button class="back-btn" [routerLink]="['/it-team']">Back</button></a>

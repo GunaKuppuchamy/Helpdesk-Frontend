@@ -1,0 +1,57 @@
+.ticket-nav-container {
+  height: 65vh;
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.ticket-nav-container h2 {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+
+.ticket-links {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.ticket-links a {
+  text-decoration: none;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-links a:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.back-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: white;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.back-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}

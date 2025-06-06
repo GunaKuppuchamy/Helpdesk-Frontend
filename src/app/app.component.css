@@ -1,0 +1,25 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+  background-color: #7d4c9c;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  color: #ecf0f1;
+  margin: 0;
+  font-size: 2rem;
+}
+
+main {
+  flex-grow: 1;
+  padding: 20px;
+}

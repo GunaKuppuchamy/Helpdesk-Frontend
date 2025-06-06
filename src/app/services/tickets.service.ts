@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket.type';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class TicketsService {
       category: 'Hardware',
       subject: 'Laptop issue',
       description: 'Laptop not turning on even after charging. Screen remains black and no lights are visible.',
-      status: 'open',
+      status: 'onHold',
       priority: 'high',
       raisedById: 'U001',
       assignedToId: 'U002',
@@ -63,6 +64,42 @@ export class TicketsService {
       subject: 'Finance dashboard access',
       description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
       status: 'onHold',
+      priority: 'low',
+      raisedById: 'U004',
+      assignedToId: 'U005',
+      dueDate: new Date('2025-06-15'),
+      createdDate: new Date('2025-06-04')
+    },
+     {
+      tid: 't5',
+      category: 'Access',
+      subject: 'Finance dashboard access',
+      description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
+      status: 'closed',
+      priority: 'low',
+      raisedById: 'U004',
+      assignedToId: 'U005',
+      dueDate: new Date('2025-06-15'),
+      createdDate: new Date('2025-06-04')
+    },
+     {
+      tid: 't5',
+      category: 'Access',
+      subject: 'Finance dashboard access',
+      description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
+      status: 'closed',
+      priority: 'low',
+      raisedById: 'U004',
+      assignedToId: 'U005',
+      dueDate: new Date('2025-06-15'),
+      createdDate: new Date('2025-06-04')
+    },
+     {
+      tid: 't5',
+      category: 'Access',
+      subject: 'Finance dashboard access',
+      description: 'User requires access to the finance analytics dashboard for reporting and audit purposes.',
+      status: 'open',
       priority: 'low',
       raisedById: 'U004',
       assignedToId: 'U005',
