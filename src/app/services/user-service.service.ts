@@ -7,70 +7,74 @@ import { Users } from '../models/users';
 export class UserServiceService {
 
   constructor() { }
-//   UsersData: Users[] = [
-//   {
-//     user_id: 'U001',
-//     name: 'Alice Johnson',
-//     email: 'alice.johnson@example.com',
-//     password_hash: '$2a$10$abcdefgh1234567890ijklmnopqrstuv',
-//     role: 'user',
-//     BU: 'DEX',
+  UsersData: Users[] = [
+  {
+    empid: 'U001',
+    name: 'Alice Johnson',
+    email: 'alice.johnson@example.com',
+    password: '$2a$10$abcdefgh1234567890ijklmnopqrstuv',
+    role: 'user',
+    bu: 'DEX',
+    phoneno: 9876543210
+  },
+  {
+    empid: 'U002',
+    name: 'Bob Smith',
+    email: 'bob.smith@example.com',
+    password: '$2a$10$abcdef1234567890ghijklmnopqrstuv',
+    role: 'IT_team',
+    bu: 'IT',
     
-//     phNumber: 9876543210
-//   },
-//   {
-//     user_id: 'U002',
-//     name: 'Bob Smith',
-//     email: 'bob.smith@example.com',
-//     password_hash: '$2a$10$abcdef1234567890ghijklmnopqrstuv',
-//     role: 'IT_team',
-//     BU: 'IT',
+    phoneno: 9123456780
+  },
+  {
+    empid: 'U003',
+    name: 'Charlie Davis',
+    email: 'charlie.davis@example.com',
+    password: '$2a$10$abc1234567890defghijklmnopqrstuv',
+    role: 'user',
+    bu: 'DATA',
+    phoneno: 9988776655
+  },
+  {
+    empid: 'U004',
+    name: 'Diana Lee',
+    email: 'diana.lee@example.com',
+    password: '$2a$10$xyz9876543210abcdefghijklmno',
+    role: 'user',
+    bu: 'HR',
     
-//     phNumber: 9123456780
-//   },
-//   {
-//     user_id: 'U003',
-//     name: 'Charlie Davis',
-//     email: 'charlie.davis@example.com',
-//     password_hash: '$2a$10$abc1234567890defghijklmnopqrstuv',
-//     role: 'user',
-//     BU: 'DATA',
-//     phNumber: 9988776655
-//   },
-//   {
-//     user_id: 'U004',
-//     name: 'Diana Lee',
-//     email: 'diana.lee@example.com',
-//     password_hash: '$2a$10$xyz9876543210abcdefghijklmno',
-//     role: 'user',
-//     BU: 'HR',
+    phoneno: 9090909090
+  },
+  {
+    empid: 'U005',
+    name: 'Ethan Brown',
+    email: 'ethan.brown@example.com',
+    password: '$2a$10$mnopqr1234567890stuvwxabcdefghij',
+    role: 'IT_team',
+    bu: 'IT',
     
-//     phNumber: 9090909090
-//   },
-//   {
-//     user_id: 'U005',
-//     name: 'Ethan Brown',
-//     email: 'ethan.brown@example.com',
-//     password_hash: '$2a$10$mnopqr1234567890stuvwxabcdefghij',
-//     role: 'IT_team',
-//     BU: 'IT',
-    
-//     phNumber: 9008007006
-//   }
-// ];
+    phoneno: 9008007006
+  }
+];
 
-// getUsers()
-//   {
-//     return this.UsersData;
-//   }
+getUsers()
+  {
+    return this.UsersData;
+  }
  
-//   getUserById(uid:string):Users
-//   {
-//     const user = this.UsersData.find(u => uid === u.user_id);
-//     if (!user) {
-//       throw new Error(`User with ID ${uid} not found`);
-//     }
-//     return user;
+  getUserById(uid:string):Users
+  {
+    const user = this.UsersData.find(u => uid === u.empid);
+    if (!user) {
+      throw new Error(`User with ID ${uid} not found`);
+    }
+    return user;
  
-//   }
+  }
+
+  addUser(user :Users)
+  {
+    this.UsersData.push(user);
+  }
 }
