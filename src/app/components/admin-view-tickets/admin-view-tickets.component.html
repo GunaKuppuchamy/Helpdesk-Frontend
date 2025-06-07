@@ -1,4 +1,9 @@
-<p-table [value]="allTickets">
+<p-table [value]="allTickets" 
+  [paginator]="true" 
+  [rows]="10"
+  [resizableColumns]="true" 
+  [responsiveLayout]="'scroll'"
+  class="p-datatable-striped p-datatable-gridlines">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="ticketid">Ticket ID <p-sortIcon field="ticketid"></p-sortIcon></th>
@@ -20,7 +25,11 @@
       <td>{{ticket.subject}}</td>
       <td>{{ticket.categeory}}</td>
       <td>{{ticket.description}}</td>
-      <td>{{ticket.status}}</td>
+      <td>  <span [ngClass]="{
+          'badge-open': ticket.status === 'open',
+          'badge-closed': ticket.status === 'closed',
+          'badge-onhold': ticket.status === 'onHold'
+        }">{{ ticket.status }}</span></td>
       <td>{{ticket.priroty}}</td>
       <td>{{ticket.userid}}</td>
       <td>{{ticket.itid}}</td>
@@ -31,3 +40,4 @@
 </p-table>
 
 
+  <a ><button class="back-btn"[routerLink]="['/admin']">Back</button></a>

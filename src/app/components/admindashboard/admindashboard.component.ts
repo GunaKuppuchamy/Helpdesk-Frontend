@@ -6,9 +6,11 @@ import { UserServiceService } from '../../services/user-service.service';
 import { CommonModule } from '@angular/common';
 import { Ticket } from '../../models/ticket.type';
 import { Users } from '../../models/users';
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-admindashboard',
-  imports: [NgxEchartsModule, CommonModule],
+  imports: [NgxEchartsModule, CommonModule,RouterLink],
   templateUrl: './admindashboard.component.html',
   styleUrl: './admindashboard.component.css'
 })

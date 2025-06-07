@@ -1,46 +1,55 @@
-<p>admindashboard works!</p>
+<div class="header">
+<p class="dashboard-heading">Admin Dashboard</p>
+<a [routerLink]="['/admin']" class="cancel-btn"> X </a>
+</div>
 
-<div class="Ticket-insights">
-
-    <div class="card">
-        Total Tickets: {{totalTickets}}
+<div class="dashboard-container">
+  <!-- Ticket Insights Section -->
+  <div class="insight-section">
+    <div class="card stat-card">
+      <strong>Total Tickets:</strong> {{ totalTickets }}
     </div>
-    <!-- Dropdown to select filter type -->
-    <label for="filterType">Filter By: </label>
-    <select id="filterType" (change)="onGroupByChange($event)">
+
+    <div class="controls">
+      <label for="filterType">Filter By:</label>
+      <select id="filterType" (change)="onGroupByChange($event)">
         <option value="status">Status</option>
         <option value="priroty">Priority</option>
         <option value="categeory">Category</option>
-    </select> &nbsp;
+      </select>
 
-    <!-- Dropdown to select chart type -->
-    <label for="chartType">Select Chart Type: </label>
-    <select id="chartType" (change)="onTicketChartTypeChange($event)">
-      <option value="bar">Bar</option>
-      <option value="line">Line</option>
-      <option value="pie">Pie</option>
-    </select> 
-
-    <div echarts [options]="ticketsByFilter" style="height:400px; width:600px;"></div>
-</div>
-
-<div class="user-ticket-insights">
-    <div class="card">
-        Total Users: {{totalUsers}}
+      <label for="chartType">Chart Type:</label>
+      <select id="chartType" (change)="onTicketChartTypeChange($event)">
+        <option value="bar">Bar</option>
+        <option value="line">Line</option>
+        <option value="pie">Pie</option>
+      </select>
     </div>
-    <!-- Dropdown to select filter type -->
-    <label for="userGroupBy">Group By: </label>
-    <select id="userGroupBy" (change)="onUserGroupByChange($event)">
-    <option *ngFor="let option of userGroupOptions" [value]="option">{{ option }}</option>
-    </select> &nbsp;
-    
-    <label for="userChartType">Select Chart Type: </label>
-    <select id="userChartType" (change)="onUserChartTypeChange($event)">
-    <option value="bar">Bar</option>
-    <option value="line">Line</option>
-    <option value="pie">Pie</option>
-    </select>
 
-    <!-- Display User Chart -->
-    <div echarts [options]="usersByFilter" style="height:400px; width:600px;"></div>
+    <div echarts [options]="ticketsByFilter" class="chart-box"></div>
+  </div>
+
+  <!-- User Insights Section -->
+  <div class="insight-section">
+    <div class="card stat-card">
+      <strong>Total Users:</strong> {{ totalUsers }}
+    </div>
+
+    <div class="controls">
+      <label for="userGroupBy">Group By:</label>
+      <select id="userGroupBy" (change)="onUserGroupByChange($event)">
+        <option *ngFor="let option of userGroupOptions" [value]="option">{{ option }}</option>
+      </select>
+
+      <label for="userChartType">Chart Type:</label>
+      <select id="userChartType" (change)="onUserChartTypeChange($event)">
+        <option value="bar">Bar</option>
+        <option value="line">Line</option>
+        <option value="pie">Pie</option>
+      </select>
+    </div>
+
+    <div echarts [options]="usersByFilter" class="chart-box"></div>
+  </div>
+
 </div>

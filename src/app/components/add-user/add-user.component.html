@@ -1,11 +1,13 @@
-<p>add-user works!</p>
-<h2>{{isEditMode? 'Edit User' : 'Add New User'}}</h2>
+<div class="form-header">
+  <h2>{{isEditMode? 'Edit User' : 'Add New User'}}</h2>
+<a [routerLink]="['/admin']" class="cancel-btn"> X </a>
+</div>
 <form [formGroup]="userForm" (ngSubmit)="submitUser()">
   <label>UserId: <input formControlName="empid" /></label><br>
   <label>Name: <input formControlName="name" /></label><br>
-  <label>Email: <input formControlName="email"></label><br>
-  <label>Password: <input formControlName="password"></label><br>
-  <label>Phone: <input formControlName="phoneno"></label><br>
+  <label>Email: <input formControlName="email" /></label><br>
+<label>Password: <input type="password" formControlName="password" /></label><br>
+<label>Phone: <input type="tel" formControlName="phoneno" /></label><br>
   <label>BU: 
     <select formControlName="bu">
       <option value="DEX">DEX</option>
