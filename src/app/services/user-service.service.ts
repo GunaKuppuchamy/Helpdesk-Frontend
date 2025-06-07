@@ -77,4 +77,18 @@ getUsers()
   {
     this.UsersData.push(user);
   }
+
+  deleteUserById(id:string)
+  {
+    this.UsersData=this.UsersData.filter(u=>u.empid!==id);
+  }
+
+  updateUserById(id:string, updatedData:Users)
+  {
+    const index=this.UsersData.findIndex(u=>u.empid===id);
+    if(index!==-1)
+    {
+      this.UsersData[index]=updatedData;
+    }
+  }
 }
