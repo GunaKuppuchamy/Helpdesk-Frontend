@@ -17,6 +17,9 @@
         BU
         <p-sortIcon field="bu"></p-sortIcon>
       </th>
+      <th>
+        Actions
+      </th>
     </tr>
   </ng-template>
 
@@ -28,6 +31,10 @@
       <td>{{ u.phoneno }}</td>
       <td>{{ u.role }}</td>
       <td>{{ u.bu }}</td>
+      <td>
+        <button (click)="editUser(u.empid)">Edit</button>
+        <button (click)="deleteUser(u.empid)">Delete</button>
+      </td>
     </tr>
   </ng-template>
 
