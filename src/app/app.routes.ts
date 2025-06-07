@@ -69,6 +69,10 @@ export const routes: Routes = [
     {
         path:'addUser',
         loadComponent:()=>{ return import('./components/add-user/add-user.component').then((m)=>m.AddUserComponent)}
+    },
+    {
+        path:'addUser/:id',
+        loadComponent:()=>{ return import('./components/add-user/add-user.component').then((m)=>m.AddUserComponent)}
     }
 
 ];

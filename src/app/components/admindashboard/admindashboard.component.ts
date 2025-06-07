@@ -4,10 +4,11 @@ import { EChartsOption } from 'echarts';
 import { TicketsService } from '../../services/tickets.service';
 import { UserServiceService } from '../../services/user-service.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admindashboard',
-  imports: [NgxEchartsModule, CommonModule],
+  imports: [NgxEchartsModule, CommonModule,RouterLink],
   templateUrl: './admindashboard.component.html',
   styleUrl: './admindashboard.component.css'
 })

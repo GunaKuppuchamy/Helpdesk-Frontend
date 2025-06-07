@@ -3,10 +3,11 @@ import { Ticket } from '../../models/ticket.type';
 import { TicketsService } from '../../services/tickets.service';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-view-tickets',
-  imports: [CommonModule,TableModule],
+  imports: [CommonModule,TableModule,RouterLink],
   templateUrl: './admin-view-tickets.component.html',
   styleUrl: './admin-view-tickets.component.css'
 })
