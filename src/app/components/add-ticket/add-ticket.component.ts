@@ -50,29 +50,32 @@ it_count ={}
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + daysToAdd);
 
-      // Step 1: Get all IT members
+      // Get all IT members
       const itMembers = this.userservice.getUsers().filter(u => u.role === 'IT_team');
 
-      // Step 2: Count tickets per IT member
+      //  Count tickets per IT member
       const ticketCounts: { [itid: string]: number } = {};
       for (let member of itMembers) {
         const count = this.ticketService.getTickets().filter(t => t.itid === member.empid).length;
         ticketCounts[member.empid] = count;
       }
 
-      // Step 3: Find IT member with minimum assigned tickets
+      //  Find IT member with minimum assigned tickets
       const leastLoadedIT = Object.keys(ticketCounts).reduce((a, b) =>
         ticketCounts[a] <= ticketCounts[b] ? a : b
       );
 
-      // Step 4: Create new ticket with assigned IT ID
+      //  Create new ticket with assigned IT ID
       const newTicket = {
         ...this.ticketForm.value,
-        userid: 'U001', // Replace with logged-in user
+         ticketid : 'TKT' + Date.now() + Math.floor(Math.random() * 1000),
+        userid: 'U001', 
         itid: leastLoadedIT,
         status: 'open',
         raiseddate: new Date(),
         duedate: dueDate
+
+        
       };
       this.ticketService.addTicket(newTicket).subscribe( {
         next: (ticket) => {
@@ -88,4 +91,8 @@ it_count ={}
       this.router.navigate(['/displayUserTickets', 'all']);
     }
   }
+
+
+  
+
 }

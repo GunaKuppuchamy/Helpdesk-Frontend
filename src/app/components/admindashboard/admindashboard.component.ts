@@ -4,7 +4,8 @@ import { EChartsOption } from 'echarts';
 import { TicketsService } from '../../services/tickets.service';
 import { UserServiceService } from '../../services/user-service.service';
 import { CommonModule } from '@angular/common';
-
+import { Ticket } from '../../models/ticket.type';
+import { Users } from '../../models/users';
 @Component({
   selector: 'app-admindashboard',
   imports: [NgxEchartsModule, CommonModule],
@@ -35,23 +36,43 @@ export class AdmindashboardComponent {
   //count total
   totalTickets:number=0;
   totalUsers:number=0;
-
+allTickets !: Ticket[];
+allUsers !:Users[];
   ngOnInit() {
+     this.ticketservice.getTicketAPI().subscribe({
+    next: (ticket) => {
+      console.log("Fetched ticket data:", ticket); 
+      this.allTickets = ticket;
+      console.log(this.allTickets)
     this.updateTicketChart();
     this.updateUserChart();
+    },
+    error: (err) => {
+      console.error("Error fetching tickets:", err);
+    }
+  });
+   this.allUsers = this.userservice.getUsers();
+  // console.log("aaaaa")
+  //   console.log(this.test_ticket)
+  //   this.updateTicketChart();
+  //   this.updateUserChart();
   }
 
+  
   //  TICKET CHART 
   updateTicketChart(): void {
-    const allTickets = this.ticketservice.getTickets();
-    this.totalTickets=allTickets.length;
+    this.allTickets = this.ticketservice.getTickets();
+    
+    //console.log(this.allTickets)
+    
+    this.totalTickets=this.allTickets.length;
 
     const groupKeys = this.possibleTickets[this.ticketGroupBy];
     this.ticketCounts = {};
 
     groupKeys.forEach(key => this.ticketCounts[key] = 0);
 
-    allTickets.forEach(ticket => {
+    this.allTickets.forEach(ticket => {
       const key = ticket[this.ticketGroupBy as keyof typeof ticket] as string;
       if (this.ticketCounts.hasOwnProperty(key)) {
         this.ticketCounts[key]++;
@@ -79,19 +100,20 @@ export class AdmindashboardComponent {
 
   // USER CHART 
   updateUserChart(): void {
-  const allUsers = this.userservice.getUsers();
-  this.totalUsers=allUsers.length;
+  // const allUsers = this.userservice.getUsers();
+  this.totalUsers=this.allUsers.length;
 
-  const allTickets = this.ticketservice.getTickets();
+  this.allTickets = this.ticketservice.getTickets();
+
   const userCounts: { [key: string]: number } = {};
   let userKeys: string[] = [];
 
   if (this.userGroupBy === 'userid') {
     // Group directly by ticket.userid (which maps to user.empid)
-    userKeys = [...new Set(allTickets.map(ticket => ticket.userid))];
+    userKeys = [...new Set(this.allTickets.map(ticket => ticket.userid))];
     userKeys.forEach(key => userCounts[key] = 0);
 
-    allTickets.forEach(ticket => {
+    this.allTickets.forEach(ticket => {
       const id = ticket.userid;
       if (userCounts.hasOwnProperty(id)) {
         userCounts[id]++;
@@ -100,11 +122,11 @@ export class AdmindashboardComponent {
 
   } else {
     // Group by user.bu or other user fields via user.empid === ticket.userid
-    userKeys = [...new Set(allUsers.map(user => user[this.userGroupBy as keyof typeof user] as string))];
+    userKeys = [...new Set(this.allUsers.map(user => user[this.userGroupBy as keyof typeof user] as string))];
     userKeys.forEach(key => userCounts[key] = 0);
 
-    allTickets.forEach(ticket => {
-      const user = allUsers.find(u => u.empid === ticket.userid);
+    this.allTickets.forEach(ticket => {
+      const user = this.allUsers.find(u => u.empid === ticket.userid);
       const groupValue = user ? user[this.userGroupBy as keyof typeof user] as string : '';
       if (groupValue && userCounts.hasOwnProperty(groupValue)) {
         userCounts[groupValue]++;

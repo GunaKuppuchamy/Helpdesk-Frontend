@@ -12,13 +12,19 @@ import { TableModule } from 'primeng/table';
 })
 export class AdminViewTicketsComponent {
 
-  allTickets: Ticket[] = [];
+  allTickets: Ticket[] = []; 
   filters: { [s: string]: any } = {};
 
   constructor(private ticketservice: TicketsService) {}
 
   ngOnInit() {
-    this.allTickets = this.ticketservice.getTickets();
+    //this.allTickets = this.ticketservice.getTickets();
+
+    this.ticketservice.getTicketAPI().subscribe((ticket) =>{
+      this.allTickets=ticket;
+    }
+    
+    )
   }
 }
 
