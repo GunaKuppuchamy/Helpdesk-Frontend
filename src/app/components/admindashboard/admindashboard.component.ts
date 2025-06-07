@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Ticket } from '../../models/ticket.type';
 import { Users } from '../../models/users';
 import { RouterLink } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-admindashboard',
@@ -41,29 +42,31 @@ export class AdmindashboardComponent {
 allTickets !: Ticket[];
 allUsers !:Users[];
   ngOnInit() {
-     this.ticketservice.getTicketAPI().subscribe({
-    next: (ticket) => {
-      console.log("Fetched ticket data:", ticket); 
-      this.allTickets = ticket;
-      console.log(this.allTickets)
-    this.updateTicketChart();
-    this.updateUserChart();
-    },
-    error: (err) => {
-      console.error("Error fetching tickets:", err);
-    }
-  });
-   this.allUsers = this.userservice.getUsers();
-  // console.log("aaaaa")
-  //   console.log(this.test_ticket)
-  //   this.updateTicketChart();
-  //   this.updateUserChart();
+
+    forkJoin({
+      tickets: this.ticketservice.getTicketAPI(),
+      users : this.userservice.getUsersApi()
+    }).subscribe({
+      next : ({tickets,users}) =>
+      {
+        this.allTickets = tickets,
+        this.allUsers=users
+        this.updateTicketChart();
+        this.updateUserChart();
+
+      },
+      error : () =>
+      {
+        console.log("Error Occured")
+      }
+    })
+  
   }
 
   
   //  TICKET CHART 
   updateTicketChart(): void {
-    this.allTickets = this.ticketservice.getTickets();
+    //this.allTickets = this.ticketservice.getTickets();
     
     //console.log(this.allTickets)
     
@@ -105,7 +108,7 @@ allUsers !:Users[];
   // const allUsers = this.userservice.getUsers();
   this.totalUsers=this.allUsers.length;
 
-  this.allTickets = this.ticketservice.getTickets();
+  //this.allTickets = this.ticketservice.getTickets();
 
   const userCounts: { [key: string]: number } = {};
   let userKeys: string[] = [];

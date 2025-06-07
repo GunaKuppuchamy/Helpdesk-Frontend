@@ -121,7 +121,7 @@ getTickets()
   
   getTicketById(tid : string) : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/getby/${tid}`);
+    return this.http.get(`${this.apiUrl}/getTicket/${tid}`);
   }
 
   updateTickets(tid : string , data:Ticket) : Observable<any>

@@ -16,11 +16,15 @@ export class AdminViewUsersComponent {
  
   userservice=inject(UserServiceService);
   router=inject(Router);
-  allUsers:Users[]=[];
+  allUsers!:Users[];
  
   ngOnInit():void
   {
-    this.allUsers=this.userservice.getUsers();
+    //this.allUsers=this.userservice.getUsers();
+    this.userservice.getUsersApi().subscribe((ticket) =>
+    {
+      this.allUsers = ticket;
+    })
   }
   editUser(id:string)
   {
@@ -28,10 +32,17 @@ export class AdminViewUsersComponent {
   }
   deleteUser(id:string)
   {
+    console.log(id);
     if(confirm("Are you sure you want to delete this user? "))
     {
-      this.userservice.deleteUserById(id);
-      this.ngOnInit();
+      this.userservice.deleteUserById(id).subscribe({
+        next : () =>
+        {
+          this.ngOnInit();
+        }
+
+      });
+      
     }
   }
 

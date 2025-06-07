@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable,inject } from '@angular/core';
 import { Users } from '../models/users';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
+  http=inject(HttpClient)
   constructor() { }
   UsersData: Users[] = [
   {
@@ -58,30 +61,33 @@ export class UserServiceService {
   }
 ];
 
+private apiUrl='http://localhost:3002'
+
+
 getUsers()
   {
     return this.UsersData;
   }
  
-  getUserById(uid:string):Users
-  {
-    const user = this.UsersData.find(u => uid === u.empid);
-    if (!user) {
-      throw new Error(`User with ID ${uid} not found`);
-    }
-    return user;
+  // getUserById(uid:string):Users
+  // {
+  //   const user = this.UsersData.find(u => uid === u.empid);
+  //   if (!user) {
+  //     throw new Error(`User with ID ${uid} not found`);
+  //   }
+  //   return user;
  
-  }
+  // }
 
-  addUser(user :Users)
-  {
-    this.UsersData.push(user);
-  }
+  // addUser(user :Users)
+  // {
+  //   this.UsersData.push(user);
+  // }
 
-  deleteUserById(id:string)
-  {
-    this.UsersData=this.UsersData.filter(u=>u.empid!==id);
-  }
+  // deleteUserById(id:string)
+  // {
+  //   this.UsersData=this.UsersData.filter(u=>u.empid!==id);
+  // }
 
   updateUserById(id:string, updatedData:Users)
   {
@@ -91,17 +97,29 @@ getUsers()
       this.UsersData[index]=updatedData;
     }
   }
-  deleteUserById(id:string)
-  {
-    this.UsersData=this.UsersData.filter(u=>u.empid!==id);
-  }
- 
-  updateUserById(id:string, updatedData:Users)
-  {
-    const index=this.UsersData.findIndex(u=>u.empid===id);
-    if(index!==-1)
-    {
-      this.UsersData[index]=updatedData;
-    }
-  }
+
+getUsersApi() 
+{
+  return this.http.get<Array<Users>>(`${this.apiUrl}/getUsers`);
+}
+
+addUser(user : Users): Observable<any>
+{
+  return this.http.post(`${this.apiUrl}/addemp`,user);
+}
+
+UpdateUser(id:string,data:Users)
+{
+  return this.http.put(`${this.apiUrl}/updateUser/${id}`,data);
+}
+
+getUserById(id : string) : Observable<any>
+{
+  return this.http.get(`${this.apiUrl}/getUserByID/${id}`);
+}
+
+deleteUserById(id : string)
+{
+  return this.http.delete(`${this.apiUrl}/deleteUser/${id}`);
+}
 }
