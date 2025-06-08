@@ -22,8 +22,10 @@ export class EditTicketComponent implements OnInit {
     
     this.ticketService.getTicketById(this.id).subscribe((ticket) => {
       this.this_ticket=ticket;
-    })
       console.log(this.id)
+      console.log(this.this_ticket)
+    })
+      
     
   }
 onHold()

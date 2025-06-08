@@ -16,7 +16,7 @@ export class ItMyTicketsComponent {
     display_tickets = signal<Array<Ticket>>([]);
   //all_tickets = this.ticketService.tickets
     currentview !: 'all'|'onHold'|'open'|'closed';
-    loggedInUserId :string= 'U001';
+    loggedInUserId :string= 'I408';
 
     setView(view : 'all'|'onHold'|'open'|'closed' )
     {
@@ -25,7 +25,7 @@ export class ItMyTicketsComponent {
     }
     ngOnInit(): void {
     
-       this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
+       this.ticketService.getTicketByIt(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
       {
        
         this.display_tickets.set(ticket)
@@ -41,7 +41,7 @@ export class ItMyTicketsComponent {
       
        if(this.currentview== 'all')
        {
-           this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
+           this.ticketService.getTicketByIt(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
       {
         this.display_tickets.set(ticket)
       });
@@ -49,7 +49,7 @@ export class ItMyTicketsComponent {
        else{
 
        
-       this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
+       this.ticketService.getTicketByIt(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
       {
         const filtered = ticket.filter(t => t.status == this.currentview)
         this.display_tickets.set(filtered)
