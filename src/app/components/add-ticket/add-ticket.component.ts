@@ -35,62 +35,65 @@ it_count ={}
   }
   
 
-  submitTicket() {
-    if (this.ticketForm.valid) {
+ submitTicket() {
+  if (this.ticketForm.valid) {
+    const priority = this.ticketForm.value.priroty;
+    let daysToAdd = 3;
 
-      const priority = this.ticketForm.value.priroty;
-      let daysToAdd = 3; // default for low
+    if (priority === 'high') daysToAdd = 1;
+    else if (priority === 'medium') daysToAdd = 2;
 
-      if (priority === 'high') {
-        daysToAdd = 1;
-      } else if (priority === 'medium') {
-        daysToAdd = 2;
-      }
+    const dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + daysToAdd);
 
-      const dueDate = new Date();
-      dueDate.setDate(dueDate.getDate() + daysToAdd);
+    // First: get IT team members
+    this.userservice.getUsersApi().subscribe((users) => {
+      const itMembers = users.filter((user: any) => user.role === 'it');
 
-      // Get all IT members
-      const itMembers = this.userservice.getUsers().filter(u => u.role === 'IT_team');
+      // Second: get all tickets
+      this.ticketService.getTicketAPI().subscribe((tickets) => {
+        const ticketCounts: { [itid: string]: number } = {};
 
-      //  Count tickets per IT member
-      const ticketCounts: { [itid: string]: number } = {};
-      for (let member of itMembers) {
-        const count = this.ticketService.getTickets().filter(t => t.itid === member.empid).length;
-        ticketCounts[member.empid] = count;
-      }
+        for (let member of itMembers) {
+          const count = tickets.filter(t => t.itid === member.empid).length;
+          ticketCounts[member.empid] = count;
+        }
 
-      //  Find IT member with minimum assigned tickets
-      const leastLoadedIT = Object.keys(ticketCounts).reduce((a, b) =>
-        ticketCounts[a] <= ticketCounts[b] ? a : b
-      );
+        console.log("Ticket counts per IT member:", ticketCounts);
 
-      //  Create new ticket with assigned IT ID
-      const newTicket = {
-        ...this.ticketForm.value,
-         ticketid : 'TKT' + Date.now() + Math.floor(Math.random() * 1000),
-        userid: 'U001', 
-        itid: leastLoadedIT,
-        status: 'open',
-        raiseddate: new Date(),
-        duedate: dueDate
+        const leastLoadedIT = Object.keys(ticketCounts).reduce((a, b) =>
+          ticketCounts[a] <= ticketCounts[b] ? a : b
+        );
 
-        
-      };
-      this.ticketService.addTicket(newTicket).subscribe( {
-        next: (ticket) => {
-        console.log('Ticket added successfully!', ticket);
-        this.router.navigate(['/displayUserTickets', 'all']);
-      },
-      error: (err) => {
-        console.error('Error adding ticket', err);
-        alert('Something went wrong while submitting the ticket.');
-      }
+        console.log("Least loaded IT member:", leastLoadedIT);
 
+        // Create and add new ticket
+        const newTicket = {
+          ...this.ticketForm.value,
+          ticketid: 'TKT' + Date.now() + Math.floor(Math.random() * 1000),
+          userid: 'U001',
+          itid: leastLoadedIT,
+          status: 'open',
+          raiseddate: new Date(),
+          duedate: dueDate
+        };
+
+        this.ticketService.addTicket(newTicket).subscribe({
+          next: (ticket) => {
+            console.log('Ticket added successfully!', ticket);
+            this.router.navigate(['/displayUserTickets', 'all']);
+          },
+          error: (err) => {
+            console.error('Error adding ticket', err);
+            alert('Something went wrong while submitting the ticket.');
+          }
+        });
       });
-      this.router.navigate(['/displayUserTickets', 'all']);
-    }
+    });
   }
+}
+
+
 
 
   
