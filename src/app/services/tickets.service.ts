@@ -107,7 +107,7 @@ export class TicketsService {
   private apiUrl = 'http://localhost:3002'
   getTicketAPI()
   {
-  return this.http.get<Array<Ticket>>(`${this.apiUrl}/getticket`);
+  return this.http.get<Array<Ticket>>(`${this.apiUrl}/getticket`,{withCredentials:true});
   }
 
    addTicket(ticket: Ticket): Observable<any> {

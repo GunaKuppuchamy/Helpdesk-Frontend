@@ -100,7 +100,7 @@ getUsers()
 
 getUsersApi() 
 {
-  return this.http.get<Array<Users>>(`${this.apiUrl}/getUsers`);
+  return this.http.get<Array<Users>>(`${this.apiUrl}/getUsers`,{withCredentials:true});
 }
 
 addUser(user : Users): Observable<any>
@@ -110,7 +110,7 @@ addUser(user : Users): Observable<any>
 
 UpdateUser(id:string,data:Users)
 {
-  return this.http.put(`${this.apiUrl}/updateUser/${id}`,data);
+  return this.http.put(`${this.apiUrl}/updateUser/${id}`,data,{withCredentials:true});
 }
 
 getUserById(id : string) : Observable<any>
