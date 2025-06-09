@@ -111,10 +111,10 @@ export class TicketsService {
   }
 
    addTicket(ticket: Ticket): Observable<any> {
-    return this.http.post(`${this.apiUrl}/addticket`, ticket);
+    return this.http.post(`${this.apiUrl}/addticket`, ticket,{withCredentials : true});
   }
-
-  getTicketByUser( ) : Observable<any>
+ 
+  getTicketByUser() : Observable<any>
   {
     return this.http.get(`${this.apiUrl}/tickets/user`,{ withCredentials: true });
   }
