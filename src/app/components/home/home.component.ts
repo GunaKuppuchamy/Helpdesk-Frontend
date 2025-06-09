@@ -1,26 +1,37 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+
 
 import { LoginService } from '../../services/login.service';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+
 import { UserServiceService } from '../../services/user-service.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule,RouterModule],
+  imports: [FormsModule,RouterModule, ReactiveFormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   email = "";
   password = "";
   role = ""
 
   constructor(private router: Router,  private loginService:LoginService , private userservice : UserServiceService) { }
-  ngOnInit(): void {
+   loginForm!:FormGroup;
+  private fb=inject(FormBuilder);
+  authservice=inject(AuthService);
 
-   
-      
+  ngOnInit()
+  {
+    this.loginForm = this.fb.group({
+      email:['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password:['',[Validators.required,Validators.minLength(8)]],
+      role:['',Validators.required]
+    })
   }
 
   

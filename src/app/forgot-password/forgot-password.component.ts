@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../services/auth-service.service';
 @Component({
   selector: 'app-forgot-password',
   imports: [FormsModule,RouterModule,CommonModule,HttpClientModule],
@@ -17,8 +18,15 @@ export class ForgotPasswordComponent {
 
   otpSent: boolean = false;
   otpVerified: boolean = false;
+  authservice=inject(AuthService);
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit()
+  {
+        this.authservice.logout();   
+
+  }
 
  
   sendOtp() {
@@ -49,7 +57,7 @@ export class ForgotPasswordComponent {
   this.http.post('http://localhost:3002/resetpassword', { email: this.email, newPassword: this.newPassword }).subscribe({
     next: () => {
       alert('Password reset successful. Redirecting to login.');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
     },
     error: (err:any) => {
       alert('Failed to reset password.');

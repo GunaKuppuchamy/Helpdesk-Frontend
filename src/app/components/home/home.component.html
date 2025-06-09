@@ -1,16 +1,27 @@
 <div class="home-container">
-<h2>Login Here</h2>
-<label>Email: <input [(ngModel)]="email" ></label> <br>
-<label>Password: <input [(ngModel)]="password"></label> <br>
-<!-- <div>Role:
-    <select [(ngModel)]="role">
-      <option value="it">It</option>
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-    </select>
-  </div> -->
-    <br>
-    <a routerLink="/forgot-password">Forget Password?</a>
-<button (click)="login()">Login</button>
-  
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <h2>Login Here</h2>
+    <label>Email: <input formControlName="email" ></label>
+    <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors as errors" class="error">
+          <div *ngIf="errors['required']">Email is required.</div>
+          <div *ngIf="errors['pattern']">Invalid email</div>
+    </div>
+    <label>Password: <input formControlName="password"></label>
+    <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors as errors" class="error">
+          <div *ngIf="errors['required']">Password is required.</div>
+          <div *ngIf="errors['minlength']">A minimum of length 8 is required</div>
+    </div>
+    <!-- <div>Role:
+        <select formControlName="role">
+          <option value="">Select role</option>
+          <option value="IT">It</option>
+          <option value="User">User</option>
+          <option value="admin">Admin</option>
+        </select>
+    </div> -->
+        <br>
+        <a routerLink="/forgot-password">Forget Password?</a>
+    <button type="submit">Login</button>
+      </form>
+</div>
   
