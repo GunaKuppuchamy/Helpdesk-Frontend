@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -13,10 +13,7 @@ export class HomeComponent {
   password = "";
   role = ""
 
-  constructor(private router: Router) {
-    console.log("1");
-    
-  }
+  constructor(private router: Router) { }
   login() {
     switch (this.role) {
       case 'User':
