@@ -27,7 +27,7 @@ export class ItMyTicketsComponent implements OnInit {
     
        this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
       {
-       
+       console.log(ticket)
         this.display_tickets.set(ticket)
       }
        );
