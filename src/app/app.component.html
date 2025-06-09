@@ -1,10 +1,12 @@
 <div class="app-container">
   <header>
     <h1>{{ title }}</h1>
+      <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
   </header>
   <main>
     <router-outlet></router-outlet>
   </main>
-</div>
+</div> 
+
 
 

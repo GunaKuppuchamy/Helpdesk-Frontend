@@ -1,6 +1,6 @@
 <div class="form-header">
   <h2>{{isEditMode? 'Edit User' : 'Add New User'}}</h2>
-<a [routerLink]="['/admin']" class="cancel-btn"> X </a>
+<!-- <a [routerLink]="['/admin']" class="cancel-btn"> X </a> -->
 </div>
 <form [formGroup]="userForm" (ngSubmit)="submitUser()">
   <div>
@@ -68,5 +68,6 @@
   </div>
 
   <button type="submit" [disabled]="!userForm.valid">Submit</button>
+  <button [routerLink]="['/admin']" class="cancel-btn"> Cancel </button>
 </form>
 
