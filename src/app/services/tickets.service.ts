@@ -114,7 +114,7 @@ export class TicketsService {
     return this.http.post(`${this.apiUrl}/addticket`, ticket);
   }
 
-  getTicketByUser() : Observable<any>
+  getTicketByUser( ) : Observable<any>
   {
     return this.http.get(`${this.apiUrl}/tickets/user`,{ withCredentials: true });
   }
@@ -129,9 +129,9 @@ export class TicketsService {
     return this.http.put(`${this.apiUrl}/updateTicket/${tid}`,data);
   }
 
-  getTicketByIt(itId:string) : Observable<any>
+  getTicketByIt() : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/tickets/it/${itId}`);
+    return this.http.get(`${this.apiUrl}/tickets/it`,{withCredentials:true});
   }
 
 }

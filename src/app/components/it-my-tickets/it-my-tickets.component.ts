@@ -1,4 +1,4 @@
-import { Component ,inject,signal} from '@angular/core';
+import { Component ,inject,OnInit,signal} from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { RouterLink, RouterModule } from '@angular/router';
   templateUrl: './it-my-tickets.component.html',
   styleUrl: './it-my-tickets.component.css'
 })
-export class ItMyTicketsComponent {
+export class ItMyTicketsComponent implements OnInit {
 
   ticketService = inject(TicketsService);
     display_tickets = signal<Array<Ticket>>([]);
@@ -25,13 +25,13 @@ export class ItMyTicketsComponent {
     }
     ngOnInit(): void {
     
-       this.ticketService.getTicketByIt(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
+       this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
       {
        
         this.display_tickets.set(ticket)
       }
        );
-      console.log(this.display_tickets)
+      console.log("aaa" + this.display_tickets)
       console.log(this.currentview)
       
     }
@@ -41,7 +41,7 @@ export class ItMyTicketsComponent {
       
        if(this.currentview== 'all')
        {
-           this.ticketService.getTicketByIt(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
+           this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
       {
         this.display_tickets.set(ticket)
       });
@@ -49,7 +49,7 @@ export class ItMyTicketsComponent {
        else{
 
        
-       this.ticketService.getTicketByIt(this.loggedInUserId).subscribe((ticket : Ticket[]) =>
+       this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
       {
         const filtered = ticket.filter(t => t.status == this.currentview)
         this.display_tickets.set(filtered)
