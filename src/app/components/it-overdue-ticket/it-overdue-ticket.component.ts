@@ -25,7 +25,7 @@ export class ItOverdueTicketComponent implements OnInit {
       console.log('Today:', this.today);
       console.log('Status:', t.status);
 
-      return dueDate < this.today && t.userid === this.loggedInUserId && t.status !== 'closed';
+      return dueDate < this.today && t.userid === this.loggedInUserId && t.status !== 'closed' && t.status !== 'cancelled';
     });
 
     this.display_tickets.set(filtered);
