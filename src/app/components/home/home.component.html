@@ -2,14 +2,15 @@
 <h2>Login Here</h2>
 <label>Email: <input [(ngModel)]="email" ></label> <br>
 <label>Password: <input [(ngModel)]="password"></label> <br>
-<div>Role:
+<!-- <div>Role:
     <select [(ngModel)]="role">
       <option value="it">It</option>
       <option value="user">User</option>
       <option value="admin">Admin</option>
     </select>
+  </div> -->
     <br>
     <a routerLink="/forgot-password">Forget Password?</a>
 <button (click)="login()">Login</button>
-  </div>
+  
   

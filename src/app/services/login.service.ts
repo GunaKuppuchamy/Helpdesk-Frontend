@@ -15,8 +15,8 @@ export class LoginService {
 
   
 private apiUrl = 'http://localhost:3002'
-login(email:string, password:string, role:string):Observable<HttpResponse<any>> {
-  return this.http.post(`${this.apiUrl}/login`, {email, password, role},{withCredentials:true,observe: 'response'});
+login(email:string, password:string):Observable<any> {
+  return this.http.post(`${this.apiUrl}/login`, {email, password},{withCredentials:true,observe: 'response'});
 }
 
 

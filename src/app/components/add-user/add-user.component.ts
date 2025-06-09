@@ -42,6 +42,7 @@ export class AddUserComponent {
         next : (user)=>
       {
         this.curUserData = user;
+        //console.log(this.curUserData)
         if(this.curUserData)
       {
         console.log("Patching Values")

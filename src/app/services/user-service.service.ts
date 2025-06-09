@@ -122,4 +122,9 @@ deleteUserById(id : string)
 {
   return this.http.delete(`${this.apiUrl}/deleteUser/${id}`);
 }
+
+getCurrentUser()
+{
+  return this.http.get(`${this.apiUrl}/getCurrentUser`,{withCredentials:true})
+}
 }
