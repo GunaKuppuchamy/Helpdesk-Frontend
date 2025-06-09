@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject,signal } from '@angular/core';
+
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
@@ -12,35 +13,58 @@ import { CommonModule, DatePipe } from '@angular/common';
 })
 export class DisplayUserTicketsComponent {
 
-  allTickets: Ticket[] = [];
-  filteredTickets: Ticket[] = [];
+//   allTickets = signal<Array<Ticket>>([]);;
+//   filteredTickets: Ticket[] = [];
 
   constructor(private route: ActivatedRoute){}
-  ticketservice=inject(TicketsService)
 
- ngOnInit(): void {
-  const currentUserId = 'U001';  // or from AuthService in real case
-  this.allTickets = this.ticketservice.getTicketsByUser(currentUserId);
-  
 
-  const type = this.route.snapshot.paramMap.get('type');
+ticketService = inject(TicketsService);
+  display_tickets = signal<Array<Ticket>>([]);
 
-  if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
-    this.filteredTickets = this.allTickets.filter(t => t.status === type);
-  } else {
-    this.filteredTickets = this.allTickets;  // default: show all
+  ngOnInit(): void {
+    const userId = 'U001';
+    const type = this.route.snapshot.paramMap.get('user');
+  console.log(type)
+    this.ticketService.getTicketByUser(userId).subscribe({
+      next: (tickets: Ticket[]) => {
+        if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
+        const filtered = tickets.filter(t => t.status === type);
+        this.display_tickets.set(filtered);
+      } else {
+        this.display_tickets.set(tickets);
+      }
+        console.log(this.display_tickets)
+        console.log("Fetched tickets:", tickets);
+      },
+      error: (err) => {
+        console.error("Failed to fetch tickets", err);
+      }
+    });
   }
-
-  
-}
+  this_ticket !: Ticket
 
 cancelTicket(tid:string)
   {
-    const confirmcancel=confirm('Are you sure you want to cancel this Ticket');
-    if(confirmcancel)
-    {
-      this.ticketservice.cancelTicketById(tid);
-    }
+    this.ticketService.getTicketById(tid).subscribe({
+  next: (ticket) => {
+    ticket.status = "cancelled"; 
+
+    this.ticketService.updateTickets(tid, ticket).subscribe({
+      next: () => {
+        alert("Ticket Cancelled");
+        this.ngOnInit(); 
+      },
+      error: () => {
+        alert("Error Cancelling Ticket");
+      }
+    });
+  },
+  error: () => {
+    alert("Error fetching ticket");
+  }
+});
+
   }
 
 

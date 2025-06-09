@@ -15,51 +15,73 @@ export class EditTicketComponent implements OnInit {
   router=inject(Router)
   ticketService=inject(TicketsService);
   this_ticket !: Ticket;
+  id : string= this.route.snapshot.paramMap.get('id') || '';
  
 
   ngOnInit(): void {
-      const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.this_ticket = this.ticketService.tickets.find(t => t.ticketid === id)!;
-    }
+    
+    this.ticketService.getTicketById(this.id).subscribe((ticket) => {
+      this.this_ticket=ticket;
+      console.log(this.id)
+      console.log(this.this_ticket)
+    })
+      
+    
   }
 onHold()
 {
+
     if(this.this_ticket)
     {
       this.this_ticket.status = "onHold"
     }
 
-    const ind = this.ticketService.tickets.findIndex(t => t.ticketid === this.this_ticket.ticketid)
-    console.log(this.ticketService.tickets[ind])
-    if(ind !==-1)
-    {
-      this.ticketService.tickets[ind] = { ...this.this_ticket };
-    }
 
-     alert("Ticket upadted - onhold");
-    console.log(this.this_ticket)
+    this.ticketService.updateTickets(this.id,this.this_ticket).subscribe(
+      {
+        next :(upTicket) => {
+
+             alert("Ticket Updated - onhold");
+    console.log(upTicket)
     this.router.navigate(['/it-my']);
+        },
+
+        error : () =>
+        {
+          alert("Error occured while Updating");
+        }
+      }
+    );
+     
 }
 
 
 close()
 {
+  
+
+
   if(this.this_ticket)
     {
       this.this_ticket.status = "closed"
     }
 
-    const ind = this.ticketService.tickets.findIndex(t => t.ticketid === this.this_ticket.ticketid)
-    console.log(this.ticketService.tickets[ind])
-    if(ind !==-1)
-    {
-      this.ticketService.tickets[ind] = { ...this.this_ticket };
-    }
+  
+    this.ticketService.updateTickets(this.id,this.this_ticket).subscribe(
+      {
+        next :(upTicket) => {
 
-     alert("Ticket upadted - closed");
-    console.log(this.this_ticket)
+             alert("Ticket Updated - Closed");
+    console.log(upTicket)
     this.router.navigate(['/it-my']);
+        },
+
+        error : () =>
+        {
+          alert("Error occured while Updating");
+        }
+      }
+    );
 
 }
 

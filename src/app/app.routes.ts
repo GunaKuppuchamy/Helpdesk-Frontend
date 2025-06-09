@@ -47,7 +47,7 @@ export const routes: Routes = [
             return import('./edit-ticket/edit-ticket.component').then((m)=>m.EditTicketComponent)
         }
     },
-  { path: 'displayUserTickets/:type', component: DisplayUserTicketsComponent },
+  { path: 'displayUserTickets/:user', component: DisplayUserTicketsComponent },
   { path: 'addTicket', component: AddTicketComponent },
   { path: 'user', component:UserComponent},
   { path: 'forgot-password', component:ForgotPasswordComponent},
