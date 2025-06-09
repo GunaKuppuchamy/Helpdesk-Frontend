@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserServiceService } from '../../services/user-service.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Users } from '../../models/users';
+import { CommonModule } from '@angular/common';
  
 @Component({
   selector: 'app-add-user',
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule,RouterLink, CommonModule],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.css'
 })
@@ -25,11 +26,11 @@ export class AddUserComponent {
   ngOnInit()
   {
     this.userForm = this.fb.group({
-      empid: ['', Validators.required],
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      phoneno: ['', Validators.required],
+      empid: ['', [Validators.required,Validators.pattern(/^[A-Z]\d{3}$/)]],
+      name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password: ['', [Validators.required,Validators.minLength(8)]],
+      phoneno: ['', [Validators.required,Validators.pattern(/^[6-9]\d{9}$/)]],
       bu: ['', Validators.required],
       role: ['', Validators.required]
     });

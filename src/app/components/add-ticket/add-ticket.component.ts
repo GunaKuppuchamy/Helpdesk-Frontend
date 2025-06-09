@@ -4,10 +4,11 @@ import { TicketsService } from '../../services/tickets.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserServiceService } from '../../services/user-service.service';
 import { Ticket } from '../../models/ticket.type';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-ticket',
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule,RouterLink, CommonModule],
   templateUrl: './add-ticket.component.html',
   styleUrl: './add-ticket.component.css'
 })
@@ -19,9 +20,9 @@ export class AddTicketComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({
-      subject: ['', Validators.required],
-      categeory: ['', Validators.required],
-      description: ['', Validators.required],
+      subject: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      categeory: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
       priroty: ['medium', Validators.required]
     });
   }
