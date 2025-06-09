@@ -1,6 +1,5 @@
 <div class="header">
 <p class="dashboard-heading">Admin Dashboard</p>
-<a [routerLink]="['/admin']" class="cancel-btn"> X </a>
 </div>
 
 <div class="dashboard-container">
@@ -52,4 +51,5 @@
     <div echarts [options]="usersByFilter" class="chart-box"></div>
   </div>
 
+  <button [routerLink]="['/admin']" class="back-btn"> Back </button>
 </div>
