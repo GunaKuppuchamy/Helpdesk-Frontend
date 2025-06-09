@@ -10,8 +10,8 @@ import { LoginService } from '../../services/login.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  email = "sree@gmail.com";
-  password = "suvetha";
+  email = "";
+  password = "";
   role = ""
 
   constructor(private router: Router,  private loginService:LoginService) { }

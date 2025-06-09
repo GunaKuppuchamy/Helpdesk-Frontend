@@ -126,12 +126,12 @@ export class TicketsService {
 
   updateTickets(tid : string , data:Ticket) : Observable<any>
   {
-    return this.http.put(`${this.apiUrl}/updateTicket/${tid}`,data);
+    return this.http.put(`${this.apiUrl}/updateTicket/${tid}`,data,{withCredentials: true,observe: 'response'});
   }
 
-  getTicketByIt(itId:string) : Observable<any>
+  getTicketByIt() : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/tickets/it/${itId}`);
+    return this.http.get(`${this.apiUrl}/tickets/it`,{withCredentials:true,observe:'response'});
   }
 
 }
