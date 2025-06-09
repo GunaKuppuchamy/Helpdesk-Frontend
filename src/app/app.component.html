@@ -1,6 +1,9 @@
 <div class="app-container">
   <header>
-    <h1>{{ title }}</h1>
+    <div class="logo-container">
+      <img src="https://www.pngegg.com/en/png-ngmtq" alt="Logo" class="logo" />
+      <h1>{{ title }}</h1>
+    </div>
       <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
   </header>
   <main>
