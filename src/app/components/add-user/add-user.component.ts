@@ -59,6 +59,7 @@ export class AddUserComponent {
   submitUser()
   {
     const newUser={...this.userForm.value};
+    console.log(newUser);
     if(this.isEditMode && this.editUserId!==null) 
     {
       //this.userservice.updateUserById(this.editUserId, newUser);

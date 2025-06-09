@@ -26,8 +26,9 @@ ticketService = inject(TicketsService);
     const userId = 'U001';
     const type = this.route.snapshot.paramMap.get('user');
   console.log(type)
-    this.ticketService.getTicketByUser(userId).subscribe({
+    this.ticketService.getTicketByUser().subscribe({
       next: (tickets: Ticket[]) => {
+        alert("called");
         if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
         const filtered = tickets.filter(t => t.status === type);
         this.display_tickets.set(filtered);

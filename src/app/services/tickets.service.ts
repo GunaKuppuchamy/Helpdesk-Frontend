@@ -114,14 +114,14 @@ export class TicketsService {
     return this.http.post(`${this.apiUrl}/addticket`, ticket);
   }
 
-  getTicketByUser(userId:string) : Observable<any>
+  getTicketByUser() : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/tickets/user/${userId}`);
+    return this.http.get(`${this.apiUrl}/tickets/user`,{ withCredentials: true });
   }
   
   getTicketById(tid : string) : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/getTicket/${tid}`);
+    return this.http.get(`${this.apiUrl}/getTicket/${tid}`,{ withCredentials: true });
   }
 
   updateTickets(tid : string , data:Ticket) : Observable<any>

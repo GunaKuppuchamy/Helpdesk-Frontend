@@ -18,7 +18,7 @@ export class ItOverdueTicketComponent implements OnInit {
     loggedInUserId : string = "U001"
 
     ngOnInit(): void {
-  this.ticketService.getTicketByUser(this.loggedInUserId).subscribe((ticket: Ticket[]) => {
+  this.ticketService.getTicketByUser().subscribe((ticket: Ticket[]) => {
     const filtered = ticket.filter(t => {
       const dueDate = new Date(t.duedate);
       console.log('Due Date:', dueDate);

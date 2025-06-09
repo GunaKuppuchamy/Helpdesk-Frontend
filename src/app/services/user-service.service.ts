@@ -105,7 +105,7 @@ getUsersApi()
 
 addUser(user : Users): Observable<any>
 {
-  return this.http.post(`${this.apiUrl}/addemp`,user);
+  return this.http.post(`${this.apiUrl}/addemp`,user,{withCredentials:true});
 }
 
 UpdateUser(id:string,data:Users)
