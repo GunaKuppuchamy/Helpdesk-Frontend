@@ -20,17 +20,9 @@ export class ForgotPasswordComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // sendOtp() {
-  //   this.http.post('http://localhost:3002/send-otp', { email: this.email }).subscribe(
-  //     next:() => {
-  //     this.otpSent = true;
-  //     alert('OTP sent to your email.');
-  //   }, () => {
-  //     alert('Failed to send OTP. Check your email.');
-  //   });
-  // }
+ 
   sendOtp() {
-  this.http.post('http://localhost:3002/sendotp', { email: this.email }).subscribe({
+  this.http.post('http://localhost:3002/sendotp', { email: this.email }).subscribe( {
     next: () => {
       this.otpSent = true;
       alert('OTP sent to your email.');
@@ -43,7 +35,7 @@ export class ForgotPasswordComponent {
 }
 
   verifyOtp() {
-    this.http.post('/verify-otp', { email: this.email, otp: this.otp }).subscribe((res: any) => {
+    this.http.post('http://localhost:3002/verifyotp', { email: this.email, otp: this.otp }).subscribe((res: any) => {
       if (res.valid) {
         this.otpVerified = true;
         alert('OTP verified. Please enter a new password.');
@@ -54,11 +46,14 @@ export class ForgotPasswordComponent {
   }
 
   resetPassword() {
-    this.http.post('/reset-password', { email: this.email, newPassword: this.newPassword }).subscribe(() => {
+  this.http.post('http://localhost:3002/resetpassword', { email: this.email, newPassword: this.newPassword }).subscribe({
+    next: () => {
       alert('Password reset successful. Redirecting to login.');
       this.router.navigate(['/login']);
-    }, () => {
+    },
+    error: (err:any) => {
       alert('Failed to reset password.');
-    });
-  }
+    }
+  });
+}
 }
