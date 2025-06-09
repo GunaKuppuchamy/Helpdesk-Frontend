@@ -49,7 +49,7 @@ export class ForgotPasswordComponent {
   this.http.post('http://localhost:3002/resetpassword', { email: this.email, newPassword: this.newPassword }).subscribe({
     next: () => {
       alert('Password reset successful. Redirecting to login.');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
     },
     error: (err:any) => {
       alert('Failed to reset password.');

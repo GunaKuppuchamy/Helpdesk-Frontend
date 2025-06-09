@@ -1,6 +1,5 @@
 <div class="form-header">
   <h2>{{isEditMode? 'Edit User' : 'Add New User'}}</h2>
-<a [routerLink]="['/admin']" class="cancel-btn"> X </a>
 </div>
 <form [formGroup]="userForm" (ngSubmit)="submitUser()">
   <label>UserId: <input formControlName="empid" /></label><br>
@@ -26,6 +25,10 @@
         <option value="user">user</option>
     </select>
   </label><br>
+<div class="button-group">
   <button type="submit" [disabled]="!userForm.valid">Submit</button>
+  <button [routerLink]="['/admin']" class="back-btn">Cancel</button>
+</div>
+
 </form>
 
