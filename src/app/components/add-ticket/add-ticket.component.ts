@@ -52,6 +52,7 @@ it_count ={}
 
       // Second: get all tickets
       this.ticketService.getTicketAPI().subscribe((tickets) => {
+        console.log('aaa'+tickets)
         const ticketCounts: { [itid: string]: number } = {};
 
         for (let member of itMembers) {
@@ -71,7 +72,7 @@ it_count ={}
         const newTicket = {
           ...this.ticketForm.value,
           ticketid: 'TKT' + Date.now() + Math.floor(Math.random() * 1000),
-          userid: 'U001',
+          
           itid: leastLoadedIT,
           status: 'open',
           raiseddate: new Date(),

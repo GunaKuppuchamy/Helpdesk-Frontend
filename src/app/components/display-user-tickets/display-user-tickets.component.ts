@@ -23,12 +23,12 @@ ticketService = inject(TicketsService);
   display_tickets = signal<Array<Ticket>>([]);
 
   ngOnInit(): void {
-    const userId = 'U001';
+    // const userId = 'U001';
     const type = this.route.snapshot.paramMap.get('user');
   console.log(type)
     this.ticketService.getTicketByUser().subscribe({
       next: (tickets: Ticket[]) => {
-        alert("called");
+        //alert("called");
         if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
         const filtered = tickets.filter(t => t.status === type);
         this.display_tickets.set(filtered);
@@ -37,7 +37,7 @@ ticketService = inject(TicketsService);
       }
         console.log(this.display_tickets)
         console.log("Fetched tickets:", tickets);
-      },
+      }, 
       error: (err) => {
         console.error("Failed to fetch tickets", err);
       }
