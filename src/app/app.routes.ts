@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DisplayUserTicketsComponent } from './components/display-user-tickets/display-user-tickets.component';
 import { AddTicketComponent } from './components/add-ticket/add-ticket.component';
 import { UserComponent } from './user/user.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const routes: Routes = [
 
@@ -49,6 +50,7 @@ export const routes: Routes = [
   { path: 'displayUserTickets/:type', component: DisplayUserTicketsComponent },
   { path: 'addTicket', component: AddTicketComponent },
   { path: 'user', component:UserComponent},
+  { path: 'forgot-password', component:ForgotPasswordComponent},
   {
         path:'admin',
         loadComponent:()=>{ return import('./admin/admin.component').then((m)=>m.AdminComponent)}
