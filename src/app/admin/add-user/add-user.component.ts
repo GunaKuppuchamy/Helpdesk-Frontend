@@ -23,78 +23,85 @@ export class AddUserComponent {
   private route=inject(ActivatedRoute);
   private fb=inject(FormBuilder);
   private router=inject(Router);
-  ngOnInit()
-  {
-    this.userForm = this.fb.group({
-      empid: ['', [Validators.required,Validators.pattern(/^[A-Z]\d{3}$/)]],
-      name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
-      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password: ['', [Validators.required,Validators.minLength(5)]],
-      phoneno: ['', [Validators.required,Validators.pattern(/^[6-9]\d{9}$/)]],
-      bu: ['', Validators.required],
-      role: ['', Validators.required]
-    });
-    this.editUserId=this.route.snapshot.paramMap.get('id');
-    if(this.editUserId)
-    {
-      this.isEditMode=true;
-      //this.curUserData=this.userservice.getUserById(this.editUserId);
-      this.userservice.getUserById(this.editUserId).subscribe({
-        next : (user)=>
-      {
-        this.curUserData = user;
-        if(this.curUserData)
-      {
-        console.log("Patching Values")
-        this.userForm.patchValue(this.curUserData);
-      }
-      else{
-        console.log("Not Patching")
-      }
-      console.log(this.curUserData)
-      }})
-      
-    }
-  }
- 
-  submitUser()
-  {
-    const newUser={...this.userForm.value};
-    if(this.isEditMode && this.editUserId!==null) 
-    {
-      //this.userservice.updateUserById(this.editUserId, newUser);
-      this.userservice.UpdateUser(this.editUserId,newUser).subscribe(
-        {
-          next : (user) =>
-          {
-            console.log('User Edited Successfully');
-            this.router.navigate(['/adminViewUsers']);
-          },
+  ngOnInit() {
+  this.userForm = this.fb.group({
+    empid: ['', [Validators.required, Validators.pattern(/^[A-Z]\d{3}$/)]],
+    name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+    password: ['', [Validators.required, Validators.minLength(5)]],
+    phoneno: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+    bu: ['', Validators.required],
+    role: ['', Validators.required]
+  });
 
-          error : () =>
-          {
-            console.log("Error occured while editing");
-          }
+  this.editUserId = this.route.snapshot.paramMap.get('id');
+
+  if (this.editUserId) {
+    this.isEditMode = true;
+
+    this.userservice.getUserById(this.editUserId).subscribe({
+      next: (response) => {
+        console.log(response)
+        this.curUserData = response.body;
+        if (this.curUserData) {
+          console.log("Patching Values");
+          this.userForm.patchValue(this.curUserData);
+        } else {
+          console.log("User data is null");
         }
-      )
-    }
-    else
-    {
-      //this.userservice.addUser(newUser);
-      this.userservice.addUser(newUser).subscribe(
-        {
-           next: (user) => {
-        console.log('User added successfully!', user);
+        console.log(this.curUserData);
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/']); // Session expired
+        } else {
+          console.error('Failed to load user data:', err);
+          alert('Something went wrong while loading user data.');
+        }
+      }
+    });
+  }
+}
+
+  submitUser() {
+  const newUser = { ...this.userForm.value };
+  console.log(newUser);
+
+  if (this.isEditMode && this.editUserId !== null) {
+    // Edit mode: update existing user
+    this.userservice.UpdateUser(this.editUserId, newUser).subscribe({
+      next: (response) => {
+        console.log(response)
+        console.log('User edited successfully!');
         this.router.navigate(['/adminViewUsers']);
       },
       error: (err) => {
-        console.error('Error adding User', err);
-        alert('Something went wrong while adding the User.');
-      }
-
+        if (err.status === 401) {
+          this.router.navigate(['/']); // Redirect to login
+        } else {
+          console.error('Error occurred while editing user', err);
+          alert('Something went wrong while editing the user.');
         }
-      )
-    }
-    
+      }
+    });
+  } else {
+    // Add mode: add new user
+    this.userservice.addUser(newUser).subscribe({
+      next: (response) => {
+        console.log(response)
+        console.log('User added successfully!', response);
+        this.router.navigate(['/adminViewUsers']);
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/']); // Redirect to login
+        } else {
+          console.error('Error adding user', err);
+          alert('Something went wrong while adding the user.');
+        }
+      }
+    });
   }
 }
+}
+

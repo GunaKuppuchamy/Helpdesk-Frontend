@@ -49,8 +49,8 @@ allUsers !:Users[];
     }).subscribe({
       next : ({tickets,users}) =>
       {
-        this.allTickets = tickets,
-        this.allUsers=users
+        this.allTickets = tickets.body || [],
+        this.allUsers=users.body || []
         this.updateTicketChart();
         this.updateUserChart();
 

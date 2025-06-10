@@ -1,71 +1,76 @@
-import { Component, inject,signal } from '@angular/core';
-
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-display-user-tickets',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './display-user-tickets.component.html',
   styleUrl: './display-user-tickets.component.css'
 })
 export class DisplayUserTicketsComponent {
+  constructor(private route: ActivatedRoute) {}
 
-//   allTickets = signal<Array<Ticket>>([]);;
-//   filteredTickets: Ticket[] = [];
-
-  constructor(private route: ActivatedRoute){}
-
-
-ticketService = inject(TicketsService);
+  ticketService = inject(TicketsService);
+  router = inject(Router);
   display_tickets = signal<Array<Ticket>>([]);
+  this_ticket!: Ticket;
 
   ngOnInit(): void {
-    const userId = 'U001';
     const type = this.route.snapshot.paramMap.get('user');
-  console.log(type)
-    this.ticketService.getTicketByUser(userId).subscribe({
-      next: (tickets: Ticket[]) => {
-        if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
-        const filtered = tickets.filter(t => t.status === type);
-        this.display_tickets.set(filtered);
-      } else {
-        this.display_tickets.set(tickets);
-      }
-        console.log(this.display_tickets)
-        console.log("Fetched tickets:", tickets);
-      },
-      error: (err) => {
-        console.error("Failed to fetch tickets", err);
-      }
-    });
-  }
-  this_ticket !: Ticket
+    console.log(type);
 
-cancelTicket(tid:string)
-  {
-    this.ticketService.getTicketById(tid).subscribe({
-  next: (ticket) => {
-    ticket.status = "cancelled"; 
-
-    this.ticketService.updateTickets(tid, ticket).subscribe({
-      next: () => {
-        alert("Ticket Cancelled");
-        this.ngOnInit(); 
-      },
-      error: () => {
-        alert("Error Cancelling Ticket");
-      }
-    });
+   this.ticketService.getTicketByUser().subscribe({
+  next: (response) => {
+    const tickets = response.body as Ticket[];
+    if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
+      const filtered = tickets.filter(t => t.status === type);
+      this.display_tickets.set(filtered);
+    } else {
+      this.display_tickets.set(tickets);
+    }
   },
-  error: () => {
-    alert("Error fetching ticket");
+  error: (err) => {
+    if (err.status === 401) {
+      this.router.navigate(['/']); // Session expired, redirect
+    } else {
+      alert("Error fetching user tickets.");
+    }
   }
 });
 
   }
 
+  cancelTicket(tid: string): void {
+    this.ticketService.getTicketById(tid).subscribe({
+  next: (response) => {
+    const ticket = response.body as Ticket;
+    ticket.status = "cancelled";
 
+    this.ticketService.updateTickets(tid, ticket).subscribe({
+      next: () => {
+        alert("Ticket Cancelled");
+        this.ngOnInit();
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/']);
+        } else {
+          alert("Error cancelling ticket.");
+        }
+      }
+    });
+  },
+  error: (err) => {
+    if (err.status === 401) {
+      this.router.navigate(['/']);
+    } else {
+      alert("Error fetching ticket.");
+    }
+  }
+});
+
+  }
 }

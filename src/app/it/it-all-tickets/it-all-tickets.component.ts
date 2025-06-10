@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TableModule} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import {  HttpClientModule } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -20,14 +20,29 @@ export class ItAllTicketsComponent {
   
       ticketService = inject(TicketsService);
       display_tickets = signal<Array<Ticket>>([]);
+      router = inject(Router)
       ngOnInit(): void {
           //this.display_tickets.set(this.ticketService.tickets)
-          this.ticketService.getTicketAPI().subscribe((ticket) => {
-            this.display_tickets.set(ticket);
+          this.ticketService.getTicketAPI().subscribe({
+            next : (response) =>
+            {
+              this.display_tickets.set(response.body || []);
+            },
+            error : (err) =>
+            {
+              if (err.status === 401) {
+        this.router.navigate(['/']); 
+      } else {
+        alert('Something went wrong while submitting the ticket.');
+      }
+            }
+          
+            
           })
-        console.log(this.display_tickets)
+        }
+        //console.log(this.display_tickets)
         
       }
   
 
-}
+
