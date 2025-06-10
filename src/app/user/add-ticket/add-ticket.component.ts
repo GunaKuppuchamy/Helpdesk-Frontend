@@ -34,7 +34,7 @@ it_count ={}
       console.log('Tickets:', this.all_tickets);
 
       console.log('Ticket added successfully!', response);
-      this.router.navigate(['/displayUserTickets', 'all']);
+      // this.router.navigate(['/displayUserTickets', 'all']);
     },
     error: (err) => {
       if (err.status === 401) {

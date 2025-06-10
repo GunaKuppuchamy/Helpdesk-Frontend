@@ -21,7 +21,7 @@ login(email:string, password:string):Observable<any> {
 
 logout():Observable<any>{
 
-  return this.http.post(`${this.apiUrl}/logout`,{withCredentials:true,observe: 'response'});
+  return this.http.post(`${this.apiUrl}/logout`,{},{withCredentials:true,observe: 'response'});
 }
 
 
