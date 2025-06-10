@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth-service.service';
 import { CommonModule } from '@angular/common';
@@ -10,13 +10,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Helpdesk Ticketing System';
   isLoggedIn = false;
-
+ngOnInit(): void {
+    console.log(this.isLoggedIn)
+}
 
   constructor(private auth: AuthService) {
-    this.auth.isLoggedIn$.subscribe(status => {
+    this.auth.isLoggedInSubject.subscribe(status => {
       this.isLoggedIn = status;
     });
   }

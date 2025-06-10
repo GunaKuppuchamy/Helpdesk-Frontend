@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTicketComponent } from './add-ticket.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AddTicketComponent', () => {
   let component: AddTicketComponent;
@@ -8,7 +12,24 @@ describe('AddTicketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTicketComponent]
+      imports: [AddTicketComponent,HttpClientTestingModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }), // Mocked route param
+            snapshot: {
+              paramMap: {
+                get: (key: string) => {
+                  if (key === 'id') return '123';
+                  return null;
+                }
+              }
+            }
+          }
+        }
+      ]
+
     })
     .compileComponents();
 
