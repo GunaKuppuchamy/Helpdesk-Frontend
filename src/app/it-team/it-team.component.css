@@ -1,4 +1,4 @@
-.ticket-nav-container {
+ .ticket-nav-container {
   height: 65vh;
   background: linear-gradient(to right, #fdfbfb, #ebedee);
   display: flex;
@@ -54,4 +54,5 @@
 .back-btn:hover {
   background-color: #c0392b;
   transform: scale(1.05);
-}
+} 
+

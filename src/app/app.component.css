@@ -8,39 +8,37 @@
 
 header {
   background-color: #7d4c9c;
-  padding: 20px 0;
-  text-align: center;
-  position: relative; 
+  padding: 16px 12px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.logo-container{
-  margin-left: 10px;
-   display: flex;
+.logo-container {
+  display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .logo {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 15px;
-  object-fit:fill;
+  object-fit: fill;
   border: 2px solid #ecf0f1;
 }
 
 header h1 {
   color: #ecf0f1;
+  font-size: 1.8rem;
   margin: 0;
-  font-size: 2rem;      
+  flex: 1;
+  text-align: center;
 }
 
 .logout-container {
-  position: absolute;        
-  top: 50%;                  
-  right: 20px;               
-  transform: translateY(-50%);
   padding: 8px 16px;
   background-color: #ecf0f1;
   color: #7d4c9c;
@@ -49,6 +47,7 @@ header h1 {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.2s ease-in-out;
+  white-space: nowrap;
 }
 
 .logout-container:hover {
@@ -59,14 +58,14 @@ main {
   flex-grow: 1;
   padding: 20px;
 }
+
 .footer {
-  background-color: #7d4c9c; /* Matches header */
-  color: #ecf0f1; /* Light text like the header title */
+  background-color: #7d4c9c;
+  color: #ecf0f1;
   text-align: center;
   padding: 20px 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.95rem;
-  margin-top: auto; /* Pushes footer to bottom if flex layout is used */
+  margin-top: auto;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -79,4 +78,43 @@ main {
 .footer a:hover {
   color: #dcdde1;
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo-container {
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .logout-container {
+    position: static;
+    transform: none;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  .logout-container {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .footer {
+    font-size: 0.85rem;
+    padding: 16px 8px;
+  }
 }
