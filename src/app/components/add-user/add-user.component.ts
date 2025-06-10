@@ -29,7 +29,7 @@ export class AddUserComponent {
       empid: ['', [Validators.required,Validators.pattern(/^[A-Z]\d{3}$/)]],
       name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password: ['', [Validators.required,Validators.minLength(8)]],
+      password: ['', [Validators.required,Validators.minLength(5)]],
       phoneno: ['', [Validators.required,Validators.pattern(/^[6-9]\d{9}$/)]],
       bu: ['', Validators.required],
       role: ['', Validators.required]
