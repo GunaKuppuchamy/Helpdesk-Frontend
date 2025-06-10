@@ -5,6 +5,8 @@
       <h1>{{ title }}</h1>
     </div>
       <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
+      <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
+
   </header>
   <main>
     <router-outlet></router-outlet>

@@ -3,11 +3,13 @@ import { DisplayUserTicketsComponent } from './user/display-user-tickets/display
 import { AddTicketComponent } from './user/add-ticket/add-ticket.component';
 import { UserComponent } from './user/user/user.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
+import { FaqComponent } from './home/faq/faq.component';
+import { LandingpageComponent } from './home/landingpage/landingpage.component';
 
 export const routes: Routes = [
 
     {
-        path : '',
+        path : 'login',
         loadComponent : () => {
             return import('./home/home/home.component').then((m)=>m.HomeComponent)
         }
@@ -51,6 +53,8 @@ export const routes: Routes = [
   { path: 'addTicket', component: AddTicketComponent },
   { path: 'user', component:UserComponent},
   { path: 'forgot-password', component:ForgotPasswordComponent},
+  { path: '',component:LandingpageComponent},
+  { path: 'faq', component:FaqComponent},
   {
         path:'admin',
         loadComponent:()=>{ return import('./admin/admin/admin.component').then((m)=>m.AdminComponent)}
