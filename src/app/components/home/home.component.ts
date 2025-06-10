@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit {
   email = "";
   password = "";
-  role = ""
+  // role = ""
 
   constructor(private router: Router,  private loginService:LoginService , private userservice : UserServiceService) { }
    loginForm!:FormGroup;
@@ -27,11 +27,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit()
   {
+    this.authservice.logout();
+
     this.loginForm = this.fb.group({
       email:['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password:['',[Validators.required,Validators.minLength(8)]],
-      role:['',Validators.required]
+      password:['',[Validators.required,Validators.minLength(5)]],
+      // role:['',Validators.required]
     })
+        
   }
 
   
@@ -66,13 +69,14 @@ export class HomeComponent implements OnInit {
   //       this.router.navigate(['']);
   //     }
   //   }})
-
-    if (!this.email || !this.password) {
-    alert('Please enter email and password');
+ if (this.loginForm.invalid) {
+    alert('Please enter valid email and password');
     return;
   }
 
-  this.loginService.login(this.email, this.password).subscribe({
+  const { email, password } = this.loginForm.value;
+
+  this.loginService.login(email, password).subscribe({
     next: (response: any) => {
       console.log(response)
       if (response.body.role) {
