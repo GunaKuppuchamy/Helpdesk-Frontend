@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-display-user-tickets',
@@ -14,11 +15,13 @@ export class DisplayUserTicketsComponent {
   constructor(private route: ActivatedRoute) {}
 
   ticketService = inject(TicketsService);
+  authService = inject(AuthService);
   router = inject(Router);
   display_tickets = signal<Array<Ticket>>([]);
   this_ticket!: Ticket;
 
   ngOnInit(): void {
+    this.authService.isLoggedIn();
     const type = this.route.snapshot.paramMap.get('user');
     console.log(type);
 

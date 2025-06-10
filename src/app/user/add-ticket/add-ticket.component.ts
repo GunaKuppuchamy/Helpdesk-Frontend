@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { UserServiceService } from '../../services/user-service.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-add-ticket',
@@ -17,6 +18,7 @@ export class AddTicketComponent implements OnInit {
   
   all_tickets !: Ticket[]
   userservice=inject(UserServiceService);
+  authService = inject(AuthService);
 
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({

@@ -3,6 +3,7 @@ import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-it-overdue-ticket',
@@ -13,12 +14,14 @@ import { Router, RouterLink } from '@angular/router';
 export class ItOverdueTicketComponent implements OnInit {
 
     ticketService = inject(TicketsService);
+    authService = inject(AuthService);
     display_tickets = signal<Array<Ticket>>([]);
     router = inject(Router)
     today = new Date()
     loggedInUserId : string = "I388"
 
     ngOnInit(): void {
+      this.authService.isLoggedIn();
   this.ticketService.getTicketByIt().subscribe({
     next : (response) => {
     const filtered = (response.body || []).filter((t:Ticket) => {

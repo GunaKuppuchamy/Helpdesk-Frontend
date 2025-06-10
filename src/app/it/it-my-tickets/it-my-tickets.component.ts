@@ -3,6 +3,7 @@ import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-it-my-tickets',
@@ -11,7 +12,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
   styleUrl: './it-my-tickets.component.css'
 })
 export class ItMyTicketsComponent implements OnInit {
-
+    authService = inject(AuthService);
   ticketService = inject(TicketsService);
     display_tickets = signal<Array<Ticket>>([]);
   //all_tickets = this.ticketService.tickets
@@ -26,7 +27,7 @@ export class ItMyTicketsComponent implements OnInit {
       console.log(this.currentview)
     }
     ngOnInit(): void {
-    
+    this.authService.isLoggedIn();
        this.ticketService.getTicketByIt().subscribe({
         next : (response) =>
       {
