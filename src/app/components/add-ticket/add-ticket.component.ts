@@ -28,15 +28,26 @@ export class AddTicketComponent implements OnInit {
   }
 it_count ={}
   ngOnInit(): void {
-      this.ticketService.getTicketAPI().subscribe((ticket) =>
-      {
-        this.all_tickets = ticket;
-      })
-      console.log(this.all_tickets)
-  }
-  
+  this.ticketService.getTicketAPI().subscribe({
+    next: (response) => {
+      this.all_tickets = response.body || []; 
+      console.log('Tickets:', this.all_tickets);
 
- submitTicket() {
+      console.log('Ticket added successfully!', response);
+      this.router.navigate(['/displayUserTickets', 'all']);
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/']); 
+      } else {
+        alert('Something went wrong while submitting the ticket.');
+      }
+    }
+  });
+}
+
+  
+submitTicket() {
   if (this.ticketForm.valid) {
     const priority = this.ticketForm.value.priroty;
     let daysToAdd = 3;
@@ -48,49 +59,63 @@ it_count ={}
     dueDate.setDate(dueDate.getDate() + daysToAdd);
 
     // First: get IT team members
-    this.userservice.getUsersApi().subscribe((users) => {
-      const itMembers = users.filter((user: any) => user.role === 'it');
+    this.userservice.getUsersApi().subscribe({
+      next: (users) => {
+        const itMembers = (users.body || []).filter((user: any) => user.role === 'it');
 
-      // Second: get all tickets
-      this.ticketService.getTicketAPI().subscribe((tickets) => {
-        console.log('aaa'+tickets)
-        const ticketCounts: { [itid: string]: number } = {};
+        // Second: get all tickets
+        this.ticketService.getTicketAPI().subscribe({
+          next: (tickets) => {
+            const ticketCounts: { [itid: string]: number } = {};
 
-        for (let member of itMembers) {
-          const count = tickets.filter(t => t.itid === member.empid).length;
-          ticketCounts[member.empid] = count;
-        }
+            for (let member of itMembers) {
+              const count = (tickets.body || []).filter(t => t.itid === member.empid).length;
+              ticketCounts[member.empid] = count;
+            }
 
-        console.log("Ticket counts per IT member:", ticketCounts);
+            const leastLoadedIT = Object.keys(ticketCounts).reduce((a, b) =>
+              ticketCounts[a] <= ticketCounts[b] ? a : b
+            );
 
-        const leastLoadedIT = Object.keys(ticketCounts).reduce((a, b) =>
-          ticketCounts[a] <= ticketCounts[b] ? a : b
-        );
+            const newTicket = {
+              ...this.ticketForm.value,
+              ticketid: 'TKT' + Date.now() + Math.floor(Math.random() * 1000),
+              itid: leastLoadedIT,
+              status: 'open',
+              raiseddate: new Date(),
+              duedate: dueDate
+            };
 
-        console.log("Least loaded IT member:", leastLoadedIT);
-
-        // Create and add new ticket
-        const newTicket = {
-          ...this.ticketForm.value,
-          ticketid: 'TKT' + Date.now() + Math.floor(Math.random() * 1000),
-          
-          itid: leastLoadedIT,
-          status: 'open',
-          raiseddate: new Date(),
-          duedate: dueDate
-        };
-
-        this.ticketService.addTicket(newTicket).subscribe({
-          next: (ticket) => {
-            console.log('Ticket added successfully!', ticket);
-            this.router.navigate(['/displayUserTickets', 'all']);
+            this.ticketService.addTicket(newTicket).subscribe({
+              next: (ticket) => {
+                console.log('Ticket added successfully!', ticket);
+                this.router.navigate(['/displayUserTickets', 'all']);
+              },
+              error: (err) => {
+                if (err.status === 401) {
+                  this.router.navigate(['/']); // Session expired
+                } else {
+                  alert('Something went wrong while submitting the ticket.');
+                }
+              }
+            });
           },
           error: (err) => {
-            console.error('Error adding ticket', err);
-            alert('Something went wrong while submitting the ticket.');
+            if (err.status === 401) {
+              this.router.navigate(['/']);
+            } else {
+              alert('Something went wrong while fetching tickets.');
+            }
           }
         });
-      });
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/']);
+        } else {
+          alert('Something went wrong while fetching users.');
+        }
+      }
     });
   }
 }

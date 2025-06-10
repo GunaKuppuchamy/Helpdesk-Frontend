@@ -23,6 +23,7 @@ export class ItMyTicketsComponent implements OnInit {
     {
       this.currentview = view;
       this.filterTicket()
+      console.log(this.currentview)
     }
     ngOnInit(): void {
     
@@ -32,11 +33,9 @@ export class ItMyTicketsComponent implements OnInit {
        console.log(response)
        console.log(response.status)
        
-       if (Array.isArray(response.body)) {
-  this.display_tickets.set(response.body);
-} else {
-  this.display_tickets.set([]);  // or handle error
-}
+       
+  this.display_tickets.set(response.body || []);
+
       },
       error :(err) =>
       {
@@ -66,6 +65,7 @@ export class ItMyTicketsComponent implements OnInit {
 
         if (Array.isArray(response.body)) {
   this.display_tickets.set(response.body);
+  console.log("all" + this.display_tickets);
 } else {
   this.display_tickets.set([]);  // or handle error
 }
@@ -86,9 +86,11 @@ export class ItMyTicketsComponent implements OnInit {
        this.ticketService.getTicketByIt().subscribe({
     next: (response) => {
       
-      console.log(response);
-       const filtered = (response.body.tickets || []).filter((t: Ticket) => t.status === this.currentview);
+      console.log(response.body);
+       const filtered = (response.body || []).filter((t: Ticket) => t.status === this.currentview);
+       console.log(filtered)
     this.display_tickets.set(filtered);
+    console.log("filtered" + this.display_tickets);
     },
     error: (err) => {
       console.error('Error occurred:', err);

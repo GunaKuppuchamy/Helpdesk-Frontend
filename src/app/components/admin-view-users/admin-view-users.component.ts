@@ -21,9 +21,21 @@ export class AdminViewUsersComponent {
   ngOnInit():void
   {
     //this.allUsers=this.userservice.getUsers();
-    this.userservice.getUsersApi().subscribe((ticket) =>
-    {
-      this.allUsers = ticket;
+    this.userservice.getUsersApi().subscribe({
+      next :(response) =>
+      {
+        this.allUsers = response.body || [];
+        console.log(response)
+      },
+      error : (err) =>
+      {
+
+      if(err.status == 401)
+      {
+        this.router.navigate(['/']);
+      }
+
+    }
     })
   }
   editUser(id:string)
@@ -36,9 +48,17 @@ export class AdminViewUsersComponent {
     if(confirm("Are you sure you want to delete this user? "))
     {
       this.userservice.deleteUserById(id).subscribe({
-        next : () =>
+        next : (response) =>
         {
           this.ngOnInit();
+        },
+        error : (err) =>
+        {
+          if(err.status == 401)
+          {
+            this.router.navigate(['/'])
+          }
+          
         }
 
       });
