@@ -88,3 +88,9 @@
   background-color: #db3434;
   transform: scale(1.05);
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

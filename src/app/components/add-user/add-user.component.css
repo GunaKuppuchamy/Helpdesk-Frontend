@@ -79,3 +79,8 @@ button[disabled] {
   background-color: #bdc3c7;
   cursor: not-allowed;
 }
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

@@ -4,16 +4,34 @@
     <div class="form-group">
       <label>Subject:</label>
       <input formControlName="subject" type="text" />
+      <div *ngIf="ticketForm.get('subject')?.touched && ticketForm.get('subject')?.errors as errors" class="error">
+        <div *ngIf="errors['required']">Subject is required.</div>
+        <div *ngIf="errors['pattern']">Only letters are allowed.</div>
+      </div>
+
     </div>
 
     <div class="form-group">
       <label>Categeory:</label>
-      <input formControlName="categeory" type="text" />
-    </div>
+      <select formControlName="categeory">
+        <option value="Software">Software</option>
+        <option value="Hardware">Hardware</option>
+        <option value="Network">Network</option>
+        <option value="Email">Software</option>
+        <option value="Asset Request">Asset Request</option>
+      </select>
+      <div *ngIf="ticketForm.get('categeory')?.touched && ticketForm.get('categeory')?.invalid" class="error">
+        Category is required.
+      </div>
+    </div> 
 
     <div class="form-group">
       <label>Description:</label>
       <textarea formControlName="description"></textarea>
+      <div *ngIf="ticketForm.get('description')?.touched && ticketForm.get('description')?.errors as errors" class="error">
+        <div *ngIf="errors['required']">Subject is required.</div>
+        <div *ngIf="errors['minlength']">A minimal description is needed</div>
+      </div>
     </div>
 
     <div class="form-group">
@@ -23,6 +41,9 @@
         <option value="medium">Medium</option>
         <option value="high">High</option>
       </select>
+      <div *ngIf="ticketForm.get('priroty')?.touched && ticketForm.get('priroty')?.invalid" class="error">
+        Priority is required
+      </div>
     </div>
 
     <button type="submit" [disabled]="!ticketForm.valid" class="submit-btn">Submit</button>

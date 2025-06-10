@@ -1,41 +1,64 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule} from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [FormsModule,RouterModule,CommonModule,HttpClientModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
-  email: string = '';
-  otp: string = '';
-  newPassword: string = '';
+  emailForm!: FormGroup;
+  otpForm!: FormGroup;
+  resetForm!: FormGroup;
 
-  otpSent: boolean = false;
-  otpVerified: boolean = false;
+  otpSent = false;
+  otpVerified = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
- 
+  ngOnInit() {
+    this.authService.logout();
+
+    this.emailForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]]
+    });
+
+    this.otpForm = this.fb.group({
+      otp: ['', [Validators.required,Validators.pattern(/^\d{6}$/)]]
+    });
+
+    this.resetForm = this.fb.group({
+      newPassword: ['', [Validators.required, Validators.minLength(5)]]
+    });
+  }
+
   sendOtp() {
-  this.http.post('http://localhost:3002/sendotp', { email: this.email }).subscribe( {
-    next: () => {
-      this.otpSent = true;
-      alert('OTP sent to your email.');
-    },
-    error: (error) => {
-      console.error('Error:', error);
-      alert('Failed to send OTP. Please try again.');
-    }
-  });
-}
+    const email = this.emailForm.value.email;
+    this.http.post('http://localhost:3002/sendotp', { email }).subscribe({
+      next: () => {
+        this.otpSent = true;
+        alert('OTP sent to your email.');
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        alert('Failed to send OTP. Please try again.');
+      }
+    });
+  }
 
   verifyOtp() {
-    this.http.post('http://localhost:3002/verifyotp', { email: this.email, otp: this.otp }).subscribe((res: any) => {
+    const email = this.emailForm.value.email;
+    const otp = this.otpForm.value.otp;
+    this.http.post('http://localhost:3002/verifyotp', { email, otp }).subscribe((res: any) => {
       if (res.valid) {
         this.otpVerified = true;
         alert('OTP verified. Please enter a new password.');
@@ -46,14 +69,16 @@ export class ForgotPasswordComponent {
   }
 
   resetPassword() {
-  this.http.post('http://localhost:3002/resetpassword', { email: this.email, newPassword: this.newPassword }).subscribe({
-    next: () => {
-      alert('Password reset successful. Redirecting to login.');
-      this.router.navigate(['/']);
-    },
-    error: (err:any) => {
-      alert('Failed to reset password.');
-    }
-  });
-}
+    const email = this.emailForm.value.email;
+    const newPassword = this.resetForm.value.newPassword;
+    this.http.post('http://localhost:3002/resetpassword', { email, newPassword }).subscribe({
+      next: () => {
+        alert('Password reset successful. Redirecting to login.');
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        alert('Failed to reset password.');
+      }
+    });
+  }
 }
