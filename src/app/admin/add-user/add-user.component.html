@@ -1,0 +1,74 @@
+<div class="form-header">
+  <h2>{{isEditMode? 'Edit User' : 'Add New User'}}</h2>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="submitUser()">
+  <div>
+    <label>UserId: <input formControlName="empid" /></label>
+    <div *ngIf="userForm.get('empid')?.touched && userForm.get('empid')?.errors as errors" class="error">
+          <div *ngIf="errors['required']">User ID is required.</div>
+          <div *ngIf="errors['pattern']">Invalid (must be in form "U001")</div>
+    </div>
+  </div>
+
+  <div>
+    <label>Name: <input formControlName="name" /></label>
+    <div *ngIf="userForm.get('name')?.touched && userForm.get('name')?.errors as errors" class="error">
+          <div *ngIf="errors['required']">Name is required.</div>
+          <div *ngIf="errors['pattern']">Only letters and spaces are allowed</div>
+    </div>
+  </div>
+
+  <div>
+    <label>Email: <input formControlName="email" /></label>
+    <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors as errors" class="error">
+          <div *ngIf="errors['required']">Email is required.</div>
+          <div *ngIf="errors['pattern']">Invalid email</div>
+    </div>
+  </div>
+
+  <div>
+    <label>Password: <input type="password" formControlName="password" /></label>
+    <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors as errors" class="error">
+        <div *ngIf="errors['required']">User ID is required.</div>
+        <div *ngIf="errors['minlength']">Minimum of length 8 is required</div>
+    </div>
+  </div>
+
+  <div>
+    <label>Phone: <input type="tel" formControlName="phoneno" /></label>
+    <div *ngIf="userForm.get('phoneno')?.touched && userForm.get('phoneno')?.errors as errors" class="error">
+              <div *ngIf="errors['required']">User ID is required.</div>
+              <div *ngIf="errors['pattern']">Invalid Phone number</div>
+      </div>
+  </div>
+
+  <div>
+    <label>BU: 
+    <select formControlName="bu">
+      <option value="Dex">DEX</option>
+      <option value="Data">DATA</option>
+      <option value="ILD">ILD</option>
+      <option value="SIMS">SIMS</option>
+      <option value="It">IT</option>
+      <option value="HR">HR</option>
+      <option value="IAT">IAT</option>
+      <option value="Admin">Admin</option>
+    </select>
+  </label><br>
+  </div>
+
+  <div>
+    <label>Role: 
+    <select formControlName="role">
+        <option value="admin">admin</option>
+        <option value="it">IT team</option>
+        <option value="user">user</option>
+    </select>
+  </label></div><br>
+<div class="button-group">
+  <button type="submit" [disabled]="!userForm.valid">Submit</button>
+  <button [routerLink]="['/admin']" class="back-btn">Cancel</button>
+</div>
+
+</form>
+
