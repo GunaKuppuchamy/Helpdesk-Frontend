@@ -6,6 +6,7 @@ import { TableModule} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import {  HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
 
 
 @Component({
@@ -19,10 +20,12 @@ export class ItAllTicketsComponent {
 
   
       ticketService = inject(TicketsService);
+      authService = inject(AuthService);
       display_tickets = signal<Array<Ticket>>([]);
       router = inject(Router)
       ngOnInit(): void {
           //this.display_tickets.set(this.ticketService.tickets)
+          this.authService.isLoggedIn();
           this.ticketService.getTicketAPI().subscribe({
             next : (response) =>
             {

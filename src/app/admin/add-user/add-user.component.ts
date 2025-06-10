@@ -5,6 +5,7 @@ import { UserServiceService } from '../../services/user-service.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Users } from '../../models/users';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service.service';
  
 @Component({
   selector: 'app-add-user',
@@ -23,7 +24,9 @@ export class AddUserComponent {
   private route=inject(ActivatedRoute);
   private fb=inject(FormBuilder);
   private router=inject(Router);
+  private authService = inject(AuthService);
   ngOnInit() {
+    this.authService.isLoggedIn();
   this.userForm = this.fb.group({
     empid: ['', [Validators.required, Validators.pattern(/^[A-Z]\d{3}$/)]],
     name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],

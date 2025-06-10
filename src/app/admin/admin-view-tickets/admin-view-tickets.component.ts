@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admin-view-tickets',
@@ -17,10 +18,11 @@ export class AdminViewTicketsComponent {
   allTickets: Ticket[] = []; 
   filters: { [s: string]: any } = {};
 
-  constructor(private ticketservice: TicketsService, private router : Router) {}
+  constructor(private ticketservice: TicketsService,private authService:AuthService, private router : Router) {}
 
   ngOnInit() {
     //this.allTickets = this.ticketservice.getTickets();
+    this.authService.isLoggedIn();
  this.ticketservice.getTicketAPI().subscribe({
             next : (response) =>
             {

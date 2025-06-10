@@ -8,6 +8,7 @@ import { Ticket } from '../../models/ticket.type';
 import { Users } from '../../models/users';
 import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admindashboard',
@@ -31,6 +32,7 @@ export class AdmindashboardComponent {
 
   // User chart vars
   userservice = inject(UserServiceService);
+  authService = inject(AuthService);
   usersByFilter!: EChartsOption;
   userChartType: string = 'bar';
   userGroupBy: string = 'bu'; 
@@ -42,7 +44,7 @@ export class AdmindashboardComponent {
 allTickets !: Ticket[];
 allUsers !:Users[];
   ngOnInit() {
-
+this.authService.isLoggedIn();
     forkJoin({
       tickets: this.ticketservice.getTicketAPI(),
       users : this.userservice.getUsersApi()

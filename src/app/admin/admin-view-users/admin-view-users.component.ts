@@ -5,6 +5,7 @@ import { UserServiceService } from '../../services/user-service.service';
 import { TableModule } from 'primeng/table';
 import { Router, RouterLink } from '@angular/router';
 import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth-service.service';
  
 @Component({
   selector: 'app-admin-view-users',
@@ -16,11 +17,13 @@ export class AdminViewUsersComponent {
  
   userservice=inject(UserServiceService);
   router=inject(Router);
+  authService=inject(AuthService);
   allUsers!:Users[];
  
   ngOnInit():void
   {
     //this.allUsers=this.userservice.getUsers();
+    this.authService.isLoggedIn();
     this.userservice.getUsersApi().subscribe({
       next :(response) =>
       {
