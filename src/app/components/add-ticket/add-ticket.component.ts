@@ -21,7 +21,7 @@ export class AddTicketComponent implements OnInit {
   constructor(private fb: FormBuilder, private ticketService: TicketsService, private router: Router) {
     this.ticketForm = this.fb.group({
       subject: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
-      categeory: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      categeory: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(10)]],
       priroty: ['medium', Validators.required]
     });

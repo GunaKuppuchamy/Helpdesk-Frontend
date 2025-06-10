@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
+
 export class HomeComponent {
   loginForm!:FormGroup;
   private fb=inject(FormBuilder);
@@ -17,12 +18,15 @@ export class HomeComponent {
 
   ngOnInit()
   {
+    setTimeout(() => this.authservice.logout(), 0);
     this.loginForm = this.fb.group({
       email:['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password:['',[Validators.required,Validators.minLength(8)]],
+      password:['',[Validators.required,Validators.minLength(5)]],
       role:['',Validators.required]
     })
   }
+
+  
 
   constructor(private router: Router) { }
   login() {

@@ -26,7 +26,7 @@ export class AdmindashboardComponent {
   possibleTickets: { [key: string]: string[] } = {
     status: ['open', 'onHold', 'closed', 'cancelled'],
     priroty: ['low', 'medium', 'high'],
-    categeory: ['Hardware', 'Software', 'Network', 'Access', 'Email']
+    categeory: ['Hardware', 'Software', 'Network', 'Asset Request', 'Email']
   };
 
   // User chart vars
