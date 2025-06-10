@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { UserServiceService } from '../services/user-service.service';
-import { Users } from '../models/users';
+import { UserServiceService } from '../../services/user-service.service';
+import { Users } from '../../models/users';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({

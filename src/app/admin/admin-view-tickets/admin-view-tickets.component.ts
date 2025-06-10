@@ -14,7 +14,6 @@ import { RouterLink } from '@angular/router';
 export class AdminViewTicketsComponent {
 
   allTickets: Ticket[] = []; 
-  filters: { [s: string]: any } = {};
 
   constructor(private ticketservice: TicketsService) {}
 
@@ -28,6 +27,3 @@ export class AdminViewTicketsComponent {
     )
   }
 }
-
-
-
