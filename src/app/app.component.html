@@ -4,7 +4,7 @@
       <img src="https://www.pngegg.com/en/png-ngmtq" alt="Logo" class="logo" />
       <h1>{{ title }}</h1>
     </div>
-      <button  (click)="logout()" routerLink="/" class="logout-container">Logout</button>
+      <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
   </header>
   <main>
     <router-outlet></router-outlet>

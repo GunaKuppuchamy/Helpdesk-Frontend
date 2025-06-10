@@ -2,7 +2,7 @@ import { Component,inject,OnInit,signal } from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-it-overdue-ticket',
@@ -14,12 +14,14 @@ export class ItOverdueTicketComponent implements OnInit {
 
     ticketService = inject(TicketsService);
     display_tickets = signal<Array<Ticket>>([]);
+    router = inject(Router)
     today = new Date()
     loggedInUserId : string = "I388"
 
     ngOnInit(): void {
-  this.ticketService.getTicketByIt().subscribe((ticket: Ticket[]) => {
-    const filtered = ticket.filter(t => {
+  this.ticketService.getTicketByIt().subscribe({
+    next : (response) => {
+    const filtered = (response.body || []).filter((t:Ticket) => {
       const dueDate = new Date(t.duedate);
       console.log('Due Date:', dueDate);
       console.log('Today:', this.today);
@@ -30,7 +32,18 @@ export class ItOverdueTicketComponent implements OnInit {
 
     this.display_tickets.set(filtered);
     console.log(this.display_tickets)
-  });
+  },
+  error : (err) =>
+  {
+    if(err.status == 401)
+    {
+      this.router.navigate(['/'])
+    }
+    console.log("Session expires")
+  }
+  }
+);
+    
 }
 
         // const filtered = this.ticketService.tickets.filter( t => t.duedate < this.today && t.itid === this.loggedInUserId && t.status !== 'closed');

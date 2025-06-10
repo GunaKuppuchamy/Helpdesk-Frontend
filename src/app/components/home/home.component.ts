@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit()
   {
-    this.authservice.logout();
+    setTimeout(() =>this.authservice.logout(),0);
 
     this.loginForm = this.fb.group({
       email:['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
@@ -73,6 +73,7 @@ export class HomeComponent implements OnInit {
     alert('Please enter valid email and password');
     return;
   }
+  this.authservice.login()
 
   const { email, password } = this.loginForm.value;
 

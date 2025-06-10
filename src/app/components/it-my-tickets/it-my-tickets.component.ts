@@ -2,7 +2,7 @@ import { Component ,inject,OnInit,signal} from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-it-my-tickets',
@@ -17,6 +17,7 @@ export class ItMyTicketsComponent implements OnInit {
   //all_tickets = this.ticketService.tickets
     currentview !: 'all'|'onHold'|'open'|'closed';
     loggedInUserId :string= 'I408';
+    router=inject(Router)
 
     setView(view : 'all'|'onHold'|'open'|'closed' )
     {
@@ -25,12 +26,28 @@ export class ItMyTicketsComponent implements OnInit {
     }
     ngOnInit(): void {
     
-       this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
+       this.ticketService.getTicketByIt().subscribe({
+        next : (response) =>
       {
-       console.log(ticket)
-        this.display_tickets.set(ticket)
+       console.log(response)
+       console.log(response.status)
+       
+       if (Array.isArray(response.body)) {
+  this.display_tickets.set(response.body);
+} else {
+  this.display_tickets.set([]);  // or handle error
+}
+      },
+      error :(err) =>
+      {
+        if (err.status === 401) {
+        this.router.navigate(['/']); // redirect to login
+      } else {
+        alert('Something went wrong fetching tickets.');
       }
-       );
+        console.log("Error Occured")
+      }
+     } );
       console.log("aaa" + this.display_tickets)
       console.log(this.currentview)
       
@@ -41,20 +58,50 @@ export class ItMyTicketsComponent implements OnInit {
       
        if(this.currentview== 'all')
        {
-           this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
+           this.ticketService.getTicketByIt().subscribe({
+        next : (response) =>
       {
-        this.display_tickets.set(ticket)
-      });
+       console.log(response)
+       console.log(response.status)
+
+        if (Array.isArray(response.body)) {
+  this.display_tickets.set(response.body);
+} else {
+  this.display_tickets.set([]);  // or handle error
+}
+      },
+      error :(err) =>
+      {
+        if (err.status === 401) {
+        this.router.navigate(['/']); // redirect to login
+      } else {
+        alert('Something went wrong fetching tickets.');
+      }
+        console.log("Error Occured")
+      }
+     } );
        }
        else{
 
-       
-       this.ticketService.getTicketByIt().subscribe((ticket : Ticket[]) =>
-      {
-        const filtered = ticket.filter(t => t.status == this.currentview)
-        this.display_tickets.set(filtered)
+       this.ticketService.getTicketByIt().subscribe({
+    next: (response) => {
+      
+      console.log(response);
+       const filtered = (response.body.tickets || []).filter((t: Ticket) => t.status === this.currentview);
+    this.display_tickets.set(filtered);
+    },
+    error: (err) => {
+      console.error('Error occurred:', err);
+
+      if (err.status === 401) {
+        this.router.navigate(['/']); // redirect to login
+      } else {
+        alert('Something went wrong fetching tickets.');
       }
-       );
+    }
+  });
+      
+       
     
       }
     }

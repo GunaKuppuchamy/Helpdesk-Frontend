@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket.type';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -131,7 +131,7 @@ export class TicketsService {
 
   getTicketByIt() : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/tickets/it`,{withCredentials:true});
+    return this.http.get(`${this.apiUrl}/tickets/it`,{withCredentials:true,observe:'response'});
   }
 
 }
