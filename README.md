@@ -27,7 +27,7 @@
   * Reset your password using email-based OTP (if needed)
 
 **5. File Structure**
-  src/
+src/
 └── app/
     ├── admin/
     │   ├── admin/
@@ -47,6 +47,8 @@
     └── home/
         ├── home/
         └── forgot-password/
+
+
 
   
 **6. Run**
