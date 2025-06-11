@@ -1,8 +1,18 @@
-<h1>{{title}}</h1>
-<<<<<<< HEAD
-<h1>Made Changes - Thanzia</h1>
-<h1>Another change</h1>
-=======
-<p>Changes</p>
-<h2>Hi</h2>
->>>>>>> sree
+<div class="app-container">
+  <header>
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="Logo" class="logo" />
+      <h1>{{ title }}</h1>
+    </div>
+      <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
+      <button *ngIf="!isLoggedIn && showLoginBtn" (click)="login()"  routerLink="/" class="logout-container">Login</button>
+
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <footer class="footer">
+    <p><strong>Helpdesk Ticketing System</strong> — Simplifying IT support.</p>
+    <p>Reach us at: <a href="mailto:itteamilink@gmail.com">itteamilink&#64;gmail.com</a></p>
+  </footer>
+</div> 

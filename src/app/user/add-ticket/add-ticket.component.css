@@ -1,0 +1,96 @@
+.raise-ticket-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.raise-ticket-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.ticket-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.ticket-form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #34495e;
+}
+
+.ticket-form input,
+.ticket-form textarea,
+.ticket-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+  transition: border-color 0.3s ease;
+}
+
+.ticket-form input:focus,
+.ticket-form textarea:focus,
+.ticket-form select:focus {
+  border-color: #3b89bd;
+  outline: none;
+}
+
+.ticket-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.submit-btn {
+  padding: 12px 24px;
+  background-color: #109748;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #42a87a;
+  color: rgb(255, 255, 255);
+  transform: scale(1.03);
+}
+
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.back-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: white;
+  background-color: #db3434;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 20px auto;
+}
+
+.back-btn:hover {
+  background-color: #db3434;
+  transform: scale(1.05);
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

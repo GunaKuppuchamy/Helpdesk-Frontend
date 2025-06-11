@@ -1,0 +1,17 @@
+<div class="ticket-card">
+  <div class="ticket-header">
+    <h3>Ticket #{{ this_ticket.ticketid }}</h3>
+    <span class="status-pill" [ngClass]="this_ticket.status.toLowerCase()">
+      {{ this_ticket.status }}
+    </span>
+  </div>
+
+  <p class="ticket-description">{{ this_ticket.description }}</p>
+
+  <div class="ticket-actions">
+    <button (click)="onHold()">Mark as On Hold</button>
+    <button (click)="close()">Close Ticket</button>
+  </div>
+
+  <a routerLink="/it-my" class="ticket-back-link">← Back to My Tickets</a>
+</div>

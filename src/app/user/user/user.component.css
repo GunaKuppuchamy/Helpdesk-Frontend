@@ -1,0 +1,77 @@
+.user-dashboard {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.user-dashboard h2 {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.add-ticket-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: white;
+  background-color: #27ae60;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-ticket-btn:hover {
+  background-color: #eefa66;
+  transform: scale(1.05);
+  color: black;
+}
+
+.user-ticket-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.user-ticket-nav a {
+  text-decoration: none;
+  color: #3498db;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.user-ticket-nav a:hover {
+  color: #21618c;
+  text-decoration:underline;
+}
+
+.back-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: white;
+  background-color: #db3434;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 20px auto;
+}
+
+.back-btn:hover {
+  background-color: #db3434;
+  transform: scale(1.05);
+}
+
+
+
+
