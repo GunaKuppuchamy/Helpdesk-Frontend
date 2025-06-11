@@ -1,4 +1,4 @@
-:host ::ng-deep .p-datatable {
+ :host ::ng-deep .p-datatable {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.95rem;
   background-color: #ffffff;
@@ -75,4 +75,6 @@
 .back-btn:hover {
   background-color: #db3434;
   transform: scale(1.05);
-}
+} 
+
+
