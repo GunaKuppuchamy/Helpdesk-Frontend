@@ -6,7 +6,7 @@ export interface Users {
     phoneno:number;
     password:string;
     role:'admin'|'IT_team'|'user';
-    bu:'DEX'|'DATA'|'ILD'|'IT'|'HR'|'SIMS'|'IAT';
+    bu:'DEX'|'DATA'|'ILD'|'IT'|'HR'|'SIMS' | 'IAT';
     
 
 }

@@ -1,4 +1,4 @@
-.ticket-filter-container {
+ .ticket-filter-container {
   max-width: 900px;
   margin: 0 auto;
   padding: 30px 20px;
@@ -119,4 +119,6 @@
 .back-btn:hover {
   background-color: #db3434;
   transform: scale(1.05);
-}
+} 
+
+

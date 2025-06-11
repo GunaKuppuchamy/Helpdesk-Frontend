@@ -1,4 +1,4 @@
-.ticket-overdue-container {
+ .ticket-overdue-container {
   max-width: 800px;
   margin: 30px auto;
   padding: 20px;
@@ -80,4 +80,5 @@
 .back-btn:hover {
   background-color: #db3434;
   transform: scale(1.05);
-}
+} 
+

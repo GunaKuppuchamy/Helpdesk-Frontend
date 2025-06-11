@@ -26,8 +26,9 @@ export class HomeComponent implements OnInit {
   authservice = inject(AuthService);
 
   ngOnInit() {
-    this.authservice.isLoggedIn();
-    setTimeout(() => this.authservice.logout(), 0);
+    this.authservice.isLoggedOut();
+    this.authservice.logInButtonVisibility(false);
+    // setTimeout(() => this.authservice.logout(), 0);
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
