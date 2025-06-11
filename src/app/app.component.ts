@@ -35,9 +35,9 @@ showLoginBtn: boolean = false;
     //   this.isLoggedIn = status;
     // });
   }
-// login(){
-//   this.router.navigate(['/login']);
-// }
+login(){
+  this.router.navigate(['/login']);
+}
   logout() {
     this.auth.logout();
     this.router.navigate(['/login']);
