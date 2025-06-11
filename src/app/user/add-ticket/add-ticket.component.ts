@@ -40,6 +40,7 @@ it_count ={}
     },
     error: (err) => {
       if (err.status === 401) {
+        alert("Session expired Login again to continue");
         this.router.navigate(['/']); 
       } else {
         alert('Something went wrong while submitting the ticket.');
@@ -95,6 +96,7 @@ submitTicket() {
               },
               error: (err) => {
                 if (err.status === 401) {
+                  alert("Session expired Login again to continue");
                   this.router.navigate(['/']); // Session expired
                 } else {
                   alert('Something went wrong while submitting the ticket.');
@@ -104,6 +106,7 @@ submitTicket() {
           },
           error: (err) => {
             if (err.status === 401) {
+              alert("Session expired Login again to continue");
               this.router.navigate(['/']);
             } else {
               alert('Something went wrong while fetching tickets.');
@@ -113,6 +116,7 @@ submitTicket() {
       },
       error: (err) => {
         if (err.status === 401) {
+          alert("Session expired Login again to continue");
           this.router.navigate(['/']);
         } else {
           alert('Something went wrong while fetching users.');

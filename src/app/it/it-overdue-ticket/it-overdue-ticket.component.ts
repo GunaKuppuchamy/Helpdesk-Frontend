@@ -40,6 +40,7 @@ export class ItOverdueTicketComponent implements OnInit {
   {
     if(err.status == 401)
     {
+      alert("Session expired Login again to continue");
       this.router.navigate(['/'])
     }
     console.log("Session expires")

@@ -56,7 +56,9 @@ export class AddUserComponent {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.router.navigate(['/']); // Session expired
+          alert("Session expired Login again to continue");
+          this.router.navigate(['/']); 
+          // Session expired
         } else {
           console.error('Failed to load user data:', err);
           alert('Something went wrong while loading user data.');
@@ -80,7 +82,9 @@ export class AddUserComponent {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.router.navigate(['/']); // Redirect to login
+          alert("Session expired Login again to continue"); 
+          this.router.navigate(['/']);
+          // Redirect to login
         } else {
           console.error('Error occurred while editing user', err);
           alert('Something went wrong while editing the user.');
@@ -97,7 +101,9 @@ export class AddUserComponent {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.router.navigate(['/']); // Redirect to login
+          alert("Session expired Login again to continue");
+          this.router.navigate(['/']);
+           // Redirect to login
         } else {
           console.error('Error adding user', err);
           alert('Something went wrong while adding the user.');

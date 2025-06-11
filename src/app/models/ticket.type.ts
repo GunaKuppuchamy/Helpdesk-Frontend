@@ -2,7 +2,7 @@ export type Ticket = {
   _id : string;
   ticketid?: string;    
   subject:string;       
-  categeory: string;
+  categeory: 'Software'|'Network'|'Hardware'|'Asset Request'|'Email';
   
   description: string;
   status: 'open' | 'onHold' | 'closed'|'cancelled';

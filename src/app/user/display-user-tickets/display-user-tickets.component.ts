@@ -37,6 +37,7 @@ export class DisplayUserTicketsComponent {
   },
   error: (err) => {
     if (err.status === 401) {
+      alert("Session expired Login again to continue");
       this.router.navigate(['/']); // Session expired, redirect
     } else {
       alert("Error fetching user tickets.");
@@ -59,6 +60,7 @@ export class DisplayUserTicketsComponent {
       },
       error: (err) => {
         if (err.status === 401) {
+          alert("Session expired Login again to continue");
           this.router.navigate(['/']);
         } else {
           alert("Error cancelling ticket.");
@@ -68,6 +70,7 @@ export class DisplayUserTicketsComponent {
   },
   error: (err) => {
     if (err.status === 401) {
+      alert("Session expired Login again to continue");
       this.router.navigate(['/']);
     } else {
       alert("Error fetching ticket.");

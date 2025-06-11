@@ -35,6 +35,7 @@ export class AdminViewUsersComponent {
 
       if(err.status == 401)
       {
+        alert("Session expired Login again to continue");
         this.router.navigate(['/']);
       }
 
@@ -59,7 +60,9 @@ export class AdminViewUsersComponent {
         {
           if(err.status == 401)
           {
-            this.router.navigate(['/'])
+            alert("Session expired Login again to continue");
+            this.router.navigate(['/']);
+            
           }
           
         }

@@ -31,6 +31,7 @@ export class AdminViewTicketsComponent {
             error : (err) =>
             {
               if (err.status === 401) {
+                alert("Session expired Login again to continue");
         this.router.navigate(['/']); 
       } else {
         alert('Something went wrong while submitting the ticket.');

@@ -41,6 +41,7 @@ export class ItMyTicketsComponent implements OnInit {
       error :(err) =>
       {
         if (err.status === 401) {
+          alert("Session expired Login again to continue");
         this.router.navigate(['/']); // redirect to login
       } else {
         alert('Something went wrong fetching tickets.');
@@ -74,6 +75,7 @@ export class ItMyTicketsComponent implements OnInit {
       error :(err) =>
       {
         if (err.status === 401) {
+          alert("Session expired Login again to continue");
         this.router.navigate(['/']); // redirect to login
       } else {
         alert('Something went wrong fetching tickets.');
@@ -97,6 +99,7 @@ export class ItMyTicketsComponent implements OnInit {
       console.error('Error occurred:', err);
 
       if (err.status === 401) {
+        alert("Session expired Login again to continue");
         this.router.navigate(['/']); // redirect to login
       } else {
         alert('Something went wrong fetching tickets.');
