@@ -27,7 +27,7 @@
   * Reset your password using email-based OTP (if needed)
 
 **5. File Structure**
-<pre>```bash
+<pre>
   src/
 └── app/
     ├── admin/
