@@ -9,37 +9,37 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admin-view-tickets',
-  imports: [CommonModule,TableModule,RouterLink,InputTextModule],
+  imports: [CommonModule, TableModule, RouterLink, InputTextModule],
   templateUrl: './admin-view-tickets.component.html',
   styleUrl: './admin-view-tickets.component.css'
 })
 export class AdminViewTicketsComponent {
 
-  allTickets: Ticket[] = []; 
+  allTickets: Ticket[] = [];
   filters: { [s: string]: any } = {};
 
-  constructor(private ticketservice: TicketsService,private authService:AuthService, private router : Router) {}
+  constructor(private ticketservice: TicketsService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     //this.allTickets = this.ticketservice.getTickets();
     this.authService.isLoggedIn();
- this.ticketservice.getTicketAPI().subscribe({
-            next : (response) =>
-            {
-              this.allTickets = response.body || [];
-            },
-            error : (err) =>
-            {
-              if (err.status === 401) {
-        this.router.navigate(['/']); 
-      } else {
-        alert('Something went wrong while submitting the ticket.');
+    this.ticketservice.getTicketAPI().subscribe({
+      next: (response) => {
+        this.allTickets = response.body || [];
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.router.navigate(['/login']);
+          this.authService.isLoggedOut();
+
+        } else {
+          alert('Something went wrong while submitting the ticket.');
+        }
       }
-            }
-          
-            
-          })
-        
+
+
+    })
+
   }
 }
 
