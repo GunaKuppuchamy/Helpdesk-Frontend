@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/route
 import { TicketsService } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -17,9 +18,9 @@ export class EditTicketComponent implements OnInit {
   this_ticket !: Ticket;
   id : string= this.route.snapshot.paramMap.get('id') || '';
  
-
+authService=inject(AuthService);
   ngOnInit(): void {
-    
+    this.authService.isLoggedIn();
     this.ticketService.getTicketById(this.id).subscribe((ticket) => {
       this.this_ticket=ticket;
       console.log(this.id)

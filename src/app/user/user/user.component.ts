@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UserServiceService } from '../../services/user-service.service';
 import { Users } from '../../models/users';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-user',
@@ -12,6 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 export class UserComponent {
 
   userservice=inject(UserServiceService);
+  authService=inject(AuthService);
   router=inject(Router);
 
   curUserData!:Users;
@@ -25,6 +27,7 @@ export class UserComponent {
 
   ngOnInit():void
   {
+    this.authService.isLoggedIn();
     //this.curUserData=this.userservice.getUserById(this.curUserId);
   }
 

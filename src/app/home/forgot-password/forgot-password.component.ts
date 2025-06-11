@@ -26,6 +26,7 @@ export class ForgotPasswordComponent {
   private router = inject(Router);
 
   ngOnInit() {
+    this.authService.isLoggedIn();
     this.authService.logout();
 
     this.emailForm = this.fb.group({

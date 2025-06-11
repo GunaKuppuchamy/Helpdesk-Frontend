@@ -4,10 +4,12 @@ import { TicketsService } from '../../services/tickets.service';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Router, RouterLink } from '@angular/router';
+import { InputTextModule } from 'primeng/inputtext';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admin-view-tickets',
-  imports: [CommonModule,TableModule,RouterLink],
+  imports: [CommonModule,TableModule,RouterLink,InputTextModule],
   templateUrl: './admin-view-tickets.component.html',
   styleUrl: './admin-view-tickets.component.css'
 })
@@ -15,10 +17,11 @@ export class AdminViewTicketsComponent {
 
   allTickets: Ticket[] = []; 
 
-  constructor(private ticketservice: TicketsService, private router : Router) {}
+  constructor(private ticketservice: TicketsService,private authService:AuthService, private router : Router) {}
 
   ngOnInit() {
     //this.allTickets = this.ticketservice.getTickets();
+    this.authService.isLoggedIn();
  this.ticketservice.getTicketAPI().subscribe({
             next : (response) =>
             {

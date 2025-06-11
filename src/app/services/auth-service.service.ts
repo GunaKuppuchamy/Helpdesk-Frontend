@@ -1,4 +1,4 @@
-import { Injectable , inject} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoginService } from './login.service';
 
@@ -8,24 +8,38 @@ import { LoginService } from './login.service';
 
 export class AuthService {
   loginservice = inject(LoginService);
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  // public isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  // isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   login() {
-    this.isLoggedInSubject.next(true);                            
+    // this.isLoggedInSubject.next(true); 
+    // const event = new CustomEvent('isLoggedIn', {
+    //   detail: { data: true }
+    // });
+    // window.dispatchEvent(event);
+
+  }
+
+  isLoggedIn(){
+    const event = new CustomEvent('isLoggedIn', {
+      detail: { data: true }
+    });
+    window.dispatchEvent(event);
   }
 
   logout() {
     this.loginservice.logout().subscribe({
-      next : () =>
-      {
+      next: () => {
+        // this.isLoggedInSubject.next(false);
+        const event = new CustomEvent('isLoggedIn', {
+          detail: { data: false }
+        });
+        window.dispatchEvent(event);
         console.log("Logged Out");
       },
-      error : () =>
-      {
+      error: () => {
         console.log("Error Logging out")
       }
     })
-    this.isLoggedInSubject.next(false);                             
   }
 }

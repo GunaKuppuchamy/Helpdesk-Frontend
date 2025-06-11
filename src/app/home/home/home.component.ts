@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule,RouterModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, RouterModule, ReactiveFormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -20,89 +20,93 @@ export class HomeComponent implements OnInit {
   password = "";
   // role = ""
 
-  constructor(private router: Router,  private loginService:LoginService , private userservice : UserServiceService) { }
-   loginForm!:FormGroup;
-  private fb=inject(FormBuilder);
-  authservice=inject(AuthService);
+  constructor(private router: Router, private loginService: LoginService, private userservice: UserServiceService) { }
+  loginForm!: FormGroup;
+  private fb = inject(FormBuilder);
+  authservice = inject(AuthService);
 
-  ngOnInit()
-  {
-    setTimeout(() =>this.authservice.logout(),0);
+  ngOnInit() {
+    this.authservice.isLoggedIn();
+    setTimeout(() => this.authservice.logout(), 0);
 
     this.loginForm = this.fb.group({
-      email:['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password:['',[Validators.required,Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
       // role:['',Validators.required]
     })
-        
+
   }
 
-  
+
   login() {
 
-  //   if(this.role===''){
-  //     alert('Please select a valid user type');
-  //     return
-  //   }
-  //   this.loginService.login(this.email,this.password,this.role).subscribe({
-  //     next:(response)=>{
-  //       // alert('called');
-  //       // alert(response);
-  //       console.log(document.cookie+"hiiii");
-  //     if(response.status===200){
-  //       // alert(response.status);
-  //          switch (this.role) {
-  //     case 'user':
-  //       this.router.navigate(['/user']);
-  //       break;
-  //     case 'it':
-  //       this.router.navigate(['/it-team']);
-  //       break;
-  //     case 'admin':
-  //       this.router.navigate(['/admin']);
-  //       break;
-  //     // default:
-  //     //   alert('Please select a valid user type');
-  //   }
-  //     }
-  //     else{
-  //       this.router.navigate(['']);
-  //     }
-  //   }})
- if (this.loginForm.invalid) {
-    alert('Please enter valid email and password');
-    return;
-  }
-  this.authservice.login()
-
-  const { email, password } = this.loginForm.value;
-
-  this.loginService.login(email, password).subscribe({
-    next: (response: any) => {
-      console.log(response)
-      if (response.body.role) {
-        switch (response.body.role) {
-          case 'user':
-            this.router.navigate(['/user']);
-            break;
-          case 'it':
-            this.router.navigate(['/it-team']);
-            break;
-          case 'admin':
-            this.router.navigate(['/admin']);
-            break;
-          default:
-            alert('Unknown role');
-        }
-      } else {
-        alert('Role info not received');
-      }
-    },
-    error: () => {
-      alert('Login failed');
+    //   if(this.role===''){
+    //     alert('Please select a valid user type');
+    //     return
+    //   }
+    //   this.loginService.login(this.email,this.password,this.role).subscribe({
+    //     next:(response)=>{
+    //       // alert('called');
+    //       // alert(response);
+    //       console.log(document.cookie+"hiiii");
+    //     if(response.status===200){
+    //       // alert(response.status);
+    //          switch (this.role) {
+    //     case 'user':
+    //       this.router.navigate(['/user']);
+    //       break;
+    //     case 'it':
+    //       this.router.navigate(['/it-team']);
+    //       break;
+    //     case 'admin':
+    //       this.router.navigate(['/admin']);
+    //       break;
+    //     // default:
+    //     //   alert('Please select a valid user type');
+    //   }
+    //     }
+    //     else{
+    //       this.router.navigate(['']);
+    //     }
+    //   }})
+    if (this.loginForm.invalid) {
+      alert('Please enter valid email and password');
+      return;
     }
-  });
+    // this.authservice.login()
+
+    const { email, password } = this.loginForm.value;
+
+    this.loginService.login(email, password).subscribe({
+      next: (response: any) => {
+        // console.log(response)
+        const event = new CustomEvent('isLoggedIn', {
+          detail: { data: true }
+        });
+        window.dispatchEvent(event);
+        if (response.body.role) {
+          switch (response.body.role) {
+            case 'user':
+              this.router.navigate(['/user']);
+              break;
+            case 'it':
+              this.router.navigate(['/it-team']);
+              break;
+            case 'admin':
+              this.router.navigate(['/admin']);
+              break;
+            default:
+              alert('Unknown role');
+          }
+        } else {
+          alert('Role info not received');
+        }
+      },
+      error: () => {
+        alert('Login failed');
+      }
+    });
 
 
-}
+  }
 }

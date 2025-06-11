@@ -4,6 +4,7 @@ import { Ticket } from '../../models/ticket.type';
 import { CommonModule } from '@angular/common';
 import { tick } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-it-team',
@@ -11,8 +12,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './it-team.component.html',
   styleUrl: './it-team.component.css'
 })
-
-export class ItTeamComponent  {
+export class ItTeamComponent implements OnInit  {
+authService = inject(AuthService);
+  ngOnInit(): void {
+      this.authService.isLoggedIn();
+  }
 
 
 }

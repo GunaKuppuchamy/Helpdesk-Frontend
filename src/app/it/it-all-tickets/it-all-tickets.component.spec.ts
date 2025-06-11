@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItAllTicketsComponent } from './it-all-tickets.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ItAllTicketsComponent', () => {
   let component: ItAllTicketsComponent;
@@ -8,7 +11,25 @@ describe('ItAllTicketsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ItAllTicketsComponent]
+      imports: [ItAllTicketsComponent,HttpClientTestingModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }), // Mocked route param
+            snapshot: {
+              paramMap: {
+                get: (key: string) => {
+                  if (key === 'id') return '123';
+                  return null;
+                }
+              }
+            }
+          }
+        }
+      ]
+
+
     })
     .compileComponents();
 
