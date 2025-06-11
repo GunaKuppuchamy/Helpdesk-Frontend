@@ -25,3 +25,29 @@
   * Submit tickets with required details
   * View, track, and update status
   * Reset your password using email-based OTP (if needed)
+
+**5. File Structure**
+  src/
+└── app/
+    ├── admin/
+    │   ├── admin/
+    │   ├── add-user/
+    │   ├── display-user/
+    │   ├── ticket/
+    │   └── dashboard/
+    ├── user/
+    │   ├── user/
+    │   ├── add-ticket/
+    │   └── display-user-tickets/
+    ├── it/
+    │   ├── it-team/
+    │   ├── it-all-tickets/
+    │   ├── it-my-tickets/
+    │   └── it-overdue-tickets/
+    └── home/
+        ├── home/
+        └── forgot-password/
+
+  
+**6. Run**
+  * ng serve
