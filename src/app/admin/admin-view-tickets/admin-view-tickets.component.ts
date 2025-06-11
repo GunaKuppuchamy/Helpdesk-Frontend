@@ -1,3 +1,5 @@
+
+
 import { Component, inject } from '@angular/core';
 import { Ticket } from '../../models/ticket.type';
 import { TicketsService } from '../../services/tickets.service';
@@ -6,20 +8,19 @@ import { TableModule } from 'primeng/table';
 import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../services/auth-service.service';
-
+ 
 @Component({
   selector: 'app-admin-view-tickets',
-  imports: [CommonModule, TableModule, RouterLink, InputTextModule],
+  imports: [CommonModule,TableModule,RouterLink,InputTextModule],
   templateUrl: './admin-view-tickets.component.html',
   styleUrl: './admin-view-tickets.component.css'
 })
 export class AdminViewTicketsComponent {
-
+ 
   allTickets: Ticket[] = [];
-  filters: { [s: string]: any } = {};
-
-  constructor(private ticketservice: TicketsService, private authService: AuthService, private router: Router) { }
-
+ 
+  constructor(private ticketservice: TicketsService,private authService:AuthService, private router : Router) {}
+ 
   ngOnInit() {
     //this.allTickets = this.ticketservice.getTickets();
     this.authService.isLoggedIn();
@@ -31,17 +32,17 @@ export class AdminViewTicketsComponent {
             error : (err) =>
             {
               if (err.status === 401) {
-                alert("Session expired Login again to continue");
-        this.router.navigate(['/']); 
+        alert("Session expired Login again to continue");
+        this.router.navigate(['/login']); 
         this.authService.isLoggedOut();
-
       } else {
         alert('Something went wrong while submitting the ticket.');
       }
-
-
-    })
-
+            }
+         
+           
+          })
+       
   }
 }
 

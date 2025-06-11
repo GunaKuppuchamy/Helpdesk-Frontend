@@ -97,7 +97,9 @@ export class AddUserComponent {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.router.navigate(['/']); // Redirect to login
+          this.router.navigate(['/']); 
+          this.authService.isLoggedOut();
+// Redirect to login
         } else {
           console.error('Error adding user', err);
           alert('Something went wrong while adding the user.');
