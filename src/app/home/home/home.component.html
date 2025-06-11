@@ -6,7 +6,7 @@
           <div *ngIf="errors['required']">Email is required.</div>
           <div *ngIf="errors['pattern']">Invalid email</div>
     </div>
-    <label>Password: <input formControlName="password"></label>
+    <label>Password: <input formControlName="password" type="password"></label>
     <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors as errors" class="error">
           <div *ngIf="errors['required']">Password is required.</div>
           <div *ngIf="errors['minlength']">A minimum of length 8 is required</div>
