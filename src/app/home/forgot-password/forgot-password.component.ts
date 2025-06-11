@@ -34,7 +34,7 @@ export class ForgotPasswordComponent {
     });
 
     this.otpForm = this.fb.group({
-      otp: ['', [Validators.required,Validators.pattern(/^\d{6}$/)]]
+      otp: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]]
     });
 
     this.resetForm = this.fb.group({
@@ -75,7 +75,9 @@ export class ForgotPasswordComponent {
     this.http.post('http://localhost:3002/resetpassword', { email, newPassword }).subscribe({
       next: () => {
         alert('Password reset successful. Redirecting to login.');
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
+        this.authService.isLoggedOut();
+
       },
       error: () => {
         alert('Failed to reset password.');

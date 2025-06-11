@@ -9,16 +9,16 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admin-view-tickets',
-  imports: [CommonModule,TableModule,RouterLink,InputTextModule],
+  imports: [CommonModule, TableModule, RouterLink, InputTextModule],
   templateUrl: './admin-view-tickets.component.html',
   styleUrl: './admin-view-tickets.component.css'
 })
 export class AdminViewTicketsComponent {
 
-  allTickets: Ticket[] = []; 
+  allTickets: Ticket[] = [];
   filters: { [s: string]: any } = {};
 
-  constructor(private ticketservice: TicketsService,private authService:AuthService, private router : Router) {}
+  constructor(private ticketservice: TicketsService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     //this.allTickets = this.ticketservice.getTickets();
@@ -33,14 +33,15 @@ export class AdminViewTicketsComponent {
               if (err.status === 401) {
                 alert("Session expired Login again to continue");
         this.router.navigate(['/']); 
+        this.authService.isLoggedOut();
+
       } else {
         alert('Something went wrong while submitting the ticket.');
       }
-            }
-          
-            
-          })
-        
+
+
+    })
+
   }
 }
 

@@ -4,8 +4,8 @@
       <img src="assets/logo.png" alt="Logo" class="logo" />
       <h1>{{ title }}</h1>
     </div>
-      <!-- <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button> -->
       <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
+      <button *ngIf="!isLoggedIn && showLoginBtn" (click)="login()"  routerLink="/" class="logout-container">Login</button>
 
   </header>
   <main>

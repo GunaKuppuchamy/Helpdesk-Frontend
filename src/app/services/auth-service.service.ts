@@ -27,7 +27,24 @@ export class AuthService {
     window.dispatchEvent(event);
   }
 
+  isLoggedOut(){
+    const event = new CustomEvent('isLoggedIn', {
+      detail: { data: false }
+    });
+    window.dispatchEvent(event);
+  }
+
+  logInButtonVisibility(value: boolean) {
+    const event = new CustomEvent('showLoginBtn', {
+      detail: { data: value }
+    });
+    window.dispatchEvent(event);
+  }
+
+
+
   logout() {
+
     this.loginservice.logout().subscribe({
       next: () => {
         // this.isLoggedInSubject.next(false);

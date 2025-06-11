@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth-service.service';
   styleUrl: './display-user-tickets.component.css'
 })
 export class DisplayUserTicketsComponent {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   ticketService = inject(TicketsService);
   authService = inject(AuthService);
@@ -25,58 +25,64 @@ export class DisplayUserTicketsComponent {
     const type = this.route.snapshot.paramMap.get('user');
     console.log(type);
 
-   this.ticketService.getTicketByUser().subscribe({
-  next: (response) => {
-    const tickets = response.body as Ticket[];
-    if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
-      const filtered = tickets.filter(t => t.status === type);
-      this.display_tickets.set(filtered);
-    } else {
-      this.display_tickets.set(tickets);
-    }
-  },
-  error: (err) => {
-    if (err.status === 401) {
-      alert("Session expired Login again to continue");
-      this.router.navigate(['/']); // Session expired, redirect
-    } else {
-      alert("Error fetching user tickets.");
-    }
-  }
-});
+    this.ticketService.getTicketByUser().subscribe({
+      next: (response) => {
+        const tickets = response.body as Ticket[];
+        if (type && ['open', 'closed', 'cancelled', 'onHold'].includes(type)) {
+          const filtered = tickets.filter(t => t.status === type);
+          this.display_tickets.set(filtered);
+        } else {
+          this.display_tickets.set(tickets);
+        }
+      },
+      error: (err) => {
+        if (err.status === 401) {
+           alert("Session expired Login again to continue");
+          this.router.navigate(['/login']);
+          this.authService.isLoggedOut();
+          // Session expired, redirect
+        } else {
+          alert("Error fetching user tickets.");
+        }
+      }
+    });
 
   }
 
   cancelTicket(tid: string): void {
     this.ticketService.getTicketById(tid).subscribe({
-  next: (response) => {
-    const ticket = response.body as Ticket;
-    ticket.status = "cancelled";
+      next: (response) => {
+        const ticket = response.body as Ticket;
+        ticket.status = "cancelled";
 
-    this.ticketService.updateTickets(tid, ticket).subscribe({
-      next: () => {
-        alert("Ticket Cancelled");
-        this.ngOnInit();
+        this.ticketService.updateTickets(tid, ticket).subscribe({
+          next: () => {
+            alert("Ticket Cancelled");
+            this.ngOnInit();
+          },
+          error: (err) => {
+            if (err.status === 401) {
+               alert("Session expired Login again to continue");
+              this.router.navigate(['/login']);
+              this.authService.isLoggedOut();
+
+            } else {
+              alert("Error cancelling ticket.");
+            }
+          }
+        });
       },
       error: (err) => {
         if (err.status === 401) {
-          alert("Session expired Login again to continue");
-          this.router.navigate(['/']);
+           alert("Session expired Login again to continue");
+          this.router.navigate(['/login']);
+          this.authService.isLoggedOut();
+
         } else {
-          alert("Error cancelling ticket.");
+          alert("Error fetching ticket.");
         }
       }
     });
-  },
-  error: (err) => {
-    if (err.status === 401) {
-      alert("Session expired Login again to continue");
-      this.router.navigate(['/']);
-    } else {
-      alert("Error fetching ticket.");
-    }
-  }
-});
 
   }
 }
