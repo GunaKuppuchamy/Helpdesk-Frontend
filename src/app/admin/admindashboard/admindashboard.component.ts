@@ -134,7 +134,7 @@ this.authService.isLoggedIn();
 
     this.allTickets.forEach(ticket => {
       const user = this.allUsers.find(u => u.empid === ticket.userid);
-      const groupValue = user ? user[this.userGroupBy as keyof typeof user] as string : '';
+      const groupValue = user ? user[this.userGroupBy as keyof typeof user] as string : ''; 
       if (groupValue && userCounts.hasOwnProperty(groupValue)) {
         userCounts[groupValue]++;
       }
