@@ -126,7 +126,7 @@ describe('AdminViewTicketsComponent', () => {
 
    
 
-  // ✅ 2. Handle 401 error
+  //  2. Handle 401 error
   it('should handle 401 error from getTicketAPI', () => {
     const mockError = { status: 401 };
     mockAuthService.isLoggedIn.and.callFake(() => {true});
