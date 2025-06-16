@@ -41,5 +41,10 @@ deleteUserById(id : string)
   return this.http.delete(`${this.apiUrl}/deleteUser/${id}`,{withCredentials : true , observe : 'response'});
 }
 
+getCurrentUser() : Observable<any>
+{
+  return this.http.get(`${this.apiUrl}/currentUser`,{withCredentials : true , observe : 'response'});
+}
+
 
 }
