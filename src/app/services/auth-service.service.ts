@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +10,8 @@ import { LoginService } from './login.service';
 
 export class AuthService {
   loginservice = inject(LoginService);
-  // public isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  // isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  
 
-  login() {
-    // this.isLoggedInSubject.next(true); 
-    // const event = new CustomEvent('isLoggedIn', {
-    //   detail: { data: true }
-    // });
-    // window.dispatchEvent(event);
-
-  }
 
   isLoggedIn(){
     const event = new CustomEvent('isLoggedIn', {
@@ -48,15 +41,23 @@ export class AuthService {
     this.loginservice.logout().subscribe({
       next: () => {
         // this.isLoggedInSubject.next(false);
-        const event = new CustomEvent('isLoggedIn', {
-          detail: { data: false }
-        });
-        window.dispatchEvent(event);
-        console.log("Logged Out");
+        this.isLoggedOut();
       },
       error: () => {
         console.log("Error Logging out")
       }
     })
   }
+  router=inject(Router)
+ sessionTimeout(err: HttpErrorResponse): boolean {
+  if (err.status === 401) {
+    alert("Session Time Out. Please login again.");
+     this.router.navigate(['/login']);
+    this.isLoggedOut();
+   
+    return true;  
+  }
+  return false;  
+}
+
 }

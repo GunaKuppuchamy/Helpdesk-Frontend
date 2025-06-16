@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 
+/**
+ * This Component displays Open and onHold Tickets which has passed the due date and has not been closed yet
+ */
+
 @Component({
   selector: 'app-it-overdue-ticket',
   imports: [CommonModule,RouterLink],
@@ -18,10 +22,10 @@ export class ItOverdueTicketComponent implements OnInit {
     display_tickets = signal<Array<Ticket>>([]);
     router = inject(Router)
     today = new Date()
-    loggedInUserId : string = "I388"
+    
 
     ngOnInit(): void {
-      this.authService.isLoggedIn();
+    
   this.ticketService.getTicketByIt().subscribe({
     next : (response) => {
     const filtered = (response.body || []).filter((t:Ticket) => {
@@ -38,20 +42,15 @@ export class ItOverdueTicketComponent implements OnInit {
   },
   error : (err) =>
   {
-    if(err.status == 401)
-    {
-      alert("Session expired Login again to continue");
-      this.router.navigate(['/'])
-    }
-    console.log("Session expires")
+     if (!this.authService.sessionTimeout(err)) {
+      console.log("Error occured");
+     }
+  
   }
   }
 );
     
 }
-
-        // const filtered = this.ticketService.tickets.filter( t => t.duedate < this.today && t.itid === this.loggedInUserId && t.status !== 'closed');
-        // this.display_tickets.set(filtered)
 
     }
 

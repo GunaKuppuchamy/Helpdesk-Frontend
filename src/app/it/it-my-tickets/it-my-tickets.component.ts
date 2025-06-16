@@ -5,6 +5,11 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 
+
+/**
+ * This Component displayes the ticket assigned to the currently looged in IT team member
+ * They can edit the status of the ticket
+ */
 @Component({
   selector: 'app-it-my-tickets',
   imports: [CommonModule, RouterModule, RouterLink],
@@ -15,7 +20,7 @@ export class ItMyTicketsComponent implements OnInit {
   authService = inject(AuthService);
   ticketService = inject(TicketsService);
   display_tickets = signal<Array<Ticket>>([]);
-  //all_tickets = this.ticketService.tickets
+
   currentview !: 'all' | 'onHold' | 'open' | 'closed';
   loggedInUserId: string = 'I408';
   router = inject(Router)
@@ -26,7 +31,7 @@ export class ItMyTicketsComponent implements OnInit {
     console.log(this.currentview)
   }
   ngOnInit(): void {
-    this.authService.isLoggedIn();
+    
     this.ticketService.getTicketByIt().subscribe({
       next: (response) => {
         console.log(response)
@@ -37,19 +42,13 @@ export class ItMyTicketsComponent implements OnInit {
 
       },
       error: (err) => {
-        if (err.status === 401) {
-           alert("Session expired Login again to continue");
-          this.router.navigate(['/login']);
-          this.authService.isLoggedOut();
-          // redirect to login
-        } else {
+         if (!this.authService.sessionTimeout(err)) {
           alert('Something went wrong fetching tickets.');
         }
         console.log("Error Occured")
       }
     });
-    console.log("aaa" + this.display_tickets)
-    console.log(this.currentview)
+  
 
   }
 
@@ -69,11 +68,7 @@ export class ItMyTicketsComponent implements OnInit {
           }
         },
         error: (err) => {
-          if (err.status === 401) {
-            this.router.navigate(['/login']);
-            this.authService.isLoggedOut();
-            // redirect to login
-          } else {
+          if (!this.authService.sessionTimeout(err)) {
             alert('Something went wrong fetching tickets.');
           }
           console.log("Error Occured")
@@ -94,12 +89,7 @@ export class ItMyTicketsComponent implements OnInit {
         error: (err) => {
           console.error('Error occurred:', err);
 
-          if (err.status === 401) {
-            alert("Session expired Login again to continue");
-            this.router.navigate(['/login']);
-            this.authService.isLoggedOut();
-            // redirect to login
-          } else {
+          if (!this.authService.sessionTimeout(err)) {
             alert('Something went wrong fetching tickets.');
           }
         }

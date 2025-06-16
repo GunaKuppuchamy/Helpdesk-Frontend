@@ -28,7 +28,7 @@ export class UserComponent {
   ngOnInit():void
   {
     this.authService.isLoggedIn();
-    //this.curUserData=this.userservice.getUserById(this.curUserId);
+    
   }
 
 }

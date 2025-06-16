@@ -1,5 +1,3 @@
-
-
 import { Component, inject } from '@angular/core';
 import { Ticket } from '../../models/ticket.type';
 import { TicketsService } from '../../services/tickets.service';
@@ -8,6 +6,10 @@ import { TableModule } from 'primeng/table';
 import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../services/auth-service.service';
+
+/**
+ * This component is to fetch and list all the tickets raised by the users from the database in the Admin View
+ */
  
 @Component({
   selector: 'app-admin-view-tickets',
@@ -22,20 +24,15 @@ export class AdminViewTicketsComponent {
   constructor(private ticketservice: TicketsService,private authService:AuthService, private router : Router) {}
  
   ngOnInit() {
-    //this.allTickets = this.ticketservice.getTickets();
-    this.authService.isLoggedIn();
- this.ticketservice.getTicketAPI().subscribe({
+    // this.authService.isLoggedIn();
+    this.ticketservice.getTicketAPI().subscribe({
             next : (response) =>
             {
               this.allTickets = response.body || [];
             },
             error : (err) =>
             {
-              if (err.status === 401) {
-        alert("Session expired Login again to continue");
-        this.router.navigate(['/login']); 
-        this.authService.isLoggedOut();
-      } else {
+             if (!this.authService.sessionTimeout(err)) {
         alert('Something went wrong while submitting the ticket.');
       }
             }

@@ -1,12 +1,19 @@
-<div class="ticket-card">
+<div class="ticket-card" *ngIf="this_ticket">
   <div class="ticket-header">
     <h3>Ticket #{{ this_ticket.ticketid }}</h3>
-    <span class="status-pill" [ngClass]="this_ticket.status.toLowerCase()">
+    <span class="status-pill">
       {{ this_ticket.status }}
     </span>
   </div>
 
-  <p class="ticket-description">{{ this_ticket.description }}</p>
+  <div class="ticket-details">
+    <p><strong>Subject:</strong> {{ this_ticket.subject }}</p>
+    <p><strong>Description:</strong> {{ this_ticket.description }}</p>
+    <p><strong>Category:</strong> {{ this_ticket.categeory }}</p>
+    <p><strong>Priority:</strong> {{ this_ticket.priroty }}</p>
+    <p><strong>Created By:</strong> {{ this_ticket.userid }}</p>
+    <p><strong>Created At:</strong> {{ this_ticket.raiseddate | date:'medium' }}</p>
+  </div>
 
   <div class="ticket-actions">
     <button (click)="onHold()">Mark as On Hold</button>

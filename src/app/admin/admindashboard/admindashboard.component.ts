@@ -6,9 +6,15 @@ import { UserServiceService } from '../../services/user-service.service';
 import { CommonModule } from '@angular/common';
 import { Ticket } from '../../models/ticket.type';
 import { Users } from '../../models/users';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth-service.service';
+
+/**
+ * This is a dashboard component for the admin to analyze the data efficiently
+ * This component has graphs based on Users and Tickets
+ * Different type of graph visuals based on different criteria is displayed in this page
+ */
 
 @Component({
   selector: 'app-admindashboard',
@@ -18,6 +24,7 @@ import { AuthService } from '../../services/auth-service.service';
 })
 export class AdmindashboardComponent {
 
+  router = inject(Router)
   // Ticket chart vars
   ticketsByFilter!: EChartsOption;
   ticketservice = inject(TicketsService);
@@ -44,7 +51,7 @@ export class AdmindashboardComponent {
 allTickets !: Ticket[];
 allUsers !:Users[];
   ngOnInit() {
-this.authService.isLoggedIn();
+//this.authService.isLoggedIn();
     forkJoin({
       tickets: this.ticketservice.getTicketAPI(),
       users : this.userservice.getUsersApi()
@@ -57,9 +64,11 @@ this.authService.isLoggedIn();
         this.updateUserChart();
 
       },
-      error : () =>
+      error : (err) =>
       {
-        console.log("Error Occured")
+        if (!this.authService.sessionTimeout(err)) {
+          console.log("Error Occured")
+        }
       }
     })
   
@@ -68,9 +77,7 @@ this.authService.isLoggedIn();
   
   //  TICKET CHART 
   updateTicketChart(): void {
-    //this.allTickets = this.ticketservice.getTickets();
     
-    //console.log(this.allTickets)
     
     this.totalTickets=this.allTickets.length;
 
@@ -91,7 +98,10 @@ this.authService.isLoggedIn();
       xAxis: this.ticketChartType !== 'pie' ? {
         type: 'category',
         name: this.ticketGroupBy,
-        data: groupKeys
+        data: groupKeys,
+        axisLabel : {
+          rotate :30
+        }
       } : undefined,
       yAxis: this.ticketChartType !== 'pie' ? {
         type: 'value',
@@ -107,10 +117,9 @@ this.authService.isLoggedIn();
 
   // USER CHART 
   updateUserChart(): void {
-  // const allUsers = this.userservice.getUsers();
+  
   this.totalUsers=this.allUsers.length;
 
-  //this.allTickets = this.ticketservice.getTickets();
 
   const userCounts: { [key: string]: number } = {};
   let userKeys: string[] = [];

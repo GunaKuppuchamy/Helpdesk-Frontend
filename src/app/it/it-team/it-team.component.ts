@@ -6,6 +6,10 @@ import { tick } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 
+/**
+ * Overview Component for all the It Team Navigation
+ */
+
 @Component({
   selector: 'app-it-team',
   imports: [CommonModule,RouterModule],
