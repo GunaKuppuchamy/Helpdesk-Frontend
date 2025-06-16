@@ -1,27 +1,29 @@
- .ticket-nav-container {
+.ticket-nav-container {
+  position: relative;
   height: 65vh;
   background: linear-gradient(to right, #fdfbfb, #ebedee);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 60px 20px 20px 20px; /* space for profile link */
   text-align: center;
 }
 
+/* Title centered */
 .ticket-nav-container h2 {
   font-size: 2.2rem;
   color: #2c3e50;
   margin-bottom: 40px;
 }
 
+/* Ticket links styled horizontally */
 .ticket-links {
   display: flex;
   gap: 25px;
   flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 30px;
 }
 
+/* Each ticket link */
 .ticket-links a {
   text-decoration: none;
   background-color: #3498db;
@@ -39,32 +41,11 @@
   transform: translateY(-2px);
 }
 
-.back-btn {
-  padding: 10px 24px;
-  font-size: 1rem;
-  color: white;
-  background-color: #e74c3c;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-}
-
-.back-btn:hover {
-  background-color: #c0392b;
-  transform: scale(1.05);
-} 
-
-
-
+/* Profile Button Positioned Top Right */
 .top-bar {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  padding: 15px 30px 0 0;
   position: absolute;
-  top: 0;
+  top: 15px;
+  right: 30px;
 }
 
 .profile-link {
@@ -83,10 +64,3 @@
   background-color: #417597;
   transform: translateY(-1px);
 }
-
-
-.ticket-nav-container {
-  position: relative;
-}
-
-
