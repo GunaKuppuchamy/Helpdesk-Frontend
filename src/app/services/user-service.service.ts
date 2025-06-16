@@ -11,7 +11,10 @@ export class UserServiceService {
   http=inject(HttpClient)
   constructor() { }
 
-private apiUrl='http://localhost:3002';
+
+private apiUrl='http://localhost:3002'
+
+
 
 getUsersApi() 
 {

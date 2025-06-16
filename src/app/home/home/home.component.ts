@@ -24,10 +24,12 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.authservice.isLoggedOut();
     this.authservice.logInButtonVisibility(false);
+    
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
+    
     })
 
   }
@@ -35,6 +37,7 @@ export class HomeComponent implements OnInit {
 
   login() {
 
+   
     if (this.loginForm.invalid) {
       alert('Please enter valid email and password');
       return;
@@ -44,11 +47,7 @@ export class HomeComponent implements OnInit {
 
     this.loginService.login(email, password).subscribe({
       next: (response: any) => {
-        // const event = new CustomEvent('isLoggedIn', {
-        //   detail: { data: true }
-        // });
-        // window.dispatchEvent(event);
-        this.authservice.isLoggedIn();
+      this.authservice.isLoggedIn();
         if (response.body.role) {
           switch (response.body.role) {
             case 'user':

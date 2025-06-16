@@ -27,12 +27,12 @@
   </div>
 
   <div>
-    <label>Password: <input type="password" formControlName="password" /></label>
-    <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors as errors" class="error">
+    <label>Password: <input type="password" formControlName="password"/></label>
+     <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors as errors" class="error">
         <div *ngIf="errors['required']">User ID is required.</div>
         <div *ngIf="errors['minlength']">Minimum of length 8 is required</div>
     </div>
-  </div>
+  </div> 
 
   <div>
     <label>Phone: <input type="tel" formControlName="phoneno" /></label>

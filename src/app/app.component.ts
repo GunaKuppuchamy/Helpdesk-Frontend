@@ -16,24 +16,22 @@ export class AppComponent implements OnInit {
   authService = inject(AuthService);
 showLoginBtn: boolean = false;
   ngOnInit(): void {
-    // console.log(this.isLoggedIn)
+    
  window.addEventListener('showLoginBtn', (event: any) => {
       this.showLoginBtn = event.detail.data;
 
     })
-    // this.authService.isLoggedIn();
+    
     window.addEventListener('isLoggedIn', (event: any) => {
       this.isLoggedIn = event.detail.data;
-      // console.log("isLoggedIn event received:", this.isLoggedIn);
+      
 
     })
   }
 
 
   constructor(private auth: AuthService, private router: Router) {
-    // this.auth.isLoggedInSubject.subscribe(status => {
-    //   this.isLoggedIn = status;
-    // });
+    
   }
 login(){
   this.router.navigate(['/login']);

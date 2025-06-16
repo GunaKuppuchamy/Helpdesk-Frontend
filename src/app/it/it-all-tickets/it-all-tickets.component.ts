@@ -8,7 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 
-
+/**
+ * This component fetches all the ticket raised by the users from the database
+ * The tickets dispalyed in this component can't be edited by the current looged in IT team member
+ */
 @Component({
   selector: 'app-it-all-tickets',
   standalone: true,
@@ -24,19 +27,14 @@ export class ItAllTicketsComponent {
   display_tickets = signal<Array<Ticket>>([]);
   router = inject(Router)
   ngOnInit(): void {
-    //this.display_tickets.set(this.ticketService.tickets)
-    this.authService.isLoggedIn();
+    
+    //this.authService.isLoggedIn();
     this.ticketService.getTicketAPI().subscribe({
       next: (response) => {
         this.display_tickets.set(response.body || []);
       },
       error: (err) => {
-        if (err.status === 401) {
-                          alert("Session expired Login again to continue");
-          this.router.navigate(['/login']);
-          this.authService.isLoggedOut();
-
-        } else {
+        if (!this.authService.sessionTimeout(err)) {
           alert('Something went wrong while submitting the ticket.');
         }
       }
@@ -44,7 +42,7 @@ export class ItAllTicketsComponent {
 
     })
   }
-  //console.log(this.display_tickets)
+  
 
 }
 

@@ -21,7 +21,7 @@ export class DisplayUserTicketsComponent {
   //this_ticket!: Ticket;
 
   ngOnInit(): void {
-    this.authService.isLoggedIn();
+    
     const type = this.route.snapshot.paramMap.get('user');
     console.log(type);
 
@@ -36,12 +36,7 @@ export class DisplayUserTicketsComponent {
         }
       },
       error: (err) => {
-        if (err.status === 401) {
-           alert("Session expired Login again to continue");
-          this.router.navigate(['/login']);
-          this.authService.isLoggedOut();
-          // Session expired, redirect
-        } else {
+         if (!this.authService.sessionTimeout(err)) {
           alert("Error fetching user tickets.");
         }
       }
@@ -61,24 +56,14 @@ export class DisplayUserTicketsComponent {
             this.ngOnInit();
           },
           error: (err) => {
-            if (err.status === 401) {
-               alert("Session expired Login again to continue");
-              this.router.navigate(['/login']);
-              this.authService.isLoggedOut();
-
-            } else {
+            if (!this.authService.sessionTimeout(err)) {
               alert("Error cancelling ticket.");
             }
           }
         });
       },
       error: (err) => {
-        if (err.status === 401) {
-           alert("Session expired Login again to continue");
-          this.router.navigate(['/login']);
-          this.authService.isLoggedOut();
-
-        } else {
+        if (!this.authService.sessionTimeout(err)) {
           alert("Error fetching ticket.");
         }
       }
