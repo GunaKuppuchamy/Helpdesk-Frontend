@@ -9,7 +9,7 @@
     <label>Password: <input formControlName="password"></label>
     <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors as errors" class="error">
           <div *ngIf="errors['required']">Password is required.</div>
-          <div *ngIf="errors['minlength']">A minimum of length 8 is required</div>
+          <div *ngIf="errors['minlength']">A minimum of length 5 is required</div>
     </div>
     <!-- <div>Role:
         <select formControlName="role">
