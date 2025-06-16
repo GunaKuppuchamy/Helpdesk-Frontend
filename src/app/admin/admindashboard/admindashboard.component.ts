@@ -4,7 +4,7 @@ import { EChartsOption } from 'echarts';
 import { TicketsService } from '../../services/tickets.service';
 import { UserServiceService } from '../../services/user-service.service';
 import { CommonModule } from '@angular/common';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { Users } from '../../models/users';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';

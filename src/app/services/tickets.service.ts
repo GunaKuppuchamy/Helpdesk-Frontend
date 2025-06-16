@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Ticket } from '../models/ticket.type';
+import { Ticket } from '../models/ticket';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

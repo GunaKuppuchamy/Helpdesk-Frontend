@@ -1,4 +1,4 @@
-export type Ticket = {
+export interface Ticket  {
   _id : string;
   ticketid?: string;    
   subject:string;       

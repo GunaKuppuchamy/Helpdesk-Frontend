@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { TicketsService } from '../../services/tickets.service';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
