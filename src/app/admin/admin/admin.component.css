@@ -49,8 +49,8 @@
 
 .profile-link {
   position: absolute;
-  top: 110px;
-  right: 30px;
+  top: -60px;
+  right: -430px;
   text-decoration: none;
   background-color: #2980b9;
   color: white;
