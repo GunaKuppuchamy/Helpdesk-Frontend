@@ -18,7 +18,7 @@ export class DisplayUserTicketsComponent {
   authService = inject(AuthService);
   router = inject(Router);
   display_tickets = signal<Array<Ticket>>([]);
-  this_ticket!: Ticket;
+  //this_ticket!: Ticket;
 
   ngOnInit(): void {
     this.authService.isLoggedIn();

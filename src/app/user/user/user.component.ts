@@ -23,7 +23,6 @@ export class UserComponent {
     this.router.navigate(['addTicket']);
   }
 
-  curUserId:string='U001';
 
   ngOnInit():void
   {

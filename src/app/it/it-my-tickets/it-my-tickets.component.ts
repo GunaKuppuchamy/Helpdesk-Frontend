@@ -17,7 +17,6 @@ export class ItMyTicketsComponent implements OnInit {
   display_tickets = signal<Array<Ticket>>([]);
   //all_tickets = this.ticketService.tickets
   currentview !: 'all' | 'onHold' | 'open' | 'closed';
-  loggedInUserId: string = 'I408';
   router = inject(Router)
 
   setView(view: 'all' | 'onHold' | 'open' | 'closed') {

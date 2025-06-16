@@ -18,7 +18,6 @@ export class ItOverdueTicketComponent implements OnInit {
     display_tickets = signal<Array<Ticket>>([]);
     router = inject(Router)
     today = new Date()
-    loggedInUserId : string = "I388"
 
     ngOnInit(): void {
       this.authService.isLoggedIn();
@@ -49,9 +48,6 @@ export class ItOverdueTicketComponent implements OnInit {
 );
     
 }
-
-        // const filtered = this.ticketService.tickets.filter( t => t.duedate < this.today && t.itid === this.loggedInUserId && t.status !== 'closed');
-        // this.display_tickets.set(filtered)
 
     }
 
