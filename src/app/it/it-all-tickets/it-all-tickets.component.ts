@@ -21,7 +21,6 @@ import { AuthService } from '../../services/auth-service.service';
 })
 export class ItAllTicketsComponent {
 
-
   ticketService = inject(TicketsService);
   authService = inject(AuthService);
   display_tickets = signal<Array<Ticket>>([]);
