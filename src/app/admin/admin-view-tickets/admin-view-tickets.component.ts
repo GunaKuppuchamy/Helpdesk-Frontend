@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { TicketsService } from '../../services/tickets.service';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';

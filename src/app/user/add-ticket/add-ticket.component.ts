@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { TicketsService } from '../../services/tickets.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserServiceService } from '../../services/user-service.service';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service.service';
 

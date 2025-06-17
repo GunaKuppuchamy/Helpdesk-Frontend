@@ -1,10 +1,5 @@
 import { Routes } from '@angular/router';
-import { DisplayUserTicketsComponent } from './user/display-user-tickets/display-user-tickets.component';
-import { AddTicketComponent } from './user/add-ticket/add-ticket.component';
-import { UserComponent } from './user/user/user.component';
-import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
-import { FaqComponent } from './home/faq/faq.component';
-import { LandingpageComponent } from './home/landingpage/landingpage.component';
+
 
 export const routes: Routes = [
 
@@ -49,12 +44,39 @@ export const routes: Routes = [
             return import('./it/edit-ticket/edit-ticket.component').then((m)=>m.EditTicketComponent)
         }
     },
-  { path: 'displayUserTickets/:user', component: DisplayUserTicketsComponent },
-  { path: 'addTicket', component: AddTicketComponent },
-  { path: 'user', component:UserComponent},
-  { path: 'forgot-password', component:ForgotPasswordComponent},
-  { path: '',component:LandingpageComponent},
-  { path: 'faq', component:FaqComponent},
+    {
+        path: 'displayUserTickets/:user',
+        loadComponent : () => {
+            return import('./user/display-user-tickets/display-user-tickets.component').then((m)=>m.DisplayUserTicketsComponent)
+        }
+    },
+  
+  { 
+    path: 'addTicket', 
+     loadComponent : () => {
+            return import('./user/add-ticket/add-ticket.component').then((m)=>m.AddTicketComponent)
+        }
+},
+  { path: 'user', 
+    loadComponent : () => {
+            return import('./user/user/user.component').then((m)=>m.UserComponent)
+        }
+},
+  { path: 'forgot-password',
+    loadComponent : () => {
+            return import('./home/forgot-password/forgot-password.component').then((m)=>m.ForgotPasswordComponent)
+        }
+    },
+  { path: '',
+    loadComponent : () => {
+            return import('./home/landingpage/landingpage.component').then((m)=>m.LandingpageComponent)
+        }
+},
+  { path: 'faq', 
+   loadComponent : () => {
+            return import('./home/faq/faq.component').then((m)=>m.FaqComponent)
+        }
+},
   {
         path:'admin',
         loadComponent:()=>{ return import('./admin/admin/admin.component').then((m)=>m.AdminComponent)}

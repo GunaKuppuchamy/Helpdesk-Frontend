@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TicketsService } from '../../services/tickets.service';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service.service';
 
