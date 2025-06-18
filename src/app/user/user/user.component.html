@@ -1,0 +1,17 @@
+<!-- Profile link in top-right corner -->
+<a routerLink="/currentUser" class="profile-link">👤 Profile</a>
+
+<div class="user-dashboard">
+  <!-- <h2>Hi {{curUserData.name}}</h2> -->
+  <button (click)="onAddTicket()" class="add-ticket-btn">Add Ticket</button><br><br>
+  
+  <nav class="user-ticket-nav">
+    <a [routerLink]="['/displayUserTickets', 'all']">My Tickets</a><br><br>
+    <a [routerLink]="['/displayUserTickets', 'open']">Open Tickets</a><br><br>
+    <a [routerLink]="['/displayUserTickets', 'onHold']">OnHold Tickets</a><br><br>
+    <a [routerLink]="['/displayUserTickets', 'closed']">Closed Tickets</a><br><br>
+  </nav>
+
+  <!-- Optional back button -->
+  <!-- <a><button class="back-btn" [routerLink]="['/']">Back</button></a> -->
+</div>

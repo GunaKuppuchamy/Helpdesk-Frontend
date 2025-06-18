@@ -1,0 +1,79 @@
+.back-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: white;
+  background-color: #db3434;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 20px auto;
+}
+
+.back-btn:hover {
+  background-color: #db3434;
+  transform: scale(1.05);
+}
+
+.ticket-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.ticket-table-container h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead {
+  background-color: wheat;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #d591ee;
+}
+
+tbody tr:hover {
+  background-color: #b5def7;
+  transition: background-color 0.3s ease;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e74c3c;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #c0392b;
+}
+
+
+ 

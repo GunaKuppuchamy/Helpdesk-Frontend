@@ -21,6 +21,8 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -31,6 +33,7 @@
             ],
             "scripts": []
           },
+          
           "configurations": {
             "production": {
               "budgets": [
@@ -85,7 +88,10 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              
+  
+  "src/styles.css"
+
             ],
             "scripts": []
           }
@@ -96,4 +102,8 @@
   "cli": {
     "analytics": false
   }
+
+  
+
 }
+

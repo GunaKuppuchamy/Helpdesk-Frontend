@@ -1,0 +1,42 @@
+<h3>Tickets</h3>
+<div >
+  <table style="border:2px solid">
+      <thead>
+        <tr>
+          <th>Tid</th>
+          <th>Subject</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>RaisedById</th>
+          <th>AssignedToId</th>
+          <th>CreatedDate</th>
+          <th>DueDate</th>
+          <th>Cancel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of display_tickets()">
+          <td>{{ticket.ticketid}}</td>
+          <td>{{ticket.subject}}</td>
+          <td>{{ticket.categeory}}</td>
+          <td>{{ticket.description}}</td>
+          <td>{{ticket.status}}</td>
+          <td>{{ticket.priroty}}</td>
+          <td>{{ticket.userid}}</td>
+          <td>{{ticket.itid}}</td>
+          <td>{{ticket.raiseddate | date}}</td>
+          <td>{{ticket.duedate | date}}</td>
+          <td>
+            <button *ngIf="ticket.status === 'open' || ticket.status === 'onHold'" 
+            (click)="cancelTicket(ticket.ticketid!)">
+             Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+
+<a><button [routerLink]="['/user']" class="back-btn">Back</button></a>
