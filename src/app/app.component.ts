@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth-service.service';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,12 @@ import { CommonModule } from '@angular/common';
 
 export class AppComponent implements OnInit {
   title = 'Helpdesk Ticketing System';
-  isLoggedIn: any;
+  isLoggedIn!: boolean;
+  http=inject(HttpClient)
   authService = inject(AuthService);
 showLoginBtn: boolean = false;
+
+userLogged !: boolean;
   ngOnInit(): void {
     
  window.addEventListener('showLoginBtn', (event: any) => {
@@ -27,6 +31,20 @@ showLoginBtn: boolean = false;
       
 
     })
+
+    this.authService.loginStatusChanged.subscribe((status: boolean) => {
+      this.userLogged = status;
+    });
+
+    this.authService.isUserLoggedIn().subscribe((
+      {
+        next : (loggedVal)=>
+        {
+          this.userLogged = loggedVal;
+          console.log(loggedVal)
+        }
+      }
+    ))
   }
 
 

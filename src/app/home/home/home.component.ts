@@ -52,8 +52,12 @@ export class HomeComponent implements OnInit {
 
     this.loginService.login(email, password).subscribe({
       next: (response: any) => {
-      this.authservice.isLoggedIn();
+        const user = response.body;
+        this.authservice.setCurrentUser(user)
+      //this.authservice.isLoggedIn();
+      this.authservice.loginStatusChanged.emit(true);
         if (response.body.role) {
+          
           switch (response.body.role) {
             case 'user':
               this.router.navigate(['/user']);

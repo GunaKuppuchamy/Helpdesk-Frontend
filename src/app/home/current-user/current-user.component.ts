@@ -1,7 +1,7 @@
 import { Component , inject, OnInit} from '@angular/core';
-import { UserServiceService } from '../../services/user-service.service';
 import { Users } from '../../models/users';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-current-user',
@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class CurrentUserComponent implements OnInit {
   currentUser !:Users;
-  userservice = inject(UserServiceService)
+  authservice = inject(AuthService)
 
   ngOnInit(): void {
-       this.userservice.getCurrentUser().subscribe({
+       this.authservice.getCurrentUser().subscribe({
       next: (data) => {
         this.currentUser = data.body;
         console.log(this.currentUser)
