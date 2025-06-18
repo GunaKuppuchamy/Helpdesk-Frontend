@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 
+    // login page
     {
         path : 'login',
         loadComponent : () => {
@@ -10,6 +11,7 @@ export const routes: Routes = [
         }
     },
 
+    // it base
     {
         path : 'it-team',
         loadComponent : () => {
@@ -17,109 +19,89 @@ export const routes: Routes = [
         }
     },
 
-    {
-        path : 'it-overdue',
-        loadComponent : () => {
-            return import('./it/it-overdue-ticket/it-overdue-ticket.component').then((m)=>m.ItOverdueTicketComponent)
-        }
-    },
-
-    //  {
-    //     path : 'it-all',
-    //     loadComponent : () => {
-    //         return import('./it/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
-    //     }
-    // },
-
-    
-
-     {
-        path : 'it-my',
-        loadComponent : () => {
-            return import('./it/it-my-tickets/it-my-tickets.component').then((m)=>m.ItMyTicketsComponent)
-        }
-    },
-
+    // it edits ticket
      {
         path : 'edit-ticket/:id',
         loadComponent : () => {
             return import('./it/edit-ticket/edit-ticket.component').then((m)=>m.EditTicketComponent)
         }
     },
-    {
-        path: 'displayUserTickets/:user',
+ 
+    // user adds ticket
+    { 
+        path: 'addTicket', 
         loadComponent : () => {
-            return import('./user/display-user-tickets/display-user-tickets.component').then((m)=>m.DisplayUserTicketsComponent)
-        }
+                return import('./user/add-ticket/add-ticket.component').then((m)=>m.AddTicketComponent)
+            }
     },
-  
-  { 
-    path: 'addTicket', 
-     loadComponent : () => {
-            return import('./user/add-ticket/add-ticket.component').then((m)=>m.AddTicketComponent)
-        }
-},
-  { path: 'user', 
-    loadComponent : () => {
-            return import('./user/user/user.component').then((m)=>m.UserComponent)
-        }
-},
-  { path: 'forgot-password',
-    loadComponent : () => {
-            return import('./home/forgot-password/forgot-password.component').then((m)=>m.ForgotPasswordComponent)
-        }
+
+    // user base
+    { path: 'user', 
+        loadComponent : () => {
+                return import('./user/user/user.component').then((m)=>m.UserComponent)
+            }
     },
-  { path: '',
+
+    //reset password if forgot
+    { path: 'forgot-password',
+        loadComponent : () => {
+                return import('./home/forgot-password/forgot-password.component').then((m)=>m.ForgotPasswordComponent)
+            }
+    },
+
+    // base page
+    { path: '',
+        loadComponent : () => {
+                return import('./home/landingpage/landingpage.component').then((m)=>m.LandingpageComponent)
+            }
+    },
+
+    // faq 
+    { path: 'faq', 
     loadComponent : () => {
-            return import('./home/landingpage/landingpage.component').then((m)=>m.LandingpageComponent)
-        }
-},
-  { path: 'faq', 
-   loadComponent : () => {
-            return import('./home/faq/faq.component').then((m)=>m.FaqComponent)
-        }
-},
-  {
+                return import('./home/faq/faq.component').then((m)=>m.FaqComponent)
+            }
+    },
+
+    // admin base component
+    {
         path:'admin',
         loadComponent:()=>{ return import('./admin/admin/admin.component').then((m)=>m.AdminComponent)}
     },
 
+    // all user details
     {
         path:'adminViewUsers',
         loadComponent:()=>{ return import('./admin/admin-view-users/admin-view-users.component').then((m)=>m.AdminViewUsersComponent)}
     },
-    {
-        path:'adminViewTickets',
-        loadComponent:()=>{ return import('./admin/admin-view-tickets/admin-view-tickets.component').then((m)=>m.AdminViewTicketsComponent)}
-    },
+
+    //admin dashboard view
     {
         path:'adminDashboard',
         loadComponent:()=>{ return import('./admin/admindashboard/admindashboard.component').then((m)=>m.AdmindashboardComponent)}
     },
+
+    //to add a new user
     {
         path:'addUser',
         loadComponent:()=>{ return import('./admin/add-user/add-user.component').then((m)=>m.AddUserComponent)}
     },
+
+    //to edit existing user
     {
         path:'addUser/:id',
         loadComponent:()=>{ return import('./admin/add-user/add-user.component').then((m)=>m.AddUserComponent)}
     },
 
+    
+    // get current user details
     {
         path : 'currentUser',
         loadComponent : () =>{
             return import('./home/current-user/current-user.component').then((m)=>m.CurrentUserComponent)
         }
-    }
-    ,
-
-    //get all tickets simply (admin)
-    {
-        path : 'ticketList',
-        loadComponent : () =>{
-            return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
-        }
     },
+
     // get tickets based on role
     {
         path : 'ticketList/:role',
