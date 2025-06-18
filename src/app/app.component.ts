@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 
 export class AppComponent implements OnInit {
   title = 'Helpdesk Ticketing System';
-  isLoggedIn: any;
+  isLoggedIn!: boolean;
   authService = inject(AuthService);
 showLoginBtn: boolean = false;
   ngOnInit(): void {

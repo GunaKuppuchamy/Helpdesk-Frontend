@@ -24,12 +24,14 @@ export const routes: Routes = [
         }
     },
 
-     {
-        path : 'it-all',
-        loadComponent : () => {
-            return import('./it/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
-        }
-    },
+    //  {
+    //     path : 'it-all',
+    //     loadComponent : () => {
+    //         return import('./it/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
+    //     }
+    // },
+
+    
 
      {
         path : 'it-my',
@@ -107,6 +109,30 @@ export const routes: Routes = [
         path : 'currentUser',
         loadComponent : () =>{
             return import('./home/current-user/current-user.component').then((m)=>m.CurrentUserComponent)
+        }
+    }
+    ,
+
+    //get all tickets simply (admin)
+    {
+        path : 'ticketList',
+        loadComponent : () =>{
+            return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
+        }
+    },
+    // get tickets based on role
+    {
+        path : 'ticketList/:role',
+        loadComponent : () =>{
+            return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
+        }
+    },
+
+    //get tickets based on role and filters
+    {
+        path : 'ticketList/:role/:type',
+        loadComponent : () =>{
+            return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
         }
     }
 
