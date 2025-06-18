@@ -1,4 +1,18 @@
-<p-table [value]="allTickets" 
+<link rel="stylesheet" href="https://unpkg.com/primeng/resources/themes/lara-light-blue/theme.css">
+<link rel="stylesheet" href="https://unpkg.com/primeng/resources/primeng.min.css">
+<link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+
+<div class="ticket-filter-container" *ngIf="isIt && isType">
+  <h2>Filter Tickets</h2>
+  <div class="filter-links">
+    <a [routerLink]="['/ticketList/it/all']">All</a>
+    <a [routerLink]="['/ticketList/it/open']">Open</a>
+    <a [routerLink]="['/ticketList/it/closed']">Closed</a>
+    <a [routerLink]="['/ticketList/it/onHold']">On Hold</a>
+    <a [routerLink]="['/ticketList/it/overdue']">Overdue Tickets</a>
+  </div>
+</div>
+<p-table [value]="filteredTickets" 
   [paginator]="true" 
   [rows]="10"
   [resizableColumns]="true" 
@@ -16,11 +30,13 @@
       <th pSortableColumn="itid">IT ID <p-sortIcon field="itid"></p-sortIcon></th>
       <th pSortableColumn="raiseddate">Raised Date <p-sortIcon field="raiseddate"></p-sortIcon></th>
       <th pSortableColumn="duedate">Due Date <p-sortIcon field="duedate"></p-sortIcon></th>
+      <th *ngIf="isUser">Cancel</th>
+      <th *ngIf="isIt && isType">Edit</th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-ticket>
-    <tr>
+    <tr [ngClass]="{ 'overdue': isOverdue }">
       <td>{{ticket.ticketid}}</td>
       <td>{{ticket.subject}}</td>
       <td>{{ticket.categeory}}</td>
@@ -35,9 +51,18 @@
       <td>{{ticket.itid}}</td>
       <td>{{ticket.raiseddate | date}}</td>
       <td>{{ticket.duedate | date}}</td>
+      <td *ngIf="isUser && (ticket.status === 'open' || ticket.status === 'onHold')">
+        <button (click)="cancelTicket(ticket.ticketid)" class="cancel">Cancel</button>
+      </td>
+      <td *ngIf="isIt && isType && ticket.status!='closed' && ticket.status!='cancelled' ">
+        <a [routerLink]="['/edit-ticket', ticket.ticketid]" class="edit-link">Edit</a>
+      </td>
     </tr>
   </ng-template>
 </p-table>
 
 
-  <a ><button class="back-btn"[routerLink]="['/admin']">Back</button></a>
+  <a ><button class="back-btn" (click)="backToPage()">Back</button></a>
+
+
+

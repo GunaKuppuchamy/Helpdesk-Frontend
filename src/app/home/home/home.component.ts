@@ -1,11 +1,8 @@
-
-
 import { LoginService } from '../../services/login.service';
-
 import { UserServiceService } from '../../services/user-service.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 import { CommonModule } from '@angular/common';
 
@@ -18,7 +15,6 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit {
   email = "";
   password = "";
-  // role = ""
 
   constructor(private router: Router, private loginService: LoginService, private userservice: UserServiceService) { }
   loginForm!: FormGroup;

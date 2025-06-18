@@ -6,10 +6,10 @@
   <button (click)="onAddTicket()" class="add-ticket-btn">Add Ticket</button><br><br>
   
   <nav class="user-ticket-nav">
-    <a [routerLink]="['/displayUserTickets', 'all']">My Tickets</a><br><br>
-    <a [routerLink]="['/displayUserTickets', 'open']">Open Tickets</a><br><br>
-    <a [routerLink]="['/displayUserTickets', 'onHold']">OnHold Tickets</a><br><br>
-    <a [routerLink]="['/displayUserTickets', 'closed']">Closed Tickets</a><br><br>
+    <a [routerLink]="['/ticketList/user/all']">My Tickets</a><br><br>
+    <a [routerLink]="['/ticketList/user/open']">Open Tickets</a><br><br>
+    <a [routerLink]="['/ticketList/user/onHold']">OnHold Tickets</a><br><br>
+    <a [routerLink]="['/ticketList/user/closed']">Closed Tickets</a><br><br>
   </nav>
 
   <!-- Optional back button -->

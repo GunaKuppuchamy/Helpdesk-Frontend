@@ -61,7 +61,6 @@ onHold()
     }
       }
     );
-     
 }
 
 
@@ -73,11 +72,11 @@ onHold()
 close()
 {
   
+  
   if(this.this_ticket)
     {
       this.this_ticket.status = "closed"
     }
-
   
     this.ticketService.updateTickets(this.id,this.this_ticket).subscribe(
       {
@@ -98,5 +97,4 @@ close()
     );
 
 }
-
 }

@@ -5,6 +5,7 @@ import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
 
+    // login page
     {
         path : 'login',
         loadComponent : () => {
@@ -31,6 +32,7 @@ export const routes: Routes = [
          canActivate : [loginGuard]
     },
 
+    // it base
     {
         path : 'it-team',
         loadComponent : () => {
@@ -40,33 +42,34 @@ export const routes: Routes = [
         data : {role : 'it'}
     },
 
-    {
-        path : 'it-overdue',
-        loadComponent : () => {
-            return import('./it/it-overdue-ticket/it-overdue-ticket.component').then((m)=>m.ItOverdueTicketComponent)
-        },
-        canActivate : [authGuard],
-        data : {role : 'it'}
-    },
+    // {
+    //     path : 'it-overdue',
+    //     loadComponent : () => {
+    //         return import('./it/it-overdue-ticket/it-overdue-ticket.component').then((m)=>m.ItOverdueTicketComponent)
+    //     },
+    //     canActivate : [authGuard],
+    //     data : {role : 'it'}
+    // },
 
-     {
-        path : 'it-all',
-        loadComponent : () => {
-            return import('./it/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
-        },
-        canActivate : [authGuard],
-        data : {role : 'it'}
-    },
+    //  {
+    //     path : 'it-all',
+    //     loadComponent : () => {
+    //         return import('./it/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
+    //     },
+    //     canActivate : [authGuard],
+    //     data : {role : 'it'}
+    // },
 
-     {
-        path : 'it-my',
-        loadComponent : () => {
-            return import('./it/it-my-tickets/it-my-tickets.component').then((m)=>m.ItMyTicketsComponent)
-        },
-        canActivate : [authGuard],
-        data : {role : 'it'}
-    },
+    //  {
+    //     path : 'it-my',
+    //     loadComponent : () => {
+    //         return import('./it/it-my-tickets/it-my-tickets.component').then((m)=>m.ItMyTicketsComponent)
+    //     },
+    //     canActivate : [authGuard],
+    //     data : {role : 'it'}
+    // },
 
+    // it edits ticket
      {
         path : 'edit-ticket/:id',
         loadComponent : () => {
@@ -75,14 +78,9 @@ export const routes: Routes = [
         canActivate : [authGuard],
         data : {role : 'it'}
     },
-    {
-        path: 'displayUserTickets/:user',
-        loadComponent : () => {
-            return import('./user/display-user-tickets/display-user-tickets.component').then((m)=>m.DisplayUserTicketsComponent)
-        },
-        canActivate : [authGuard],
-        data : {role : 'user'}
-    },
+ 
+    // user adds ticket
+
   
   { 
     path: 'addTicket', 
@@ -107,30 +105,35 @@ export const routes: Routes = [
         data : {role : 'admin'}
     },
 
+    // all user details
     {
         path:'adminViewUsers',
         loadComponent:()=>{ return import('./admin/admin-view-users/admin-view-users.component').then((m)=>m.AdminViewUsersComponent)},
          canActivate : [authGuard],
         data : {role : 'admin'}
     },
-    {
-        path:'adminViewTickets',
-        loadComponent:()=>{ return import('./admin/admin-view-tickets/admin-view-tickets.component').then((m)=>m.AdminViewTicketsComponent)},
-         canActivate : [authGuard],
-        data : {role : 'admin'}
-    },
+    // {
+    //     path:'adminViewTickets',
+    //     loadComponent:()=>{ return import('./admin/admin-view-tickets/admin-view-tickets.component').then((m)=>m.AdminViewTicketsComponent)},
+    //      canActivate : [authGuard],
+    //     data : {role : 'admin'}
+    // },
     {
         path:'adminDashboard',
         loadComponent:()=>{ return import('./admin/admindashboard/admindashboard.component').then((m)=>m.AdmindashboardComponent)},
          canActivate : [authGuard],
         data : {role : 'admin'}
     },
+
+    //to add a new user
     {
         path:'addUser',
         loadComponent:()=>{ return import('./admin/add-user/add-user.component').then((m)=>m.AddUserComponent)},
          canActivate : [authGuard],
         data : {role : 'admin'}
     },
+
+    //to edit existing user
     {
         path:'addUser/:id',
         loadComponent:()=>{ return import('./admin/add-user/add-user.component').then((m)=>m.AddUserComponent)},
@@ -138,6 +141,8 @@ export const routes: Routes = [
         data : {role : 'admin'}
     },
 
+    
+    // get current user details
     {
         path : 'currentUser',
         loadComponent : () =>{
@@ -145,6 +150,22 @@ export const routes: Routes = [
         },
          canActivate : [authGuard],
         data : {role : 'admin'}
+    },
+
+    // get tickets based on role
+    {
+        path : 'ticketList/:role',
+        loadComponent : () =>{
+            return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
+        }
+    },
+
+    //get tickets based on role and filters
+    {
+        path : 'ticketList/:role/:type',
+        loadComponent : () =>{
+            return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
+        }
     }
 
 ];

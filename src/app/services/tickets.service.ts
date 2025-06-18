@@ -12,7 +12,6 @@ export class TicketsService {
 
   constructor() { }
 
-
   private apiUrl = 'http://localhost:3002'
   getTicketAPI()
   {
@@ -25,6 +24,7 @@ export class TicketsService {
  
   getTicketByUser() : Observable<any>
   {
+    //return this.http.get(`${this.apiUrl}/tickets/user`,{ withCredentials: true,observe : 'response' });
     return this.http.get(`${this.apiUrl}/tickets/user`,{ withCredentials: true,observe : 'response' });
   }
   
@@ -40,7 +40,8 @@ export class TicketsService {
 
   getTicketByIt() : Observable<any>
   {
-    return this.http.get(`${this.apiUrl}/tickets/it`,{withCredentials:true,observe:'response'});
+    //return this.http.get(`${this.apiUrl}/tickets/it`,{withCredentials:true,observe:'response'});
+    return this.http.get(`${this.apiUrl}/tickets/user`,{ withCredentials: true,observe : 'response' });
   }
 
 }

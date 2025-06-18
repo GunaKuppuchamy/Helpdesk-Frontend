@@ -67,7 +67,6 @@ isUserLoggedIn(): Observable<boolean> {
     })
   }
 
-
   router=inject(Router)
  sessionTimeout(err: HttpErrorResponse): boolean {
   if (err.status === 401) {
