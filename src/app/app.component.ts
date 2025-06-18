@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth-service.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -16,50 +16,42 @@ export class AppComponent implements OnInit {
   isLoggedIn!: boolean;
   http=inject(HttpClient)
   authService = inject(AuthService);
-showLoginBtn: boolean = false;
+  showLoginBtn: boolean = false;
+  userLogged !: boolean;
 
-userLogged !: boolean;
+ constructor(private auth: AuthService, private router: Router) {
+    
+  }
   ngOnInit(): void {
     
- window.addEventListener('showLoginBtn', (event: any) => {
-      this.showLoginBtn = event.detail.data;
+    this.authService.loginStatusChanged.subscribe((status: boolean) => {
+      this.userLogged = status;
+    });
 
-    })
-    
-    window.addEventListener('isLoggedIn', (event: any) => {
-      this.isLoggedIn = event.detail.data;
+  this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd) {
+      const url = event.url;
+
       
+      this.showLoginBtn = (url === '/' || url === '/faq');
 
-    })
-
-    // this.authService.loginStatusChanged.subscribe((status: boolean) => {
-    //   this.userLogged = status;
-    // });
-
-    // this.authService.isUserLoggedIn().subscribe((
-    //   {
-    //     next : (loggedVal)=>
-    //     {
-    //       this.userLogged = loggedVal;
-    //       console.log(loggedVal)
-    //     }
-    //   }
-    // ))
+      
+      if (url === '/login' || url === '/forgot-password') {
+        this.userLogged = false;
+      }
+    }
+  });
   }
 
-
-  constructor(private auth: AuthService, private router: Router) {
-    
-  }
 login(){
   this.router.navigate(['/login']);
 }
   logout() {
     this.auth.logout();
     this.router.navigate(['/login']);
-    this.authService.isLoggedOut();
+    
+    this.authService.loginStatusChanged.emit(false);
 
   }
-
 
 }

@@ -16,10 +16,11 @@ import { AuthService } from '../../services/auth-service.service';
 
 export class AdminComponent implements OnInit {
 
-  constructor(private isLoggedService:AuthService) {}
+  constructor(private authservice:AuthService) {}
 
   ngOnInit(): void {
-    this.isLoggedService.isLoggedIn(); // calling the isLoggedIn custom event to tell that the user has logged in and the logout button can be shown
+    //this.authservice.isLoggedIn(); // calling the isLoggedIn custom event to tell that the user has logged in and the logout button can be shown
+    this.authservice.loginStatusChanged.emit(true);
   }
 
   

@@ -26,10 +26,8 @@ export class HomeComponent implements OnInit {
   authservice = inject(AuthService);
 
   ngOnInit() {
-    this.authservice.isLoggedOut();
-    this.authservice.logInButtonVisibility(false);
     
-
+    this.authservice.loginStatusChanged.emit(false);
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
@@ -40,22 +38,18 @@ export class HomeComponent implements OnInit {
 
 
   login() {
-
-   
     if (this.loginForm.invalid) {
       alert('Please enter valid email and password');
       return;
     }
-    // this.authservice.login()
 
     const { email, password } = this.loginForm.value;
 
     this.loginService.login(email, password).subscribe({
       next: (response: any) => {
         const user = response.body;
-        //this.authservice.setCurrentUser(user)
-      this.authservice.isLoggedIn();
-     // this.authservice.loginStatusChanged.emit(true);
+        this.authservice.setCurrentUser(user)
+      this.authservice.loginStatusChanged.emit(true);
         if (response.body.role) {
           
           switch (response.body.role) {
