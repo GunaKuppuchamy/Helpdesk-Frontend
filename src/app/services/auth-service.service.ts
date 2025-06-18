@@ -28,26 +28,27 @@ getCurrentUser(): Observable<any> {
   return this.http.get(`${this.apiUrl}/currentUser`, { withCredentials: true });
 }
 
- loginStatusChanged = new EventEmitter<boolean>();
+//  loginStatusChanged = new EventEmitter<boolean>();
 
-isUserLoggedIn(): Observable<boolean> {
-  return this.http.get<{ empid?: string }>(`${this.apiUrl}/currentUser`, { withCredentials: true }).pipe(
-    map((res) => {
-      const status = !!res?.empid;
-      this.loginStatusChanged.emit(status);
-      return status;
-    }),
-    catchError((err: HttpErrorResponse) => {
-      this.loginStatusChanged.emit(false);
-      // Redirect only if not already on /login
-      if (this.router.url !== '/login') {
-        alert('Session expired. Please log in again.');
-        this.router.navigate(['/login']);
-      }
-      return of(false);
-    })
-  );
-}
+// isUserLoggedIn(): Observable<boolean> {
+//   return this.http.get<{ empid?: string }>(`${this.apiUrl}/currentUser`, { withCredentials: true }).pipe(
+//     map((res) => {
+//       const status = !!res?.empid;
+//       this.loginStatusChanged.emit(status);
+//       return status;
+//     }),
+//     catchError((err: HttpErrorResponse) => {
+//       this.loginStatusChanged.emit(false);
+      
+//       // Redirect only if not already on /login
+//       if (this.router.url !== '/login') {
+//         alert('Session expired. Please log in again.');
+//         this.router.navigate(['/login']);
+//       }
+//       return of(false);
+//     })
+//   );
+// }
 
 
 
@@ -81,7 +82,10 @@ isUserLoggedIn(): Observable<boolean> {
     this.loginservice.logout().subscribe({
       next: () => {
         // this.isLoggedInSubject.next(false);
+         this.currentUser = null; 
         this.isLoggedOut();
+        this.router.navigate(['/']);
+        
       },
       error: () => {
         console.log("Error Logging out")
@@ -93,7 +97,7 @@ isUserLoggedIn(): Observable<boolean> {
   if (err.status === 401) {
     alert("Session Time Out. Please login again.");
      this.router.navigate(['/login']);
-    //this.isLoggedOut();
+    this.isLoggedOut();
    
     return true;  
   }

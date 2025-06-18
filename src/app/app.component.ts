@@ -32,19 +32,19 @@ userLogged !: boolean;
 
     })
 
-    this.authService.loginStatusChanged.subscribe((status: boolean) => {
-      this.userLogged = status;
-    });
+    // this.authService.loginStatusChanged.subscribe((status: boolean) => {
+    //   this.userLogged = status;
+    // });
 
-    this.authService.isUserLoggedIn().subscribe((
-      {
-        next : (loggedVal)=>
-        {
-          this.userLogged = loggedVal;
-          console.log(loggedVal)
-        }
-      }
-    ))
+    // this.authService.isUserLoggedIn().subscribe((
+    //   {
+    //     next : (loggedVal)=>
+    //     {
+    //       this.userLogged = loggedVal;
+    //       console.log(loggedVal)
+    //     }
+    //   }
+    // ))
   }
 
 
