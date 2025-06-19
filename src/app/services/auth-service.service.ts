@@ -16,7 +16,7 @@ export class AuthService {
 private apiUrl='http://localhost:3002'
 
   private currentUser: any = null;
-
+ 
 setCurrentUser(user: any) {
   this.currentUser = user;
 }
@@ -56,9 +56,10 @@ isUserLoggedIn(): Observable<boolean> {
 
     this.loginservice.logout().subscribe({
       next: () => {
+        this.router.navigate(['/']);
          this.currentUser = null; 
         this.loginStatusChanged.emit(false);
-        this.router.navigate(['/']);
+        
         
       },
       error: () => {

@@ -36,11 +36,19 @@ export class AppComponent implements OnInit {
       this.showLoginBtn = (url === '/' || url === '/faq');
 
       
-      if (url === '/login' || url === '/forgot-password') {
-        this.userLogged = false;
-      }
+     if (url === '/login' || url === '/forgot-password') {
+  
+  this.authService.getCurrentUser().subscribe(user => {
+    if (!user || !user.role) {
+      this.userLogged = false;
     }
   });
+}
+    }
+  });
+
+  this.authService.isUserLoggedIn().subscribe();
+
   }
 
 login(){

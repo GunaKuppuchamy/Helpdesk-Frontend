@@ -9,6 +9,12 @@ import { Users } from '../../models/users';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth-service.service';
+import * as Highcharts from 'highcharts';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartConfiguration,ChartData} from 'chart.js';
+
+
 
 /**
  * This is a dashboard component for the admin to analyze the data efficiently
@@ -18,7 +24,7 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admindashboard',
-  imports: [NgxEchartsModule, CommonModule,RouterLink],
+  imports: [NgxEchartsModule, CommonModule,RouterLink,HighchartsChartModule,NgChartsModule],
   templateUrl: './admindashboard.component.html',
   styleUrl: './admindashboard.component.css'
 })
@@ -45,6 +51,10 @@ export class AdmindashboardComponent {
   userGroupBy: string = 'bu'; 
   userGroupOptions: string[] = ['bu', 'empid'];
 
+  //Highchart vars
+  Highcharts: typeof Highcharts = Highcharts;
+  highchartsOptions!: Highcharts.Options;
+
   //count total
   totalTickets:number=0;
   totalUsers:number=0;
@@ -52,6 +62,7 @@ allTickets !: Ticket[];
 allUsers !:Users[];
   ngOnInit() {
 //this.authService.isLoggedIn();
+
     forkJoin({
       tickets: this.ticketservice.getTicketAPI(),
       users : this.userservice.getUsersApi()
@@ -62,6 +73,8 @@ allUsers !:Users[];
         this.allUsers=users.body || []
         this.updateTicketChart();
         this.updateUserChart();
+        this.setupHighcharts();
+        this.usersCharts();   
 
       },
       error : (err) =>
@@ -169,6 +182,87 @@ allUsers !:Users[];
 }
 
 
+ setupHighcharts(): void {
+  const dateCounts: { [date: string]: number } = {};
+ 
+  this.allTickets.forEach(ticket => {
+    if (ticket.raiseddate) {
+      const date = new Date(ticket.raiseddate).toISOString().split('T')[0];
+      dateCounts[date] = (dateCounts[date] || 0) + 1;
+    }
+  });
+ 
+  const sortedDates = Object.keys(dateCounts).sort();
+  const data = sortedDates.map(date => dateCounts[date]);
+ 
+  this.highchartsOptions = {
+    chart: { type: 'spline' },
+    title: { text: 'Tickets Raised per Day' },
+    xAxis: {
+      categories: sortedDates,
+      title: { text: 'Date' }
+    },
+    yAxis: {
+      title: { text: 'Tickets' },
+      allowDecimals: false
+    },
+    series: [{
+      name: 'Tickets',
+      type: 'spline',
+      data: data
+    }]
+  };
+}
+
+
+//chart.js
+
+
+public userChartData: ChartData<'bar'> = {
+  labels: [],
+  datasets: []
+};
+public chartOptions: ChartConfiguration<'bar'>['options'] = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Users by Role',
+    }
+  },
+  scales: {
+    x: {},
+    y: {
+      beginAtZero: true
+    }
+  }
+};
+ 
+usersChartType: 'bar' = 'bar';
+ 
+  // Users chart by chart.js
+  usersCharts(): void {
+  const roleCounts: { [key: string]: number } = {};
+ 
+  this.allUsers.forEach(user => {
+    const role = user.role || 'Unknown';
+    roleCounts[role] = (roleCounts[role] || 0) + 1;
+  });
+ 
+  this.userChartData = {
+    labels: Object.keys(roleCounts),
+    datasets: [{
+      data: Object.values(roleCounts),
+      label: 'Users by Role'
+    }]
+  };
+}
+               
+ 
 
   //HANDLERS 
 

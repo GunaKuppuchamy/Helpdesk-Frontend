@@ -42,33 +42,7 @@ export const routes: Routes = [
         data : {role : 'it'}
     },
 
-    // {
-    //     path : 'it-overdue',
-    //     loadComponent : () => {
-    //         return import('./it/it-overdue-ticket/it-overdue-ticket.component').then((m)=>m.ItOverdueTicketComponent)
-    //     },
-    //     canActivate : [authGuard],
-    //     data : {role : 'it'}
-    // },
-
-    //  {
-    //     path : 'it-all',
-    //     loadComponent : () => {
-    //         return import('./it/it-all-tickets/it-all-tickets.component').then((m)=>m.ItAllTicketsComponent)
-    //     },
-    //     canActivate : [authGuard],
-    //     data : {role : 'it'}
-    // },
-
-    //  {
-    //     path : 'it-my',
-    //     loadComponent : () => {
-    //         return import('./it/it-my-tickets/it-my-tickets.component').then((m)=>m.ItMyTicketsComponent)
-    //     },
-    //     canActivate : [authGuard],
-    //     data : {role : 'it'}
-    // },
-
+    
     // it edits ticket
      {
         path : 'edit-ticket/:id',
@@ -112,12 +86,7 @@ export const routes: Routes = [
          canActivate : [authGuard],
         data : {role : 'admin'}
     },
-    // {
-    //     path:'adminViewTickets',
-    //     loadComponent:()=>{ return import('./admin/admin-view-tickets/admin-view-tickets.component').then((m)=>m.AdminViewTicketsComponent)},
-    //      canActivate : [authGuard],
-    //     data : {role : 'admin'}
-    // },
+   
     {
         path:'adminDashboard',
         loadComponent:()=>{ return import('./admin/admindashboard/admindashboard.component').then((m)=>m.AdmindashboardComponent)},
@@ -148,8 +117,8 @@ export const routes: Routes = [
         loadComponent : () =>{
             return import('./home/current-user/current-user.component').then((m)=>m.CurrentUserComponent)
         },
-         canActivate : [authGuard],
-        data : {role : 'admin'}
+          canActivate : [authGuard],
+        // data : {role : 'admin'}
     },
 
     // get tickets based on role
@@ -157,7 +126,9 @@ export const routes: Routes = [
         path : 'ticketList/:role',
         loadComponent : () =>{
             return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
-        }
+        },
+        canActivate : [authGuard],
+        data: { allowMultipleRoles: true }
     },
 
     //get tickets based on role and filters
@@ -165,7 +136,9 @@ export const routes: Routes = [
         path : 'ticketList/:role/:type',
         loadComponent : () =>{
             return import('./ticket-list/ticket-list.component').then((m)=>m.TicketListComponent)
-        }
+        },
+        canActivate : [authGuard],
+        data: { allowMultipleRoles: true }
     }
 
 ];
