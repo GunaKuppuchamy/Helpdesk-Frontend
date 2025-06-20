@@ -16,7 +16,8 @@ import { AuthService } from '../../services/auth-service.service';
 export class ItTeamComponent implements OnInit  {
 authService = inject(AuthService);
   ngOnInit(): void {
-      this.authService.isLoggedIn();
+      //this.authService.isLoggedIn();
+      this.authService.loginStatusChanged.emit(true);
   }
 
 

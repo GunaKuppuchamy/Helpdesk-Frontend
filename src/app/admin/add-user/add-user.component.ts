@@ -34,7 +34,7 @@ export class AddUserComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   ngOnInit() {
-  this.authService.isLoggedIn();
+  //this.authService.isLoggedIn();
   this.editUserId = this.route.snapshot.paramMap.get('id');
   this.isEditMode = !!this.editUserId;
 

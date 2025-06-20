@@ -1,6 +1,6 @@
 import { Injectable,inject } from '@angular/core';
 import { Users } from '../models/users';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -41,10 +41,19 @@ deleteUserById(id : string)
   return this.http.delete(`${this.apiUrl}/deleteUser/${id}`,{withCredentials : true , observe : 'response'});
 }
 
-getCurrentUser() : Observable<any>
-{
-  return this.http.get(`${this.apiUrl}/currentUser`,{withCredentials : true , observe : 'response'});
-}
+// private currentUser: any = null;
+
+// setCurrentUser(user: any) {
+//   this.currentUser = user;
+// }
+
+// getCurrentUser(): Observable<any> {
+//   if (this.currentUser) {
+//     return of(this.currentUser);
+//   }
+
+//   return this.http.get(`${this.apiUrl}/currentUser`, { withCredentials: true });
+// }
 
 
 }

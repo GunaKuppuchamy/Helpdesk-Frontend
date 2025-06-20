@@ -22,10 +22,8 @@ export class HomeComponent implements OnInit {
   authservice = inject(AuthService);
 
   ngOnInit() {
-    this.authservice.isLoggedOut();
-    this.authservice.logInButtonVisibility(false);
     
-
+    this.authservice.loginStatusChanged.emit(false);
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
@@ -36,8 +34,6 @@ export class HomeComponent implements OnInit {
 
 
   login() {
-
-   
     if (this.loginForm.invalid) {
       alert('Please enter valid email and password');
       return;
@@ -46,30 +42,37 @@ export class HomeComponent implements OnInit {
     const { email, password } = this.loginForm.value;
 
     this.loginService.login(email, password).subscribe({
-      next: (response: any) => {
-      this.authservice.isLoggedIn();
-        if (response.body.role) {
-          switch (response.body.role) {
-            case 'user':
-              this.router.navigate(['/user']);
-              break;
-            case 'it':
-              this.router.navigate(['/it-team']);
-              break;
-            case 'admin':
-              this.router.navigate(['/admin']);
-              break;
-            default:
-              alert('Unknown role');
-          }
-        } else {
-          alert('Role info not received');
+  next: (response: any) => {
+    this.authservice.getCurrentUser().subscribe({
+      next: (userDetails) => {
+        this.authservice.setCurrentUser(userDetails);
+
+        this.authservice.loginStatusChanged.emit(true);
+
+        switch (userDetails.role) {
+          case 'user':
+            this.router.navigate(['/user']);
+            break;
+          case 'it':
+            this.router.navigate(['/it-team']);
+            break;
+          case 'admin':
+            this.router.navigate(['/admin']);
+            break;
+          default:
+            alert('Unknown role');
         }
       },
       error: () => {
-        alert('Login failed');
+        alert('Failed to fetch user details after login');
       }
     });
+  },
+  error: () => {
+    alert('Login failed');
+  }
+});
+
 
 
   }

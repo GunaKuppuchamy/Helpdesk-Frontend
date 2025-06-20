@@ -8,13 +8,7 @@ import { AuthService } from '../../services/auth-service.service';
   templateUrl: './faq.component.html',
   styleUrl: './faq.component.css'
 })
-export class FaqComponent implements OnInit {
+export class FaqComponent  {
 
-  authService = inject(AuthService);
-
-  ngOnInit(): void {
-    this.authService.logout();
-    this.authService.logInButtonVisibility(true);
-  }
-
+ 
 }

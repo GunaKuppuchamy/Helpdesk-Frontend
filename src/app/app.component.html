@@ -6,8 +6,8 @@
 </a>
       <h1>{{ title }}</h1>
     </div>
-      <button *ngIf="isLoggedIn" (click)="logout()" routerLink="/" class="logout-container">Logout</button>
-      <button *ngIf="!isLoggedIn && showLoginBtn" (click)="login()"  routerLink="/" class="logout-container">Login</button>
+      <button *ngIf="userLogged" (click)="logout()" class="logout-container">Logout</button>
+      <button *ngIf="!userLogged && showLoginBtn" (click)="login()"  routerLink="/" class="logout-container">Login</button>
 
   </header>
   <main>
@@ -18,3 +18,5 @@
     <p>Reach us at: <a href="mailto:itteamilink@gmail.com">itteamilink&#64;gmail.com</a></p>
   </footer>
 </div> 
+
+  

@@ -33,8 +33,7 @@ export class TicketListComponent {
   isOverdue!:boolean;
 
   ngOnInit() {
-  this.authservice.isLoggedIn();
-  this.filterTickets();
+
 
   this.route.paramMap.subscribe(params => {
     this.role = params.get('role');
