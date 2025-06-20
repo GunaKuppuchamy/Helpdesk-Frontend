@@ -1,6 +1,21 @@
 <div class="header">
 <p class="dashboard-heading">Admin Dashboard</p>
 </div>
+<!-- Role Count Cards -->
+<div class="role-cards">
+  <div class="role-card admin">
+    <h4>Admins</h4>
+    <p>{{ totalAdmins }}</p>
+  </div>
+  <div class="role-card it">
+    <h4>IT Team</h4>
+    <p>{{ totalIT }}</p>
+  </div>
+  <div class="role-card user">
+    <h4>Users</h4>
+    <p>{{ totalEndUsers }}</p>
+  </div>
+</div>
 
 <div class="dashboard-container">
   <!-- Ticket Insights Section -->
@@ -53,25 +68,37 @@
 
   <!-- Highcharts Section -->
   <div class="insight-section">
-    <div class="card stat-card">
-      <strong>Highcharts Overview:</strong>
-    </div>
+    <label for="startDate">Select start date: </label>
+    <input type="date" id="startDate" (change)="onDateChange($event)" [(ngModel)]="selectedDate">
  
-    <highcharts-chart
-      [Highcharts]="Highcharts"
-      [options]="highchartsOptions"
-      style="width: 100%; height: 400px; display: block;">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="dateFilter" style="width:100%; height:400px;" >
+ 
     </highcharts-chart>
-  </div>
+  </div>   
+  
+  
 
 
   <!--Charts.js-->
 
+<div class="insight-section">
+  <canvas baseChart
+          [data]="stepLineChartData"
+          [options]="stepLineChartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+
+
+
+
+
+<!-- 
    <div class="insight-section">
     <h3>Users counts by Role</h3>
     <canvas baseChart [data]="userChartData" [options]="chartOptions" [type]="usersChartType">
     </canvas>
-  </div>
+  </div> -->
   
 </div>
 
