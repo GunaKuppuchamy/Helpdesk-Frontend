@@ -9,6 +9,11 @@ import { Users } from '../../models/users';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth-service.service';
+// changes
+import {HighchartsChartModule} from 'highcharts-angular';
+import * as Highcharts from 'highcharts';
+import { FormsModule } from '@angular/forms';
+
 
 /**
  * This is a dashboard component for the admin to analyze the data efficiently
@@ -18,11 +23,16 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admindashboard',
-  imports: [NgxEchartsModule, CommonModule,RouterLink],
+  imports: [NgxEchartsModule, CommonModule,RouterLink, FormsModule, HighchartsChartModule],
   templateUrl: './admindashboard.component.html',
   styleUrl: './admindashboard.component.css'
 })
 export class AdmindashboardComponent {
+
+  //changes
+  Highcharts: typeof Highcharts = Highcharts;
+  dateFilter!:Highcharts.Options;
+  selectedDate:string=new Date().toISOString().split('T')[0];
 
   router = inject(Router)
   // Ticket chart vars
@@ -51,7 +61,7 @@ export class AdmindashboardComponent {
 allTickets !: Ticket[];
 allUsers !:Users[];
   ngOnInit() {
-//this.authService.isLoggedIn();
+
     forkJoin({
       tickets: this.ticketservice.getTicketAPI(),
       users : this.userservice.getUsersApi()
@@ -62,6 +72,7 @@ allUsers !:Users[];
         this.allUsers=users.body || []
         this.updateTicketChart();
         this.updateUserChart();
+        this.updateDateChart(this.selectedDate);
 
       },
       error : (err) =>
@@ -71,13 +82,14 @@ allUsers !:Users[];
         }
       }
     })
-  
+
+    
+    
   }
 
   
   //  TICKET CHART 
   updateTicketChart(): void {
-    
     
     this.totalTickets=this.allTickets.length;
 
@@ -135,8 +147,9 @@ allUsers !:Users[];
         userCounts[id]++;
       }
     });
+  } 
 
-  } else {
+  else {
     // Group by user.bu or other user fields via user.empid === ticket.userid
     userKeys = [...new Set(this.allUsers.map(user => user[this.userGroupBy as keyof typeof user] as string))];
     userKeys.forEach(key => userCounts[key] = 0);
@@ -194,5 +207,44 @@ allUsers !:Users[];
     const selectElement = event.target as HTMLSelectElement;
     this.userGroupBy = selectElement.value;
     this.updateUserChart();
+  }
+
+  onDateChange(event:Event):void{
+    const selectedDate = (event.target as HTMLInputElement).value;
+    this.updateDateChart(selectedDate);
+  }
+
+  //change
+  updateDateChart(date :string)
+  {
+
+    if(!date) return;
+
+    const startDate = new Date(date);
+    const targetDates: string[] = [];
+
+    // Collect 5 consecutive dates
+    for (let i = 0; i < 5; i++) {
+      const d = new Date(startDate);
+      d.setDate(startDate.getDate() + i);
+      targetDates.push(d.toISOString().split('T')[0]);
+    }
+
+    const dateCounts: number[] = targetDates.map(date=>{
+      return this.allTickets.filter(ticket=>{
+        return new Date(ticket.raiseddate!).toISOString().split('T')[0] === date;
+      }).length;
+    });
+
+    this.dateFilter={
+      title:{text:'Tickets by date'},
+      xAxis:{categories: targetDates, title:{text:'Date'} },
+      yAxis:{title: {text:'No of tickets'}, allowDecimals:false},
+      series:[{
+        type:'areaspline',
+        data:dateCounts
+      }]
+    }
+
   }
 }

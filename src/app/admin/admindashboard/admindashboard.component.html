@@ -51,5 +51,17 @@
     <div echarts [options]="usersByFilter" class="chart-box"></div>
   </div>
 
+  <div class="datefiltering">
+    <label for="startDate">Select start date: </label>
+    <input type="date" id="startDate" (change)="onDateChange($event)" [(ngModel)]="selectedDate">
+
+    <highcharts-chart [Highcharts]="Highcharts" [options]="dateFilter" style="width:100%; height:400px;" >
+
+    </highcharts-chart>
+  </div>
+
+
   <button [routerLink]="['/admin']" class="back-btn"> Back </button>
 </div>
+
+
