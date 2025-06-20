@@ -34,7 +34,12 @@ export class AppComponent implements OnInit {
 
       
       this.showLoginBtn = (url === '/' || url === '/faq');
+const publicRoutes = ['/', '/faq', '/login', '/forgot-password'];
 
+    // Call isUserLoggedIn() only on protected routes
+    if (!publicRoutes.includes(url)) {
+      this.authService.isUserLoggedIn().subscribe();
+    }
       
      if (url === '/login' || url === '/forgot-password') {
   
@@ -47,7 +52,7 @@ export class AppComponent implements OnInit {
     }
   });
 
-  this.authService.isUserLoggedIn().subscribe();
+  //this.authService.isUserLoggedIn().subscribe();
 
   }
 

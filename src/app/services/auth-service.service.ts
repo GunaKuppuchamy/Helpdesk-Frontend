@@ -25,9 +25,10 @@ getCurrentUser(): Observable<any> {
   if (this.currentUser) {
     return of(this.currentUser);
   }
-
   return this.http.get(`${this.apiUrl}/currentUser`, { withCredentials: true });
 }
+
+
 
  loginStatusChanged = new EventEmitter<boolean>();
 

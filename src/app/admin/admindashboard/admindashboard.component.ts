@@ -54,7 +54,7 @@ export class AdmindashboardComponent {
 
   //Highchart vars
   Highcharts: typeof Highcharts = Highcharts;
-  highchartsOptions!: Highcharts.Options;
+  
   dateFilter!:Highcharts.Options;
   selectedDate:string=new Date().toISOString().split('T')[0];
 
@@ -245,8 +245,9 @@ updateDateChart(date :string)
     this.updateDateChart(selectedDate);
   }
 
-//chart.js
+  
 
+//chart.js
 
 public stepLineChartData: ChartData<'line'> = {
   labels: [],

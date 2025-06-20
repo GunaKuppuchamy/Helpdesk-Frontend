@@ -23,7 +23,7 @@ export const routes: Routes = [
     loadComponent : () => {
             return import('./home/landingpage/landingpage.component').then((m)=>m.LandingpageComponent)
         },
-         canActivate : [loginGuard]
+          canActivate : [loginGuard]
     },
   { path: 'faq', 
    loadComponent : () => {
