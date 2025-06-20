@@ -248,34 +248,6 @@ updateDateChart(date :string)
 //chart.js
 
 
-public userChartData: ChartData<'bar'> = {
-  labels: [],
-  datasets: []
-};
-public chartOptions: ChartConfiguration<'bar'>['options'] = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: true,
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Users by Role',
-    }
-  },
-  scales: {
-    x: {},
-    y: {
-      beginAtZero: true
-    }
-  }
-};
-
-
-//chart.js
-
-
 public stepLineChartData: ChartData<'line'> = {
   labels: [],
   datasets: []
@@ -344,57 +316,7 @@ updateStepLineChart(): void {
 }
 
 
-// public stepLineChartData: ChartData<'line'> = {
-//   labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-//   datasets: [
-//     {
-//       label: 'Tickets Assigned',
-//       data: [3, 5, 8, 8, 10],
-//       fill: false,
-//       borderColor: 'blue',
-//       tension: 0, // disables bezier curve
-//       stepped: true
-//     }
-//   ]
-// };
-
-// public stepLineChartOptions: ChartConfiguration<'line'>['options'] = {
-//   responsive: true,
-//   plugins: {
-//     title: {
-//       display: true,
-//       text: 'Step Line Chart - Ticket Assignment'
-//     }
-//   }
-// };
-
-
-
-
-
- 
-// usersChartType: 'bar' = 'bar';
- 
-//   // Users chart by chart.js
-//   usersCharts(): void {
-//   const roleCounts: { [key: string]: number } = {};
- 
-//   this.allUsers.forEach(user => {
-//     const role = user.role || 'Unknown';
-//     roleCounts[role] = (roleCounts[role] || 0) + 1;
-//   });
-
-   
- 
-//   this.userChartData = {
-//     labels: Object.keys(roleCounts),
-//     datasets: [{
-//       data: Object.values(roleCounts),
-//       label: 'Users by Role'
-//     }]
-//   };
-//}
-               
+         
  
 
   //HANDLERS 
