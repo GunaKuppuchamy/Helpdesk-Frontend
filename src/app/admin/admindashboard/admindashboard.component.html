@@ -63,7 +63,11 @@
       </select>
     </div>
 
-    <div echarts [options]="usersByFilter" class="chart-box"></div>
+    <div style="overflow-x: auto; width:100%">
+      <div style="min-width: 800px;">
+        <div echarts [options]="usersByFilter" class="chart-box"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Highcharts Section -->

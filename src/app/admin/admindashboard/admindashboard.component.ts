@@ -16,7 +16,6 @@ import { ChartConfiguration,ChartData} from 'chart.js';
 import { FormsModule } from '@angular/forms';
 
 
-
 /**
  * This is a dashboard component for the admin to analyze the data efficiently
  * This component has graphs based on Users and Tickets
@@ -56,6 +55,7 @@ export class AdmindashboardComponent {
   userChartType: string = 'bar';
   userGroupBy: string = 'bu'; 
   userGroupOptions: string[] = ['bu', 'empid'];
+  userKeys: string[] = [];
 
   
 
@@ -154,44 +154,40 @@ allUsers !:Users[];
   // USER CHART 
   updateUserChart(): void {
   
-  this.totalUsers=this.allUsers.length;
-
+  this.totalUsers = this.allUsers.length;
 
   const userCounts: { [key: string]: number } = {};
-  let userKeys: string[] = [];
+  const filteredUsers = this.allUsers.filter(user => user.role?.toLowerCase() === 'user');
+  let groupValue: string;
 
-  if (this.userGroupBy === 'userid') {
-    // Group directly by ticket.userid (which maps to user.empid)
-    userKeys = [...new Set(this.allTickets.map(ticket => ticket.userid))];
-    userKeys.forEach(key => userCounts[key] = 0);
+  // Extract user keys based on groupBy
+  this.userKeys = [...new Set(filteredUsers.map(user =>
+    user[this.userGroupBy as keyof typeof user] as string
+  ))];
 
-    this.allTickets.forEach(ticket => {
-      const id = ticket.userid;
-      if (userCounts.hasOwnProperty(id)) {
-        userCounts[id]++;
-      }
-    });
-  } 
+  // Initialize counts
+  this.userKeys.forEach(key => userCounts[key] = 0);
 
-  else {
-    // Group by user.bu or other user fields via user.empid === ticket.userid
-    userKeys = [...new Set(this.allUsers.map(user => user[this.userGroupBy as keyof typeof user] as string))];
-    userKeys.forEach(key => userCounts[key] = 0);
-
-    this.allTickets.forEach(ticket => {
-      const user = this.allUsers.find(u => u.empid === ticket.userid);
-      const groupValue = user ? user[this.userGroupBy as keyof typeof user] as string : ''; 
+  // Loop tickets, find matching user, group by selected key
+  this.allTickets.forEach(ticket => {
+    const user = filteredUsers.find(u => u.empid === ticket.userid);
+    if (user) {
+      groupValue = user[this.userGroupBy as keyof typeof user] as string;
       if (groupValue && userCounts.hasOwnProperty(groupValue)) {
         userCounts[groupValue]++;
       }
-    });
-  }
+    }
+  });
 
   this.usersByFilter = {
     title: { text: `Tickets by ${this.userGroupBy.toUpperCase()}` },
+    tooltip:{trigger:'item'},
     xAxis: this.userChartType !== 'pie' ? {
       type: 'category',
-      data: userKeys
+      data: this.userKeys,
+      axisLabel:{
+        rotate:30
+      }
     } : undefined,
     yAxis: this.userChartType !== 'pie' ? {
       type: 'value',
@@ -199,7 +195,7 @@ allUsers !:Users[];
       minInterval: 1
     } : undefined,
     series: [{
-      data: userKeys.map(key => ({ value: userCounts[key], name: key })),
+      data: this.userKeys.map(key => ({ value: userCounts[key], name: key })),
       type: this.userChartType as 'bar' | 'line' | 'pie'
     }]
   };
