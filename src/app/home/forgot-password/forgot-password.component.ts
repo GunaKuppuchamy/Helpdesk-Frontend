@@ -26,9 +26,8 @@ export class ForgotPasswordComponent {
   private router = inject(Router);
 
   ngOnInit() {
-    this.authService.isLoggedIn();
-    this.authService.logout();
-
+    
+    this.authService.loginStatusChanged.emit(true);
     this.emailForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]]
     });
@@ -76,7 +75,7 @@ export class ForgotPasswordComponent {
       next: () => {
         alert('Password reset successful. Redirecting to login.');
         this.router.navigate(['/login']);
-        this.authService.isLoggedOut();
+        this.authService.loginStatusChanged.emit(false);
 
       },
       error: () => {

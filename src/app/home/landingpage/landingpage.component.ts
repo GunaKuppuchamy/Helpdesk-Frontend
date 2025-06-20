@@ -12,8 +12,8 @@ export class LandingpageComponent implements OnInit {
   constructor() { }
 authService = inject(AuthService);
   ngOnInit(): void {
-    this.authService.logout();
-    this.authService.logInButtonVisibility(true);
+    this.authService.loginStatusChanged.emit(false);
+   
   }
 
 }

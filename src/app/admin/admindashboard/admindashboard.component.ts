@@ -9,6 +9,13 @@ import { Users } from '../../models/users';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth-service.service';
+import * as Highcharts from 'highcharts';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartConfiguration,ChartData} from 'chart.js';
+import { FormsModule } from '@angular/forms';
+
+
 
 /**
  * This is a dashboard component for the admin to analyze the data efficiently
@@ -18,7 +25,7 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-admindashboard',
-  imports: [NgxEchartsModule, CommonModule,RouterLink],
+  imports: [NgxEchartsModule, CommonModule,RouterLink,HighchartsChartModule,NgChartsModule,FormsModule],
   templateUrl: './admindashboard.component.html',
   styleUrl: './admindashboard.component.css'
 })
@@ -45,34 +52,63 @@ export class AdmindashboardComponent {
   userGroupBy: string = 'bu'; 
   userGroupOptions: string[] = ['bu', 'empid'];
 
+  //Highchart vars
+  Highcharts: typeof Highcharts = Highcharts;
+  
+  dateFilter!:Highcharts.Options;
+  selectedDate:string=new Date().toISOString().split('T')[0];
+
+
+    //cards var
+
+    totalAdmins: number = 0;
+totalIT: number = 0;
+totalEndUsers: number = 0;
+ roleCounts: { [key: string]: number } = {};
+
   //count total
   totalTickets:number=0;
   totalUsers:number=0;
 allTickets !: Ticket[];
 allUsers !:Users[];
-  ngOnInit() {
-//this.authService.isLoggedIn();
-    forkJoin({
-      tickets: this.ticketservice.getTicketAPI(),
-      users : this.userservice.getUsersApi()
-    }).subscribe({
-      next : ({tickets,users}) =>
-      {
-        this.allTickets = tickets.body || [],
-        this.allUsers=users.body || []
-        this.updateTicketChart();
-        this.updateUserChart();
 
-      },
-      error : (err) =>
-      {
-        if (!this.authService.sessionTimeout(err)) {
-          console.log("Error Occured")
-        }
+
+ ngOnInit() {
+  forkJoin({
+    tickets: this.ticketservice.getTicketAPI(),
+    users: this.userservice.getUsersApi()
+  }).subscribe({
+    next: ({ tickets, users }) => {
+      this.allTickets = tickets.body || [];
+      this.allUsers = users.body || [];
+
+      this.totalTickets = this.allTickets.length;
+      this.totalUsers = this.allUsers.length;
+
+      this.updateTicketChart();
+      this.updateUserChart();
+      this.updateDateChart(this.selectedDate);
+      this.updateStepLineChart();
+
+     
+      this.roleCounts = {};
+      this.allUsers.forEach(user => {
+        const role = user.role?.toLowerCase() || 'unknown';
+        this.roleCounts[role] = (this.roleCounts[role] || 0) + 1;
+      });
+
+      this.totalAdmins = this.roleCounts['admin'] || 0;
+      this.totalIT = this.roleCounts['it'] || 0;
+      this.totalEndUsers = this.roleCounts['user'] || 0;
+    },
+    error: (err) => {
+      if (!this.authService.sessionTimeout(err)) {
+        console.log("Error occurred");
       }
-    })
-  
-  }
+    }
+  });
+}
+
 
   
   //  TICKET CHART 
@@ -169,6 +205,120 @@ allUsers !:Users[];
 }
 
 
+//Highcharts
+
+updateDateChart(date :string)
+  {
+ 
+    if(!date) return;
+ 
+    const startDate = new Date(date);
+    const targetDates: string[] = [];
+ 
+    // Collect 5 consecutive dates
+    for (let i = 0; i < 5; i++) {
+      const d = new Date(startDate);
+      d.setDate(startDate.getDate() + i);
+      targetDates.push(d.toISOString().split('T')[0]);
+    }
+ 
+    const dateCounts: number[] = targetDates.map(date=>{
+      return this.allTickets.filter(ticket=>{
+        return new Date(ticket.raiseddate!).toISOString().split('T')[0] === date;
+      }).length;
+    });
+ 
+    this.dateFilter={
+      title:{text:'Tickets by date'},
+      xAxis:{categories: targetDates, title:{text:'Date'} },
+      yAxis:{title: {text:'No of tickets'}, allowDecimals:false},
+      series:[{
+        type:'areaspline',
+        data:dateCounts
+      }]
+    }
+ 
+  }
+
+  onDateChange(event:Event):void{
+    const selectedDate = (event.target as HTMLInputElement).value;
+    this.updateDateChart(selectedDate);
+  }
+
+  
+
+//chart.js
+
+public stepLineChartData: ChartData<'line'> = {
+  labels: [],
+  datasets: []
+};
+
+public stepLineChartOptions: ChartConfiguration<'line'>['options'] = {
+  responsive: true,
+  maintainAspectRatio: false, 
+  plugins: {
+    title: {
+      display: true,
+      text: 'Tickets Assigned to IT Members',
+      font: {
+        size: 21
+      },
+      color : '#565656'
+    },
+    legend: {
+      display: false
+    }
+  },
+  scales: {
+    x: {
+      title: { display: true, text: 'IT Member' }
+    },
+    y: {
+      beginAtZero: true,
+      title: { display: true, text: 'Tickets Assigned' }
+    }
+  }
+};
+
+
+updateStepLineChart(): void {
+  const itMembers = this.allUsers.filter(user => user.role?.toLowerCase() === 'it');
+  const assignmentCounts: { [userid: string]: number } = {};
+
+  
+  itMembers.forEach(member => {
+    assignmentCounts[member.empid] = 0;
+  });
+
+  
+  this.allTickets.forEach(ticket => {
+    if (assignmentCounts.hasOwnProperty(ticket.itid)) {
+      assignmentCounts[ticket.itid]++;
+    }
+  });
+
+  const labels = itMembers.map(member => member.name || member.empid); 
+  const data = itMembers.map(member => assignmentCounts[member.empid]);
+
+  this.stepLineChartData = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Tickets Assigned',
+        data: data,
+        fill: false,
+        borderColor:' rgba(54, 162, 235, 1)',
+        tension: 0,
+        stepped: true
+      }
+    ]
+  };
+}
+
+
+         
+ 
 
   //HANDLERS 
 
