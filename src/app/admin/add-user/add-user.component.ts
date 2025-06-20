@@ -7,12 +7,20 @@ import { Users } from '../../models/users';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service.service';
 
+/**
+ * AddUserComponent
+ * Faciltates adding and editing user which can be done only by the admin.
+ * Data is added to the database using Reactive Forms and Validations are Included
+ */ 
+
 @Component({
   selector: 'app-add-user',
   imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.css'
 })
+
+
 export class AddUserComponent {
 
   userForm!: FormGroup;
@@ -26,38 +34,36 @@ export class AddUserComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   ngOnInit() {
-    this.authService.isLoggedIn();
-    this.userForm = this.fb.group({
-      empid: ['', [Validators.required, Validators.pattern(/^[A-Z]\d{3}$/)]],
-      name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
-      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
-      phoneno: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-      bu: ['', Validators.required],
-      role: ['', Validators.required]
-    });
+  //this.authService.isLoggedIn();
+  this.editUserId = this.route.snapshot.paramMap.get('id');
+  this.isEditMode = !!this.editUserId;
 
-    this.editUserId = this.route.snapshot.paramMap.get('id');
+  this.userForm = this.fb.group({
+    empid: ['', [Validators.required, Validators.pattern(/^[A-Z]\d{3}$/)]],
+    name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+    password: [
+      { value: '', disabled: this.isEditMode },
+      [Validators.required, Validators.minLength(5)]
+    ],
+    phoneno: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+    bu: ['', Validators.required],
+    role: ['', Validators.required]
+  });
 
-    if (this.editUserId) {
-      this.isEditMode = true;
-
+  
+  if (this.isEditMode && this.editUserId) {
     this.userservice.getUserById(this.editUserId).subscribe({
       next: (response) => {
-        console.log(response)
         this.curUserData = response.body;
         if (this.curUserData) {
-          console.log("Patching Values");
           this.userForm.patchValue(this.curUserData);
         } else {
           console.log("User data is null");
         }
-        console.log(this.curUserData);
       },
       error: (err) => {
-        if (err.status === 401) {
-          this.router.navigate(['/']); // Session expired
-        } else {
+        if (!this.authService.sessionTimeout(err)) {
           console.error('Failed to load user data:', err);
           alert('Something went wrong while loading user data.');
         }
@@ -65,6 +71,12 @@ export class AddUserComponent {
     });
   }
 }
+
+
+/**
+   * Handles form submission for both Add and Edit modes.
+   * Sends data to the backend service and navigates back to user view.
+   */
 
   submitUser() {
     const newUser = { ...this.userForm.value };
@@ -79,12 +91,15 @@ export class AddUserComponent {
         this.router.navigate(['/adminViewUsers']);
       },
       error: (err) => {
-        if (err.status === 401) {
-          this.router.navigate(['/']); // Redirect to login
-        } else {
-          console.error('Error occurred while editing user', err);
+      
+  if (!this.authService.sessionTimeout(err)) {
+      console.error('Error occurred while editing user', err);
           alert('Something went wrong while editing the user.');
-        }
+  }
+
+
+        
+        
       }
     });
   } else {
@@ -96,11 +111,7 @@ export class AddUserComponent {
         this.router.navigate(['/adminViewUsers']);
       },
       error: (err) => {
-        if (err.status === 401) {
-          this.router.navigate(['/']); 
-          this.authService.isLoggedOut();
-// Redirect to login
-        } else {
+       if (!this.authService.sessionTimeout(err)) {
           console.error('Error adding user', err);
           alert('Something went wrong while adding the user.');
         }

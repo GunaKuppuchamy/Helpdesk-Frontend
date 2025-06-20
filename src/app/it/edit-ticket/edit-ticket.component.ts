@@ -1,10 +1,14 @@
 import { Component , inject, OnInit} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { TicketsService } from '../../services/tickets.service';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service.service';
 
+
+/**
+ * This component facilitates It team members to update the ticket status to onHold or close the ticket
+ */
 @Component({
   selector: 'app-edit-ticket',
   imports: [RouterModule,RouterLink,CommonModule],
@@ -20,15 +24,17 @@ export class EditTicketComponent implements OnInit {
  
 authService=inject(AuthService);
   ngOnInit(): void {
-    this.authService.isLoggedIn();
     this.ticketService.getTicketById(this.id).subscribe((ticket) => {
-      this.this_ticket=ticket;
+      this.this_ticket=ticket.body;
       console.log(this.id)
       console.log(this.this_ticket)
-    })
-      
-    
+    })   
   }
+
+/**
+   * Update the current ticket's status to "onHold"
+   * and save the change through the API.
+   */
 onHold()
 {
 
@@ -47,26 +53,30 @@ onHold()
     this.router.navigate(['/it-my']);
         },
 
-        error : () =>
-        {
-          alert("Error occured while Updating");
-        }
+         error : (err) =>
+            {
+             if (!this.authService.sessionTimeout(err)) {
+        alert("Error while editing")
+      }
+    }
       }
     );
-     
 }
 
+
+/**
+   * Update the current ticket's status to "closed"
+   * and save the change through the API.
+   */
 
 close()
 {
   
-
-
+  
   if(this.this_ticket)
     {
       this.this_ticket.status = "closed"
     }
-
   
     this.ticketService.updateTickets(this.id,this.this_ticket).subscribe(
       {
@@ -77,13 +87,14 @@ close()
     this.router.navigate(['/it-my']);
         },
 
-        error : () =>
-        {
-          alert("Error occured while Updating");
-        }
+           error : (err) =>
+            {
+              if (!this.authService.sessionTimeout(err)) {
+        alert("Error while editing")
+      }
+    }
       }
     );
 
 }
-
 }

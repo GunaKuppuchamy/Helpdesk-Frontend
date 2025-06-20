@@ -1,0 +1,17 @@
+<div class="user-profile" *ngIf="currentUser; else loading">
+  <h3>👋 Welcome {{ currentUser.name }}</h3>
+  <ul style="list-style-type: none; padding: 0;">
+    <li><strong>Employee ID:</strong> {{ currentUser.empid }}</li>
+    <li><strong>Name:</strong> {{ currentUser.name }}</li>
+    <li><strong>Email:</strong> {{ currentUser.email }}</li>
+    <li><strong>Phone:</strong> {{ currentUser.phoneno }}</li>
+    <li><strong>Business Unit:</strong> {{ currentUser.bu }}</li>
+    <li><strong>Role:</strong> {{ currentUser.role }}</li>
+  </ul>
+</div>
+
+<ng-template #loading>
+  <p>Loading user details...</p>
+</ng-template>
+
+<button class="back-btn" (click)="redirectFn()">Back</button>

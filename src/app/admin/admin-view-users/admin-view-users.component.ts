@@ -7,6 +7,9 @@ import { Router, RouterLink } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service.service';
 
+/**
+ * Facilatates add , edit and delete an user from the database
+ */
 @Component({
   selector: 'app-admin-view-users',
   imports: [CommonModule, TableModule, RouterLink],
@@ -21,26 +24,32 @@ export class AdminViewUsersComponent {
   allUsers!: Users[];
 
   ngOnInit(): void {
-    //this.allUsers=this.userservice.getUsers();
-    this.authService.isLoggedIn();
+    
+    //this.authService.isLoggedIn();
     this.userservice.getUsersApi().subscribe({
       next: (response) => {
         this.allUsers = response.body || [];
         console.log(response)
       },
       error: (err) => {
-
-      if(err.status == 401)
-      {
-        this.router.navigate(['/']);
-      }
+  this.authService.sessionTimeout(err);
 
       }
     })
   }
+
+  /**
+   * Edit user function redirects to the add user form and patches the existing values
+   * @param id 
+   */
   editUser(id: string) {
     this.router.navigate(['/addUser', id]);
   }
+
+  /**
+   * Delete User function deletes the user by using the id details
+   * @param id 
+   */
   deleteUser(id: string) {
     console.log(id);
     if (confirm("Are you sure you want to delete this user? ")) {
@@ -50,9 +59,8 @@ export class AdminViewUsersComponent {
         },
         error : (err) =>
         {
-          if(err.status == 401)
-          {
-            this.router.navigate(['/'])
+          if (!this.authService.sessionTimeout(err)) {
+            console.log("Error deleting user")
           }
 
         }

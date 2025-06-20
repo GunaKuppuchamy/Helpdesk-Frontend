@@ -16,19 +16,20 @@ export class UserComponent {
   authService=inject(AuthService);
   router=inject(Router);
 
-  curUserData!:Users;
+  
 
   onAddTicket()
   {
     this.router.navigate(['addTicket']);
   }
 
-  curUserId:string='U001';
+  
 
   ngOnInit():void
   {
-    this.authService.isLoggedIn();
-    //this.curUserData=this.userservice.getUserById(this.curUserId);
+    
+    this.authService.loginStatusChanged.emit(true);
+    
   }
 
 }

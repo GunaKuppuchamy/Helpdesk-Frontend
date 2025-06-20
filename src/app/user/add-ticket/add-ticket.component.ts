@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { TicketsService } from '../../services/tickets.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserServiceService } from '../../services/user-service.service';
-import { Ticket } from '../../models/ticket.type';
+import { Ticket } from '../../models/ticket';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service.service';
 
@@ -36,15 +36,10 @@ export class AddTicketComponent implements OnInit {
         console.log('Tickets:', this.all_tickets);
 
         console.log('Ticket added successfully!', response);
-        // this.router.navigate(['/displayUserTickets', 'all']);
+       
       },
       error: (err) => {
-        if (err.status === 401) {
-          alert("Session expired Login again to continue");
-          this.router.navigate(['/login']);
-          this.authService.isLoggedOut();
-
-        } else {
+        if (!this.authService.sessionTimeout(err)) {
           alert('Something went wrong while submitting the ticket.');
         }
       }
@@ -97,36 +92,21 @@ export class AddTicketComponent implements OnInit {
                   this.router.navigate(['/displayUserTickets', 'all']);
                 },
                 error: (err) => {
-                  if (err.status === 401) {
-                    alert("Session expired Login again to continue");
-                    this.router.navigate(['/login']);
-                    this.authService.isLoggedOut();
-                    // Session expired
-                  } else {
+                   if (!this.authService.sessionTimeout(err)) {
                     alert('Something went wrong while submitting the ticket.');
                   }
                 }
               });
             },
             error: (err) => {
-              if (err.status === 401) {
-                alert("Session expired Login again to continue");
-                this.router.navigate(['/login']);
-                this.authService.isLoggedOut();
-
-              } else {
+               if (!this.authService.sessionTimeout(err)) {
                 alert('Something went wrong while fetching tickets.');
               }
             }
           });
         },
         error: (err) => {
-          if (err.status === 401) {
-            alert("Session expired Login again to continue");
-            this.router.navigate(['/login']);
-            this.authService.isLoggedOut();
-
-          } else {
+           if (!this.authService.sessionTimeout(err)) {
             alert('Something went wrong while fetching users.');
           }
         }
