@@ -243,33 +243,7 @@ updateDateChart(date :string)
     this.updateDateChart(selectedDate);
   }
  
-//chart.js
- 
- 
-public userChartData: ChartData<'bar'> = {
-  labels: [],
-  datasets: []
-};
-public chartOptions: ChartConfiguration<'bar'>['options'] = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: true,
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Users by Role',
-    }
-  },
-  scales: {
-    x: {},
-    y: {
-      beginAtZero: true
-    }
-  }
-};
- 
+
  
 //chart.js
  
