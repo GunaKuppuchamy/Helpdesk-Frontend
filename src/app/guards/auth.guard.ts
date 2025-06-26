@@ -16,13 +16,10 @@ export const authGuard: CanActivateFn = (route, state) => {
       if (!expectedRole && !multipleRole) {
         return true;
       }
-      if (user && user.role === expectedRole) {
-        return true;
-      } 
-      
+     
       if(expectedRole)
       {
-        if (!expectedRole || user.role === expectedRole) {
+        if (user.role === expectedRole) {
         return true;
       } 
       else

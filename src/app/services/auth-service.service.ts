@@ -3,6 +3,8 @@ import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of,map,catchError } from 'rxjs';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable({
@@ -13,7 +15,7 @@ export class AuthService {
   loginservice = inject(LoginService);
  
   http=inject(HttpClient)
-private apiUrl='http://localhost:3002'
+private apiUrl=environment.apiUrl;
 
   private currentUser: any = null;
  

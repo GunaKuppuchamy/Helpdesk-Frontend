@@ -13,9 +13,8 @@ import { HttpClient } from '@angular/common/http';
 
 export class AppComponent implements OnInit {
   title = 'Helpdesk Ticketing System';
-  isLoggedIn!: boolean;
   http=inject(HttpClient)
-  authService = inject(AuthService);
+  
   showLoginBtn: boolean = false;
   userLogged !: boolean;
 
@@ -24,7 +23,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.authService.loginStatusChanged.subscribe((status: boolean) => {
+    this.auth.loginStatusChanged.subscribe((status: boolean) => {
       this.userLogged = status;
     });
 
@@ -38,12 +37,12 @@ const publicRoutes = ['/', '/faq', '/login', '/forgot-password'];
 
     // Call isUserLoggedIn() only on protected routes
     if (!publicRoutes.includes(url)) {
-      this.authService.isUserLoggedIn().subscribe();
+      this.auth.isUserLoggedIn().subscribe();
     }
       
      if (url === '/login' || url === '/forgot-password') {
   
-  this.authService.getCurrentUser().subscribe(user => {
+  this.auth.getCurrentUser().subscribe(user => {
     if (!user || !user.role) {
       this.userLogged = false;
     }
@@ -63,7 +62,7 @@ login(){
     this.auth.logout();
     this.router.navigate(['/login']);
     
-    this.authService.loginStatusChanged.emit(false);
+    this.auth.loginStatusChanged.emit(false);
 
   }
 
