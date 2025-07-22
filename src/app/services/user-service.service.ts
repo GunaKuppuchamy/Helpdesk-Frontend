@@ -2,6 +2,7 @@ import { Injectable,inject } from '@angular/core';
 import { Users } from '../models/users';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,7 @@ export class UserServiceService {
   constructor() { }
 
 
-private apiUrl='http://localhost:3002'
-
+private apiUrl=environment.apiUrl;
 
 
 getUsersApi() 
@@ -40,20 +40,5 @@ deleteUserById(id : string)
 {
   return this.http.delete(`${this.apiUrl}/deleteUser/${id}`,{withCredentials : true , observe : 'response'});
 }
-
-// private currentUser: any = null;
-
-// setCurrentUser(user: any) {
-//   this.currentUser = user;
-// }
-
-// getCurrentUser(): Observable<any> {
-//   if (this.currentUser) {
-//     return of(this.currentUser);
-//   }
-
-//   return this.http.get(`${this.apiUrl}/currentUser`, { withCredentials: true });
-// }
-
 
 }

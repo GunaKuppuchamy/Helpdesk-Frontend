@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TicketsService {
 
   constructor() { }
 
-  private apiUrl = 'http://localhost:3002'
+  private apiUrl = environment.apiUrl;
   getTicketAPI()
   {
   return this.http.get<Array<Ticket>>(`${this.apiUrl}/getticket`,{withCredentials:true,observe : 'response'});

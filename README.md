@@ -1,59 +1,58 @@
-# HelpDeskFrontend
+# Helpdesk Ticketing System
+### Helpdesk-Frontend
+**1. Description**
+  A full-stack web application designed to manage support tickets within an organization. It allows users to raise tickets, IT teams to resolve them, and admins to oversee the entire process efficiently.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+**2. Features**
+  * Login: JWT-based secure login system.
+  * Raise Ticket: Users can raise new tickets describing their issues.
+  * View Tickets:
+  * View all tickets (Admin)
+  * View assigned tickets (IT)
+  * View personal tickets (User)
+  * Update Ticket Status: IT members can update ticket status to "closed".
+  * Email Notification: An email is sent to the user when their ticket is closed.
+  * OTP for Password Reset: Users can request an OTP and reset their password securely.\
 
-## Development server
+**3. Role-based Dashboard:**
+  * User - Submit and track issues
+  * IT - Resolve assigned tickets
+  * Admin - Manage users and oversee tickets
 
-To start a local development server, run:
+**4. Usage**
+  * A smart and interactive helpdesk platform for tracking organizational issues:
+  * Login with your role
+  * Submit tickets with required details
+  * View, track, and update status
+  * Reset your password using email-based OTP (if needed)
 
-```bash
-ng serve
-```
+**5. File Structure**
+<pre>
+  src/
+└── app/
+    ├── admin/
+    │   ├── admin/
+    │   ├── add-user/
+    │   ├── display-user/
+    │   ├── ticket/
+    │   └── dashboard/
+    ├── user/
+    │   ├── user/
+    │   ├── add-ticket/
+    │   └── display-user-tickets/
+    ├── it/
+    │   ├── it-team/
+    │   ├── it-all-tickets/
+    │   ├── it-my-tickets/
+    │   └── it-overdue-tickets/
+    └── home/
+        ├── home/
+        └── forgot-password/
+</pre>
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  
+**6. Run**
+  * ng serve
